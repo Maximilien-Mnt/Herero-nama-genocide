@@ -1,0 +1,74 @@
+[
+  {
+    "id": "res-001",
+    "kind": "book",
+    "authors": "Jürgen Zimmerer, Joachim Zeller (dir.)",
+    "title": "Völkermord in Deutsch-Südwestafrika: Der Kolonialkrieg (1904–1908) in Namibia und seine Folgen",
+    "year": "2003",
+    "url": "",
+    "notes": "Recueil fondateur pour la recherche en langue allemande."
+  },
+  {
+    "id": "res-002",
+    "kind": "book",
+    "authors": "David Olusoga, Casper W. Erichsen",
+    "title": "The Kaiser's Holocaust: Germany's Forgotten Genocide",
+    "year": "2010",
+    "url": "",
+    "notes": "Synthèse accessible en anglais ; débats sur le titre et le cadre juridique."
+  },
+  {
+    "id": "res-003",
+    "kind": "book",
+    "authors": "Isabel V. Hull",
+    "title": "Absolute Destruction: Military Culture and the Practices of War in Imperial Germany",
+    "year": "2005",
+    "url": "",
+    "notes": "Culture militaire prussienne et rationalités de l'occupation."
+  },
+  {
+    "id": "res-004",
+    "kind": "article",
+    "authors": "Reinhart Kössler",
+    "title": "Genocide and the Politics of Memory in Namibia — sélection d'articles",
+    "year": "2000–2020",
+    "url": "",
+    "notes": "Politique mémorielle et héritages."
+  },
+  {
+    "id": "res-005",
+    "kind": "archive",
+    "authors": "Bundesarchiv",
+    "title": "Fonds et inventaires coloniaux (Afrique)",
+    "year": "",
+    "url": "https://www.bundesarchiv.de/",
+    "notes": "Données d'archives soumises à réglementation."
+  },
+  {
+    "id": "res-006",
+    "kind": "website",
+    "authors": "Mémorial en Namibie / institutions partenaires",
+    "title": "Sites institutionnels (musea, centres)",
+    "year": "",
+    "url": "",
+    "notes": "Compléter avec URLs officielles."
+  },
+  {
+    "id": "res-007",
+    "kind": "film",
+    "authors": "Divers réalisateurs",
+    "title": "Documentaires et témoins filmés (liste à affiner)",
+    "year": "2004–",
+    "url": "",
+    "notes": "Vérifier droits de projection scolaire."
+  },
+  {
+    "id": "res-008",
+    "kind": "article",
+    "authors": "ONU / mécanismes de droits humains",
+    "title": "Rapports sur mémoire et réparation (repères)",
+    "year": "",
+    "url": "https://www.ohchr.org/",
+    "notes": "Cadre international des droits humains."
+  }
+]

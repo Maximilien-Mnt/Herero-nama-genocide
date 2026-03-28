@@ -33,23 +33,27 @@ This project is an interactive educational website about the **Herero and Nama g
 - **Statistics** — Data visualizations  
 - **Documents** — Historical sources  
 - **Resources** — Bibliography  
-- **Methodology** — Research explanation  
+- **Methodology** — Research and citation notes  
 
 ### Tech Stack/Tools
-- Vercel
-- Next.js  
-- HTML / CSS / JavaScript  
-- Chart.js  
-- Leaflet  
-- Markdown / Content Collections  
-- GitHub  
+- Vercel (recommended hosting)
+- Next.js (App Router) + MDX (`@next/mdx`, `@mdx-js/*`)
+- React + TypeScript
+- Recharts (statistics)
+- Leaflet + react-leaflet (map)
+- Git / GitHub
 
-### Project Structure
+### Project Structure (essential)
 ```
-assets/
-    genocide-herero+nama.png
+app/                 # routes (home, histoire/*, chronologie, carte, …)
+components/          # UI (header, timeline, map, charts, documents)
+content/*.json       # events, places, documents, datasets, resources
+docs/                # CONTENT_MODEL, NOTION_WORKFLOW, JURY_CHECKLIST
+lib/                 # types + content loaders
+public/assets/       # static logo; public/media/ for document images
+types/               # MDX + vendor typings
+assets/              # source logo (copy to public/ for builds)
 README.md
-
 ```
 
 ### Authors
@@ -90,20 +94,14 @@ Dieses Projekt ist eine interaktive Bildungswebsite über den **Völkermord an d
 
 ### Technologie/Werkzeuge
 - Vercel
-- Next.js  
-- HTML / CSS / JavaScript  
-- Chart.js  
-- Leaflet  
-- Markdown  
-- GitHub  
+- Next.js (App Router) + MDX
+- React, TypeScript
+- Recharts
+- Leaflet
+- GitHub
 
-### Projektstruktur
-```
-assets/
-    genocide-herero+nama.png
-README.md
-
-```
+### Projektstruktur (Auszug)
+Siehe englische README — `app/`, `components/`, `content/`, `public/`, `docs/`.
 
 ### Autoren
 - Recherchen, Inhalt und Informationen: Daniel LIBERGE
@@ -117,7 +115,7 @@ Alle externen Ressourcen gehören ihren jeweiligen Eigentümern.
 ---
 
 <p align="center">
-  <h2>🇫🇷 Françaish</h2>
+  <h2>🇫🇷 Français</h2>
 </p>
 
 ---
@@ -143,20 +141,14 @@ Ce projet est un site web éducatif interactif consacré au **génocide des Hér
 
 ### Technologies/Outils
 - Vercel
-- Next.js   
-- HTML / CSS / JavaScript  
-- Chart.js  
-- Leaflet  
-- Markdown  
-- GitHub  
+- Next.js (App Router) + MDX
+- React, TypeScript
+- Recharts
+- Leaflet
+- GitHub
 
-### Structure du projet
-```
-assets/
-    genocide-herero+nama.png
-README.md
-
-```
+### Structure du projet (extrait)
+Voir la section anglaise : dossiers `app/`, `components/`, `content/`, `public/`, `docs/`.
 
 ### Auteurs
 - Recherches et contenu: Daniel LIBERGE

@@ -11,12 +11,11 @@
 ---
 
 <p align="center">
-  <b>English</b> | Deutsch | Français
+  <h2>🇬🇧 English</h2>
 </p>
 
 ---
 
-## 🇬🇧 English
 
 ### Overview
 This project is an interactive educational website about the **Herero and Nama genocide (1904–1908)**. It is designed as a self-contained digital resource that allows users to explore the historical context, events, consequences, and legacy of the genocide without requiring external explanation.
@@ -65,12 +64,11 @@ All external resources belong to their respective owners.
 ---
 
 <p align="center">
-  English | <b>Deutsch</b> | Français
+    <h2>🇩🇪 Deutsch</h2>
 </p>
 
 ---
 
-## 🇩🇪 Deutsch
 
 ### Überblick
 Dieses Projekt ist eine interaktive Bildungswebsite über den **Völkermord an den Herero und Nama (1904–1908)**. Sie ist als eigenständige digitale Ressource konzipiert, die ohne zusätzliche Erklärungen verständlich ist.
@@ -119,12 +117,11 @@ Alle externen Ressourcen gehören ihren jeweiligen Eigentümern.
 ---
 
 <p align="center">
-  English | Deutsch | <b>Français</b>
+  <h2>🇫🇷 Françaish</h2>
 </p>
 
 ---
 
-## 🇫🇷 Français
 
 ### Aperçu
 Ce projet est un site web éducatif interactif consacré au **génocide des Héréros et des Namas (1904–1908)**. Il est conçu comme une ressource autonome permettant de comprendre le contexte, les événements et les conséquences sans explication orale. Ce site Web a été développé dans le contexte d'un projet scolaire.

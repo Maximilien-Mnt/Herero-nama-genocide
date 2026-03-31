@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageShell } from "@/components/PageShell";
 import { historyChapters } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -10,10 +11,12 @@ export const metadata: Metadata = {
 
 export default function HistoireIndexPage() {
   return (
-    <>
+    <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Histoire" }]} />
-      <h1 style={{ fontFamily: "var(--font-serif)" }}>Histoire</h1>
-      <p style={{ color: "var(--muted)", maxWidth: "40rem" }}>
+      <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.75rem", lineHeight: "44px", fontWeight: 600, margin: 0 }}>
+        Histoire
+      </h1>
+      <p style={{ color: "var(--text-muted)", maxWidth: "44rem", marginTop: "0.75rem" }}>
         Cinq chapitres enchaînent contexte colonial, escalade militaire, camps et exile forcé, puis
         mémoire et débats contemporains. Chaque chapitre peut être lu indépendamment mais renvoie
         vers la chronologie, la carte et les documents.
@@ -25,6 +28,6 @@ export default function HistoireIndexPage() {
           </li>
         ))}
       </ul>
-    </>
+    </PageShell>
   );
 }

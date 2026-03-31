@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageShell } from "@/components/PageShell";
 import Chapter from "./chapter.mdx";
+import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayout";
 
 export const metadata: Metadata = {
   title: "Camps et exile",
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <>
+    <PageShell>
       <Breadcrumb
         items={[
           { href: "/", label: "Accueil" },
@@ -17,8 +19,12 @@ export default function Page() {
           { label: "Camps et exile" },
         ]}
       />
-      <h1 style={{ fontFamily: "var(--font-serif)" }}>Guerre, ordres de refoulement et camps</h1>
-      <Chapter />
-    </>
+      <HistoireChapterLayout
+        slug="camps-extermination"
+        title="Guerre, ordres de refoulement et camps"
+      >
+        <Chapter />
+      </HistoireChapterLayout>
+    </PageShell>
   );
 }

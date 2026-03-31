@@ -4,16 +4,16 @@ export function SiteFooter() {
   return (
     <footer
       style={{
-        borderTop: "1px solid var(--border)",
+        borderTop: "1px solid var(--border-subtle)",
         marginTop: "3rem",
         padding: "2rem 1.25rem",
-        color: "var(--muted)",
-        fontSize: "0.9rem",
+        color: "var(--text-muted)",
+        fontSize: "0.875rem",
       }}
     >
       <div
         style={{
-          maxWidth: "var(--max)",
+          maxWidth: "var(--max-layout)",
           margin: "0 auto",
           display: "flex",
           flexWrap: "wrap",
@@ -22,10 +22,12 @@ export function SiteFooter() {
         }}
       >
         <p style={{ margin: 0 }}>
-          Projet pédagogique : génocide des Héréros et des Namas (1904–1908).{" "}
-          <Link href="/citer">Comment citer</Link>
+          Sources &amp; citations : <Link href="/citer">Comment citer</Link>.
         </p>
-        <p style={{ margin: 0 }}>À usage éducatif — voir mentions légales des médias utilisés.</p>
+        <p style={{ margin: 0 }}>
+          À usage éducatif. Voir <Link href="/a-propos">mentions de droits</Link> et informations
+          sur les contenus externes.
+        </p>
       </div>
     </footer>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageShell } from "@/components/PageShell";
+import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayout";
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <>
+    <PageShell>
       <Breadcrumb
         items={[
           { href: "/", label: "Accueil" },
@@ -17,8 +19,12 @@ export default function Page() {
           { label: "Contexte colonial" },
         ]}
       />
-      <h1 style={{ fontFamily: "var(--font-serif)" }}>Contexte colonial et sociétés du Sud-Ouest africain</h1>
-      <Chapter />
-    </>
+      <HistoireChapterLayout
+        slug="contexte"
+        title="Contexte colonial et sociétés du Sud-Ouest africain"
+      >
+        <Chapter />
+      </HistoireChapterLayout>
+    </PageShell>
   );
 }

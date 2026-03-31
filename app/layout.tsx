@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PageTransition } from "@/components/PageTransition";
 
 const siteTitle = "Génocide des Héréros et des Namas (1904–1908)";
 const description =
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Aller au contenu
         </a>
         <SiteHeader />
-        <main id="contenu-principal">{children}</main>
+        <main id="contenu-principal">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <SiteFooter />
       </body>
     </html>

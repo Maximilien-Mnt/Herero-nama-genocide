@@ -15,7 +15,9 @@ export default function CartePage() {
   return (
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Carte" }]} />
-      <h1 style={{ fontFamily: "var(--font-serif)" }}>Carte</h1>
+      <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.75rem", lineHeight: "44px", fontWeight: 600, margin: 0 }}>
+        Carte
+      </h1>
       <Suspense fallback={<p style={{ color: "var(--muted)" }}>Chargement de la carte…</p>}>
         <MapDynamic places={getPlaces()} />
       </Suspense>

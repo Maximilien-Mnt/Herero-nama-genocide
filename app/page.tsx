@@ -39,13 +39,13 @@ export default function HomePage() {
     <PageShell>
       <p
         style={{
-          padding: "0.75rem 1rem",
-          borderRadius: "var(--radius)",
-          border: "1px solid var(--border)",
-          background: "rgba(199, 93, 93, 0.12)",
-          color: "var(--text)",
+          padding: "1rem 1.15rem",
+          borderRadius: "var(--radius-md)",
+          border: "1px solid rgba(155, 90, 60, 0.35)",
+          background: "rgba(155, 90, 60, 0.12)",
+          color: "var(--text-primary)",
           fontSize: "0.95rem",
-          maxWidth: "52rem",
+          maxWidth: "54rem",
         }}
         role="note"
       >
@@ -55,7 +55,15 @@ export default function HomePage() {
       </p>
 
       <header style={{ marginTop: "2rem", marginBottom: "1.5rem" }}>
-        <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.75rem, 3vw, 2.35rem)" }}>
+        <h1
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "2.75rem",
+            lineHeight: "44px",
+            fontWeight: 600,
+            margin: 0,
+          }}
+        >
           Génocide des Héréros et des Namas
         </h1>
         <p style={{ color: "var(--muted)", maxWidth: "40rem", marginBottom: 0 }}>
@@ -65,10 +73,19 @@ export default function HomePage() {
       </header>
 
       <section aria-labelledby="guide-titre" style={{ marginBottom: "2rem" }}>
-        <h2 id="guide-titre" style={{ fontSize: "1.15rem" }}>
+        <h2
+          id="guide-titre"
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "1.85rem",
+            lineHeight: "30px",
+            fontWeight: 600,
+            margin: 0,
+          }}
+        >
           Comment lire ce site sans guide oral
         </h2>
-        <ol style={{ maxWidth: "42rem", color: "var(--muted)" }}>
+        <ol style={{ maxWidth: "42rem", color: "var(--text-muted)", marginTop: "1rem" }}>
           <li>
             Commencer par <Link href="/histoire/contexte">Histoire — Contexte colonial</Link> ou par
             la <Link href="/chronologie">Chronologie</Link> si vous préférez une logique événementielle.
@@ -84,7 +101,10 @@ export default function HomePage() {
         </ol>
       </section>
 
-      <div className="card-grid">
+      <div
+        className="home-nav-grid"
+        aria-label="Navigation principale"
+      >
         {sections.map((s) => (
           <Link
             key={s.href}
@@ -92,8 +112,10 @@ export default function HomePage() {
             className="card"
             style={{ textDecoration: "none", color: "inherit", display: "block" }}
           >
-            <h2 style={{ marginTop: 0, fontSize: "1.1rem" }}>{s.title}</h2>
-            <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.95rem" }}>{s.text}</p>
+            <h2 style={{ marginTop: 0, fontFamily: "var(--font-sans)", fontSize: "1rem", fontWeight: 600 }}>
+              {s.title}
+            </h2>
+            <p style={{ margin: 0, color: "var(--text-muted)", fontSize: "0.95rem" }}>{s.text}</p>
           </Link>
         ))}
       </div>

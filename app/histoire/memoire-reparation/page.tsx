@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageShell } from "@/components/PageShell";
 import Chapter from "./chapter.mdx";
+import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayout";
 
 export const metadata: Metadata = {
   title: "Mémoire et réparation",
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <>
+    <PageShell>
       <Breadcrumb
         items={[
           { href: "/", label: "Accueil" },
@@ -17,8 +19,12 @@ export default function Page() {
           { label: "Mémoire et réparation" },
         ]}
       />
-      <h1 style={{ fontFamily: "var(--font-serif)" }}>Mémoire, reconnaissance et débats internationaux</h1>
-      <Chapter />
-    </>
+      <HistoireChapterLayout
+        slug="memoire-reparation"
+        title="Mémoire, reconnaissance et débats internationaux"
+      >
+        <Chapter />
+      </HistoireChapterLayout>
+    </PageShell>
   );
 }

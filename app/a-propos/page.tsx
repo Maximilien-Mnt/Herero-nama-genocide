@@ -11,8 +11,7 @@ export default function AProposPage() {
   return (
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "À propos" }]} />
-      <article className="prose">
-        <h1>À propos</h1>
+        <h1>Über den Projekt</h1>
         <p>
           <strong>Recherche, Redaktion, Archivbearbeitung, Synthese :</strong> Daniel Liberge
         </p>
@@ -20,7 +19,7 @@ export default function AProposPage() {
           <strong>Entwicklung, Debugging, Bereitstellung, Verwaltung, Organisation, Koordination :</strong> Maximilien Montant
         </p>
         <p>
-          Diese Website entstand im Rahmen eines Schulprojekts. Die erwähnten, dargestellten oder verwendeten Medien, Quellen und Ressourcen gehören ihren jeweiligen Eigentümern.
+          Diese Website entstand im Rahmen eines Schulprojekts.
         </p>
         <p>
           Sie dient ausschließlich Bildungs- und Informationszwecken.
@@ -37,16 +36,17 @@ export default function AProposPage() {
         <p>DIE SOFTWARE WIRD OHNE MÄNGELGEWÄHR UND OHNE JEGLICHE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG BEREITGESTELLT, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GEWÄHRLEISTUNG DER MARKTGÄNGIGKEIT, DER EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND DER NICHTVERLETZUNG VON RECHTEN DRITTER.</p>
         <p>Die Autoren und Urheberrechtsinhaber haften in keinem Fall für Ansprüche, Schäden oder sonstige Haftung, sei es aus Vertrag, unerlaubter Handlung oder anderweitig, die aus der Software oder deren Nutzung entstehen.</p>
       <h1>Rechtliche Hinweise</h1>
-      <h2>Externe Links</h2>
-      <p>Diese Website kann Links zu externen Ressourcen enthalten.</p>
-      <p>Die Autoren übernehmen keine Verantwortung für den Inhalt oder die Verfügbarkeit dieser externen Websites.</p>
-      <h2>Kontakt</h2>
+      <h3>Externe Links</h3>
+      <p>Diese Website enthält Links zu externen Ressourcen. Die erwähnten, dargestellten oder verwendeten Medien, Quellen und Ressourcen gehören ihren jeweiligen Eigentümern. Die Autoren übernehmen keine Verantwortung für den Inhalt oder die Verfügbarkeit dieser externen 
+        Ressourcen.</p>
+      <h3>Kontakt</h3>
       <p>Bei Anfragen (Korrekturen, Entfernung von Inhalten oder sonstige Fragen) wenden Sie sich bitte an:</p>
       <p>daniel.liberge09@gmail.com</p>
       <p>maximilien.montant@gmail.com</p>
-      <h2>Aktualisierungen</h2>
+      <h3>Aktualisierungen</h3>
       <p>Diese Nutzungsbedingungen können im Zuge der Weiterentwicklung des Projekts aktualisiert werden.</p>
-      </article>
     </PageShell>
   );
 }
+
+// article classname = "prose"

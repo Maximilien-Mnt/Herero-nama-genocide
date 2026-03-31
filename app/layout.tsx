@@ -4,9 +4,9 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PageTransition } from "@/components/PageTransition";
 
-const siteTitle = "Génocide des Héréros et des Namas (1904–1908)";
+const siteTitle = "Völkermord an den Herero und Nama";
 const description =
-  "Ressource pédagogique autosuffisante : histoire, chronologie, carte, statistiques (schémas), documents et bibliographie.";
+  "Interaktive Bildungswebsite über den Völkermord an den Herero und Nama (1904–1908).";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: siteTitle,
     description,
     type: "website",
-    locale: "fr_FR",
+    locale: "de_DE",
   },
   robots: { index: true, follow: true },
 };
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr">
       <body>
         <a className="skip-link" href="#contenu-principal">
-          Aller au contenu
+          Zur Hauptnavigation springen
         </a>
         <SiteHeader />
         <main id="contenu-principal">

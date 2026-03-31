@@ -12,22 +12,33 @@ export default function AProposPage() {
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "À propos" }]} />
         <h1>Über den Projekt</h1>
+        <h3>Autoren</h3>
         <p>
           <strong>Recherche, Redaktion, Archivbearbeitung, Synthese :</strong> Daniel Liberge
         </p>
         <p>
           <strong>Entwicklung, Debugging, Bereitstellung, Verwaltung, Organisation, Koordination :</strong> Maximilien Montant
         </p>
+        <h3>Kontext</h3>
         <p>
-          Diese Website entstand im Rahmen eines Schulprojekts.
+          Diese Website entstand im Rahmen eines SchulprojektsSie dient ausschließlich Bildungs- und Informationszwecken.
         </p>
-        <p>
-          Sie dient ausschließlich Bildungs- und Informationszwecken.
-        </p>
-        <p>
-          <strong>Stack :</strong> Next.js, React Leaflet, Recharts, MDX — hébergement recommandé sur Vercel relié à
-          GitHub pour des déploiements continus.
-        </p>
+        <h3>Stack</h3>
+        <ul>
+          <li>Next.js</li>
+          <li>React Leaflet</li>
+          <li>Recharts</li>
+          <li>Vercel</li>
+          <li>GitHub</li>
+        </ul>
+        <h3>Programmiersprachen</h3>
+        <ul>
+          <li>TypeScript (80%)</li>
+          <li>Tailwind CSS (10%)</li>
+          <li>MDX (8%)</li>
+          <li>JavaScript (2%)</li>
+          <li>Shadcn/UI</li>
+        </ul>  
         <h1>Lizenz</h1>
         <p>MIT-Lizenz</p>
         <p>Copyright © 2026 Maximilien MONTANT, Daniel LIBERGE</p>
@@ -41,8 +52,10 @@ export default function AProposPage() {
         Ressourcen.</p>
       <h3>Kontakt</h3>
       <p>Bei Anfragen (Korrekturen, Entfernung von Inhalten oder sonstige Fragen) wenden Sie sich bitte an:</p>
-      <p>daniel.liberge09@gmail.com</p>
-      <p>maximilien.montant@gmail.com</p>
+      <ul>
+        <li>daniel.liberge09@gmail.com</li>
+        <li>maximilien.montant@gmail.com</li>
+      </ul>
       <h3>Aktualisierungen</h3>
       <p>Diese Nutzungsbedingungen können im Zuge der Weiterentwicklung des Projekts aktualisiert werden.</p>
     </PageShell>

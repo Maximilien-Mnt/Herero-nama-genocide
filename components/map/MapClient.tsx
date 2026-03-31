@@ -86,7 +86,7 @@ export function MapClient({ places }: { places: Place[] }) {
       <div className="map-layout" style={{ gap: "1rem", alignItems: "start" }}>
         <div
           style={{
-            minHeight: "70vh",
+            height: "70vh",
             borderRadius: "var(--radius-md)",
             overflow: "hidden",
             border: "1px solid var(--border-subtle)",

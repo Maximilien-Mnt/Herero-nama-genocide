@@ -40,8 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <PageTransition>{children}</PageTransition>
         </main>
         <SiteFooter />
+        <Analytics />
       </body>
-      <Analytics />
     </html>
 
   );

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="de">
       <body>
         <a className="skip-link" href="#contenu-principal">
           Zur Hauptnavigation springen

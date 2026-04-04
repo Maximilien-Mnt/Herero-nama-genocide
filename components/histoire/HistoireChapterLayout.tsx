@@ -90,8 +90,6 @@ export function HistoireChapterLayout({
       <aside
         className="chapter-sidebar"
         style={{
-          position: "sticky",
-          top: 72,
           alignSelf: "start",
         }}
       >

@@ -48,7 +48,7 @@ const CustomTooltip = ({ active, payload, label, unit }: any) => {
 
 function ChartForDataset({ ds }: { ds: Dataset }) {
   const unitLabel = ds.unit ?? "valeur";
-  const legendName = ds.legendName ?? unitLabel;
+  const legendName = unitLabel; // use unit as legend label
 
   const commonFooter = (
     <div style={{ marginTop: "0.75rem" }}>
@@ -113,9 +113,6 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
                 animationDuration={800}
                 animationEasing="ease-out"
                 radius={[4, 4, 0, 0]}
-                // Subtle hover feedback
-                onMouseEnter={(e) => (e.target.style.filter = "brightness(1.2)")}
-                onMouseLeave={(e) => (e.target.style.filter = "brightness(1)")}
               />
             </BarChart>
           </ResponsiveContainer>

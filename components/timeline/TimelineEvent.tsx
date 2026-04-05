@@ -1,3 +1,6 @@
+// Représente une carte d'événement individuelle sur la frise.
+// Il affiche la date, le titre, le résumé, les tags stylisés et, surtout, résout dynamiquement les identifiants liés (relatedPlaceIds, relatedDocumentIds, relatedDatasetIds, relatedHistorySlugs) pour créer des liens vers les sections correspondantes du site (/carte, /documents, /histoire/[slug], /statistiques).
+// La couleur de la bordure de la carte est déterminée par la catégorie sémantique de l'événement.
 import type { EventTag, TimelineEvent } from "@/lib/types";
 import type { CSSProperties } from "react";
 import {

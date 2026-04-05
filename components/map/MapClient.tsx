@@ -1,5 +1,10 @@
 "use client";
 
+//Le cœur de la carte interactive.
+// Il utilise react-leaflet pour afficher une carte OpenStreetMap avec des marqueurs pour les lieux historiques.
+// Il gère le filtrage des lieux par période (PlacePeriod) et l'affichage des détails d'un lieu sélectionné. 
+// Les marqueurs sont stylisés avec des DivIcon personnalisés et colorés selon leur période.
+
 import { useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";

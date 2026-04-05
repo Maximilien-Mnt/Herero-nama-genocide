@@ -1,5 +1,5 @@
 "use client";
-
+// Gère l'affichage de la frise chronologique. Il inclut la logique de filtrage par tags (EventTag) et rend une liste d'événements en utilisant TimelineEventCard.
 import { useMemo, useState } from "react";
 import type { EventTag, TimelineEvent } from "@/lib/types";
 import { FilterPill } from "@/components/FilterPill";

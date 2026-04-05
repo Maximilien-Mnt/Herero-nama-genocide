@@ -26,18 +26,17 @@ export default function AProposPage() {
         <h3>Stack</h3>
         <ul>
           <li>Next.js</li>
-          <li>React Leaflet</li>
+          <li>React</li>
+          <li>Leaflet</li>
           <li>Recharts</li>
           <li>Vercel</li>
           <li>GitHub</li>
         </ul>
         <h3>Programmiersprachen</h3>
         <ul>
-          <li>TypeScript (80%)</li>
-          <li>Tailwind CSS (10%)</li>
-          <li>MDX (8%)</li>
-          <li>JavaScript (2%)</li>
-          <li>Shadcn/UI</li>
+          <li>TypeScript (95%)</li>
+          <li>JavaScript (4,5%)</li>
+          <li>MDX/JSON/Andere (0,5%)</li> 
         </ul>  
         <h1>Lizenz</h1>
         <p>MIT-Lizenz</p>

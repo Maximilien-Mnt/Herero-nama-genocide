@@ -1,3 +1,7 @@
+// Représente une fiche individuelle pour un document historique.
+// Elle affiche une miniature, le titre, une description courte, les crédits et, comme les événements de la frise, des liens croisés vers les événements, lieux et chapitres d'histoire liés.
+// Un aspect important est la gestion des images sensibles (sensitive: true) qui peuvent être floutées par défaut.
+
 import type { HistoricalDocument, DocumentType } from "@/lib/types";
 import { CrossLinkTag } from "@/components/CrossLink";
 import {

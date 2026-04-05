@@ -1,3 +1,11 @@
+// Ce fichier définit le layout global de l'application, qui enveloppe toutes les pages.
+// Il inclut la structure HTML de base, les balises <head> (via metadata), et les composants de navigation principaux.
+// Métadonnées (metadata): Définies de manière statique, elles incluent le titre du site, la description, les informations Open Graph et les robots d'indexation.
+// Composants globaux: SiteHeader, SiteFooter, PageTransition (pour les animations de page), et les outils d'analyse de Vercel (Analytics, SpeedInsights) sont inclus ici, garantissant leur présence sur toutes les pages.
+// Accessibilité: Un lien "skip-link" est présent pour l'accessibilité, permettant de sauter directement au contenu principal.
+
+
+
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";

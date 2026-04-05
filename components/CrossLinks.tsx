@@ -1,3 +1,8 @@
+// Composants pour afficher les liens croisés vers les événements, lieux et documents liés.
+// CrossLinksForEvent: Affiche les liens croisés vers les lieux et documents liés à un événement.
+// CrossLinksForPlace: Affiche les liens croisés vers les événements liés à un lieu.
+// CrossLinksForDocument: Affiche les liens croisés vers les événements, lieux et chapitres d'histoire liés à un document.
+
 import Link from "next/link";
 import {
   getDatasetById,

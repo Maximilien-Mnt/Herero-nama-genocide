@@ -1,4 +1,6 @@
 "use client";
+// Affiche une grille de DocumentCard et intègre une Lightbox
+// (yet-another-react-lightbox) pour visualiser les images en plein écran.
 
 import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";

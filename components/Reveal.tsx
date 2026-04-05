@@ -1,5 +1,7 @@
 "use client";
 
+// Reveal est un composant d'animation simple qui fait apparaître des éléments avec un léger décalage vertical, améliorant l'esthétique du chargement du contenu.
+
 import { useEffect, useRef, useState } from "react";
 
 export function Reveal({

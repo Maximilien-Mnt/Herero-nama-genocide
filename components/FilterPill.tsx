@@ -1,3 +1,5 @@
+// Un composant réutilisable pour les filtres en forme de pillules, avec une variante active pour indiquer le filtre actif.
+
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 export function FilterPill({

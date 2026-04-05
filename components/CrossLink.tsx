@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+// Un petit composant utilitaire (CrossLinkTag) pour afficher des liens stylisés avec une icône et un libellé, utilisé pour les liens croisés à travers le site.
+
 export function CrossLinkTag({
   href,
   icon,

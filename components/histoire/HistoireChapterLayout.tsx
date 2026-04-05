@@ -1,5 +1,13 @@
 "use client";
 
+// Il gère la structure de chaque chapitre MDX, y compris la génération d'une table des matières (TOC) et l'affichage des liens croisés vers d'autres sections du site.
+// Génération de la TOC: Le useEffect scanne les titres h2 et h3 du contenu MDX (children) pour construire dynamiquement une table des matières. Il attribue des id aux titres s'ils n'en ont pas déjà, ce qui est une excellente pratique pour les ancres de navigation.
+// Liens croisés (related): Le useMemo filtre les données globales (getEvents()) pour trouver les éléments (événements, lieux, documents, datasets) qui sont liés au chapitre actuel via relatedHistorySlugs. Ces liens sont ensuite affichés dans une barre latérale et en bas du chapitre.
+// Navigation entre chapitres (prevNext): Détermine les chapitres précédent et suivant en se basant sur la liste historyChapters définie dans lib/content.ts, facilitant la lecture séquentielle.
+// Styling: Utilise des styles inline et des classes CSS (chapter-layout, chapter-sidebar, prose, crosslink-tags) pour la mise en page.
+
+// Chaque page de chapitre importe son contenu MDX (Chapter from './chapter.mdx') et l'enveloppe dans le composant HistoireChapterLayout.
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";

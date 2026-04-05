@@ -1,3 +1,5 @@
+// Un composant réutilisable pour les boutons, avec deux variantes principales : "primary" (or) et "secondary" (gold).
+
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "secondary";

@@ -1,5 +1,7 @@
 "use client";
 
+// SiteHeader inclut la navigation principale et un menu burger pour les mobiles.
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";

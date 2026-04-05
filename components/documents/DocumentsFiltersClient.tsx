@@ -1,3 +1,5 @@
+// Gère le filtrage des documents par type (DocumentType).
+
 "use client";
 
 import { useMemo, useState } from "react";

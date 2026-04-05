@@ -1,5 +1,7 @@
 "use client";
-
+// Responsable du rendu des graphiques statistiques à l'aide de la bibliothèque recharts.
+// Il itère sur les datasets et, pour chaque dataset, rend un graphique (LineChart, BarChart ou AreaChart) en fonction du chartType spécifié dans les données.
+// Il inclut également des liens croisés vers les événements liés.
 import type { Dataset } from "@/lib/types";
 import {
   Area,

@@ -1,3 +1,5 @@
+// SiteFooter contient des liens vers les pages "Citer" et "À propos".
+
 import Link from "next/link";
 
 export function SiteFooter() {

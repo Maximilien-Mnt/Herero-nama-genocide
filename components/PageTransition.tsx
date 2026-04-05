@@ -1,5 +1,7 @@
 "use client";
 
+// PageTransition utilise framer-motion pour animer les transitions entre les pages, offrant une expérience utilisateur plus fluide.
+
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";

@@ -1,3 +1,5 @@
+// Un composant réutilisable pour afficher le fil d'Ariane, améliorant la navigation et l'orientation de l'utilisateur dans le site.
+
 import Link from "next/link";
 
 export interface Crumb {

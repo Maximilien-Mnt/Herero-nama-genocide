@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: "Citer le projet",
   description: "Modèle de citation pour le rapport écrit et la présentation devant jury.",

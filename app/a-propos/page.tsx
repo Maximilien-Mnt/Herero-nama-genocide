@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: "À propos",
   description: "Auteurs, périmètre du projet et mention des droits.",
@@ -60,5 +62,3 @@ export default function AProposPage() {
     </PageShell>
   );
 }
-
-// article classname = "prose"

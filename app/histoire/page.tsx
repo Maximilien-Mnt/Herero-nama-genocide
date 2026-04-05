@@ -4,6 +4,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
 import { historyChapters } from "@/lib/content";
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: "Histoire",
   description: "Chapitres structurés sur le contexte, le déroulement et les héritages du génocide.",

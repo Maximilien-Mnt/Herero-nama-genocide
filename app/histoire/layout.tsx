@@ -2,6 +2,8 @@ import Link from "next/link";
 import { historyChapters } from "@/lib/content";
 import { PageShell } from "@/components/PageShell";
 
+export const dynamic = 'force-static';
+
 export default function HistoireLayout({ children }: { children: React.ReactNode }) {
   return (
     <PageShell>

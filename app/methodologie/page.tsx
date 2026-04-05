@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: "Méthodologie",
   description: "Choix de sources, traitement des images sensibles et limites des chiffres présentés.",

@@ -5,15 +5,15 @@ import { PageShell } from "@/components/PageShell";
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: "À propos",
-  description: "Auteurs, périmètre du projet et mention des droits.",
+  title: "Über uns",
+  description: "Autoren, Projektumfang und Rechtshinweise.",
 };
 
 export default function AProposPage() {
   return (
     <PageShell>
-      <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "À propos" }]} />
-        <h1>Über den Projekt</h1>
+      <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Über uns" }]} />
+        <h1>Über das Projekt</h1>
         <h3>Autoren</h3>
         <p>
           <strong>Recherche, Redaktion, Archivbearbeitung, Synthese :</strong> Daniel Liberge
@@ -23,7 +23,7 @@ export default function AProposPage() {
         </p>
         <h3>Kontext</h3>
         <p>
-          Diese Website entstand im Rahmen eines SchulprojektsSie dient ausschließlich Bildungs- und Informationszwecken.
+          Diese Website entstand im Rahmen eines Schulprojekts. Sie dient ausschließlich Bildungs- und Informationszwecken.
         </p>
         <h3>Stack</h3>
         <ul>
@@ -36,9 +36,9 @@ export default function AProposPage() {
         </ul>
         <h3>Programmiersprachen</h3>
         <ul>
-          <li>TypeScript (95%)</li>
-          <li>JavaScript (4,5%)</li>
-          <li>MDX/JSON/Andere (0,5%)</li> 
+          <li>TypeScript (95 %)</li>
+          <li>JavaScript (4,5 %)</li>
+          <li>MDX/JSON/Sonstige (0,5 %)</li> 
         </ul>  
         <h1>Lizenz</h1>
         <p>MIT-Lizenz</p>

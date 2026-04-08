@@ -24,16 +24,16 @@ export function CrossLinksForEvent({ eventId }: { eventId: string }) {
     <aside
       className="card"
       style={{ marginTop: "1rem", fontSize: "0.9rem" }}
-      aria-label="Liens croisés"
+      aria-label="Querverweise"
     >
-      <strong style={{ display: "block", marginBottom: "0.5rem" }}>Explorer en lien</strong>
+      <strong style={{ display: "block", marginBottom: "0.5rem" }}>Weiter erkunden</strong>
       <ul style={{ margin: 0, paddingLeft: "1.1rem" }}>
         {ev.relatedPlaceIds.map((id) => {
           const p = getPlaceById(id);
           if (!p) return null;
           return (
             <li key={id}>
-              <Link href={`/carte?place=${id}`}>{p.name}</Link>
+              <Link href={`/karte?place=${id}`}>{p.name}</Link>
             </li>
           );
         })}
@@ -42,13 +42,13 @@ export function CrossLinksForEvent({ eventId }: { eventId: string }) {
           if (!d) return null;
           return (
             <li key={id}>
-              <Link href={`/documents#${id}`}>{d.title}</Link>
+              <Link href={`/dokumente#${id}`}>{d.title}</Link>
             </li>
           );
         })}
         {ev.relatedHistorySlugs.map((slug) => (
           <li key={slug}>
-            <Link href={`/histoire/${slug}`}>{chapterTitle(slug)}</Link>
+            <Link href={`/geschichte/${slug}`}>{chapterTitle(slug)}</Link>
           </li>
         ))}
         {ev.relatedDatasetIds.map((id) => {
@@ -56,7 +56,7 @@ export function CrossLinksForEvent({ eventId }: { eventId: string }) {
           if (!ds) return null;
           return (
             <li key={id}>
-              <Link href={`/statistiques#${id}`}>{ds.title}</Link>
+              <Link href={`/statistiken#${id}`}>{ds.title}</Link>
             </li>
           );
         })}
@@ -69,8 +69,8 @@ export function CrossLinksForPlace({ placeId }: { placeId: string }) {
   const place = getPlaceById(placeId);
   if (!place) return null;
   return (
-    <aside className="card" style={{ marginTop: "1rem", fontSize: "0.9rem" }} aria-label="Liens croisés">
-      <strong style={{ display: "block", marginBottom: "0.5rem" }}>Lié à ce lieu</strong>
+    <aside className="card" style={{ marginTop: "1rem", fontSize: "0.9rem" }} aria-label="Querverweise">
+      <strong style={{ display: "block", marginBottom: "0.5rem" }}>Mit diesem Ort verknüpft</strong>
       <ul style={{ margin: 0, paddingLeft: "1.1rem" }}>
         {place.relatedEventIds.map((id) => {
           const ev = getEventById(id);
@@ -90,8 +90,8 @@ export function CrossLinksForDocument({ documentId }: { documentId: string }) {
   const doc = getDocumentById(documentId);
   if (!doc) return null;
   return (
-    <aside className="card" style={{ marginTop: "0.75rem", fontSize: "0.85rem" }} aria-label="Liens croisés">
-      <strong style={{ display: "block", marginBottom: "0.35rem" }}>Voir aussi</strong>
+    <aside className="card" style={{ marginTop: "0.75rem", fontSize: "0.85rem" }} aria-label="Querverweise">
+      <strong style={{ display: "block", marginBottom: "0.35rem" }}>Siehe auch</strong>
       <ul style={{ margin: 0, paddingLeft: "1.1rem" }}>
         {doc.relatedEventIds.map((id) => {
           const ev = getEventById(id);
@@ -107,13 +107,13 @@ export function CrossLinksForDocument({ documentId }: { documentId: string }) {
           if (!p) return null;
           return (
             <li key={id}>
-              <Link href={`/carte?place=${id}`}>{p.name}</Link>
+              <Link href={`/karte?place=${id}`}>{p.name}</Link>
             </li>
           );
         })}
         {doc.relatedHistorySlugs.map((slug) => (
           <li key={slug}>
-            <Link href={`/histoire/${slug}`}>{chapterTitle(slug)}</Link>
+            <Link href={`/geschichte/${slug}`}>{chapterTitle(slug)}</Link>
           </li>
         ))}
       </ul>

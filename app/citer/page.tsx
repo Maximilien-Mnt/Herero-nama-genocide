@@ -1,3 +1,4 @@
+// 4
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -5,29 +6,29 @@ import { PageShell } from "@/components/PageShell";
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: "Citer le projet",
-  description: "Modèle de citation pour le rapport écrit et la présentation devant jury.",
+  title: "Zitierweise",
+  description: "Zitiervorlage für den schriftlichen Bericht und die Präsentation vor der Jury.",
 };
 
 export default function CiterPage() {
   return (
     <PageShell>
-      <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Comment citer" }]} />
+      <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Zitierweise" }]} />
       <article className="prose" style={{ maxWidth: "none" }}>
-        <h1>Comment citer ce site</h1>
-        <p>Exemple (adapter la date de consultation) :</p>
+        <h1>Wie zitiere ich diese Website?</h1>
+        <p>Beispiel (Datum des Abrufs anpassen):</p>
         <blockquote>
-          Daniel Liberge et Maximilien Montant, <em>Génocide des Héréros et des Namas (1904–1908)</em>,
-          site web pédagogique, [URL publique], consulté le [jj mois aaaa].
+          Daniel Liberge und Maximilien Montant, <em>Völkermord an den Herero und Nama (1904–1908)</em>,
+          pädagogische Website, [öffentliche URL], abgerufen am [TT Monat JJJJ].
         </blockquote>
         <p>
-          Pour citer une page précise, ajoutez le chemin (ex.{" "}
-          <code>/histoire/camps-extermination</code>
-          ) après l’URL.
+          Um eine bestimmte Seite zu zitieren, fügen Sie den Pfad (z. B.{" "}
+          <code>/geschichte/vernichtungslager</code>
+          ) nach der URL hinzu.
         </p>
         <p>
-          Pour les documents d’archive en ligne, citez toujours <strong>l’institution dépositaire</strong>{" "}
-          et le cote, même si la vignette apparaît sur ce site.
+          Bei Online-Archivdokumenten zitieren Sie stets die <strong>besitzende Institution</strong>{" "}
+          und die Signatur, auch wenn das Vorschaubild auf dieser Website erscheint.
         </p>
       </article>
     </PageShell>

@@ -1,3 +1,4 @@
+// 16
 "use client";
 
 // SiteHeader inclut la navigation principale et un menu burger pour les mobiles.
@@ -8,18 +9,18 @@ import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 
 const nav = [
-  { href: "/histoire", label: "Histoire" },
+  { href: "/geschichte", label: "Geschichte" },
   { href: "/chronologie", label: "Chronologie" },
-  { href: "/statistiques", label: "Statistiques" },
-  { href: "/documents", label: "Documents" },
-  { href: "/carte", label: "Carte" },
-  { href: "/ressources", label: "Ressources" },
-  { href: "/methodologie", label: "Methodologie" },
+  { href: "/statistiken", label: "Statistiken" },
+  { href: "/dokumente", label: "Dokumente" },
+  { href: "/karte", label: "Karte" },
+  { href: "/ressourcen", label: "Ressourcen" },
+  { href: "/methodik", label: "Methodik" },
 ];
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
-  if (href === "/histoire") return pathname.startsWith("/histoire");
+  if (href === "/geschichte") return pathname.startsWith("/geschichte");
   return pathname === href;
 }
 
@@ -41,12 +42,12 @@ export function SiteHeader() {
   const isMobile = useMediaQuery("(max-width: 860px)");
   const drawerRef = useRef<HTMLDivElement>(null);
 
-  // Close on route change
+  // Schließen bei Routenwechsel
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Close on Escape key
+  // Schließen mit Escape-Taste
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,7 +57,7 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open]);
 
-  // Prevent body scroll when menu is open
+  // Body-Scroll verhindern, wenn Menü geöffnet ist
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -68,7 +69,7 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  // Close when clicking outside the drawer content
+  // Schließen bei Klick außerhalb des Drawer-Inhalts
   useEffect(() => {
     if (!open) return;
     const handleClickOutside = (e: MouseEvent) => {
@@ -120,12 +121,12 @@ export function SiteHeader() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/genocide-herero+nama.png" alt="" width={32} height={32} />
-          <span style={{ whiteSpace: "nowrap" }}>Héréro &amp; Nama — 1904–1908</span>
+          <span style={{ whiteSpace: "nowrap" }}>Herero &amp; Nama — 1904–1908</span>
         </Link>
 
-        {/* Desktop navigation (visible only on non-mobile) */}
+        {/* Desktop-Navigation (nur bei Nicht-Mobilgeräten sichtbar) */}
         {!isMobile && (
-          <nav aria-label="Navigation principale">
+          <nav aria-label="Hauptnavigation">
             <ul
               style={{
                 display: "flex",
@@ -169,11 +170,11 @@ export function SiteHeader() {
           </nav>
         )}
 
-        {/* Mobile burger button (visible only on mobile) */}
+        {/* Mobiler Burger-Button (nur auf Mobilgeräten sichtbar) */}
         {isMobile && (
           <button
             type="button"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? "Menü schließen" : "Menü öffnen"}
             aria-expanded={open}
             onClick={toggleMenu}
             style={{
@@ -205,7 +206,7 @@ export function SiteHeader() {
         )}
       </div>
 
-      {/* Mobile drawer – rendered via portal to avoid stacking context issues */}
+      {/* Mobiler Drawer – mittels Portal gerendert, um Stacking-Kontext-Probleme zu vermeiden */}
       {isMobile &&
         open &&
         createPortal(
@@ -262,7 +263,7 @@ export function SiteHeader() {
                 </button>
               </div>
 
-              <nav aria-label="Navigation mobile" style={{ flex: 1, overflowY: "auto" }}>
+              <nav aria-label="Mobile Navigation" style={{ flex: 1, overflowY: "auto" }}>
                 <ul
                   style={{
                     listStyle: "none",

@@ -1,69 +1,69 @@
 [
   {
     "id": "ds-pop-proxy",
-    "title": "Population : illustration pédagogique (valeurs indicatives)",
-    "unit": "milliers (schéma)",
-    "sourceCitation": "Les ordres de grandeur varient selon les estimateurs ; substituer par tableau sourcé (Ressources).",
-    "notes": "Données de démonstration — à remplacer par série historiographique validée.",
+    "title": "Bevölkerung: didaktische Illustration (Richtwerte)",
+    "unit": "Tausend (Schema)",
+    "sourceCitation": "Die Größenordnungen variieren je nach Schätzer; durch belegte Tabelle ersetzen (Ressourcen).",
+    "notes": "Demonstrationsdaten — durch validierte historiografische Reihe zu ersetzen.",
     "chartType": "bar",
     "relatedEventIds": ["evt-002"],
     "points": [
-      { "label": "Avant 1904 (schéma)", "value": 85, "note": "placeholder" },
-      { "label": "Estimation post-violences (schéma)", "value": 25, "note": "fourchette large" }
+      { "label": "Vor 1904 (Schema)", "value": 85, "note": "Platzhalter" },
+      { "label": "Geschätzte Nach-Gewalt (Schema)", "value": 25, "note": "große Spannweite" }
     ]
   },
   {
     "id": "ds-mortality-proxy",
-    "title": "Indice de mortalité (schéma — camps / refoulement)",
-    "unit": "indice relatif 0–100",
-    "sourceCitation": "Proxy visuel ; ne pas lire comme dénombrement exact.",
-    "notes": "Visualisation pédagogique des phases d'intensité documentée.",
+    "title": "Sterblichkeitsindex (Schema — Lager / Vertreibung)",
+    "unit": "relativer Index 0–100",
+    "sourceCitation": "Visueller Platzhalter; nicht als exakte Zählung lesen.",
+    "notes": "Didaktische Visualisierung dokumentierter Intensitätsphasen.",
     "chartType": "area",
     "relatedEventIds": ["evt-007", "evt-010", "evt-020"],
     "points": [
-      { "label": "1904 T3", "value": 30 },
-      { "label": "1904 T4", "value": 70 },
-      { "label": "1905 T1", "value": 85 },
-      { "label": "1905 T3", "value": 60 },
+      { "label": "1904 Q3", "value": 30 },
+      { "label": "1904 Q4", "value": 70 },
+      { "label": "1905 Q1", "value": 85 },
+      { "label": "1905 Q3", "value": 60 },
       { "label": "1906", "value": 40 }
     ]
   },
   {
     "id": "ds-camp-proxy",
-    "title": "Effectifs carcéraux rapportés (schéma)",
-    "unit": "personnes (schéma)",
-    "sourceCitation": "Compiler à partir des travaux listés en Ressources (écarts importants).",
+    "title": "Gemeldete Gefangenenzahlen (Schema)",
+    "unit": "Personen (Schema)",
+    "sourceCitation": "Aus den unter Ressourcen aufgeführten Arbeiten zusammenstellen (große Abweichungen).",
     "chartType": "line",
     "relatedEventIds": ["evt-010"],
     "points": [
-      { "label": "1904 fin", "value": 1200 },
-      { "label": "1905 milieu", "value": 3500 },
+      { "label": "Ende 1904", "value": 1200 },
+      { "label": "Mitte 1905", "value": 3500 },
       { "label": "1906", "value": 2800 }
     ]
   },
   {
     "id": "ds-memory-polls",
-    "title": "Reconnaissance internationale (jalons symboliques 0–100)",
-    "unit": "score illustratif",
-    "sourceCitation": "Construction didactique, pas un sondage réel.",
+    "title": "Internationale Anerkennung (symbolische Meilensteine 0–100)",
+    "unit": "Illustrativer Score",
+    "sourceCitation": "Didaktische Konstruktion, keine echte Umfrage.",
     "chartType": "bar",
     "relatedEventIds": ["evt-017", "evt-019"],
     "points": [
-      { "label": "2004 commémorations", "value": 35 },
+      { "label": "2004 Gedenkfeiern", "value": 35 },
       { "label": "2021 Bundestag", "value": 75 }
     ]
   },
   {
     "id": "ds-territory-loss",
-    "title": "Perte de contrôle territorial héréro (schéma)",
-    "unit": "% stylisé",
-    "sourceCitation": "Schéma d'accompagnement cartographique — non métrique au sol.",
+    "title": "Verlust territorialer Kontrolle der Herero (Schema)",
+    "unit": "% stilisiert",
+    "sourceCitation": "Kartografisches Begleitschema — keine metrische Bodenmessung.",
     "chartType": "line",
     "relatedEventIds": ["evt-005", "evt-007"],
     "points": [
       { "label": "Jan 1904", "value": 70 },
-      { "label": "Juin 1904", "value": 35 },
-      { "label": "Oct 1904", "value": 10 }
+      { "label": "Juni 1904", "value": 35 },
+      { "label": "Okt 1904", "value": 10 }
     ]
   }
 ]

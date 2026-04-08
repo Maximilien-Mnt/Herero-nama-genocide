@@ -1,3 +1,4 @@
+// 9
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -5,8 +6,8 @@ import Chapter from "./chapter.mdx";
 import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayout";
 
 export const metadata: Metadata = {
-  title: "Mémoire et réparation",
-  description: "Reconnaissance diplomatique, débats sur réparations et lecture critique des indicateurs.",
+  title: "Erinnerung und Wiedergutmachung",
+  description: "Diplomatische Anerkennung, Debatten über Reparationen und kritische Lektüre von Indikatoren.",
 };
 
 export default function Page() {
@@ -14,14 +15,14 @@ export default function Page() {
     <PageShell>
       <Breadcrumb
         items={[
-          { href: "/", label: "Accueil" },
-          { href: "/histoire", label: "Histoire" },
-          { label: "Mémoire et réparation" },
+          { href: "/", label: "Startseite" },
+          { href: "/geschichte", label: "Geschichte" },
+          { label: "Erinnerung und Wiedergutmachung" },
         ]}
       />
       <HistoireChapterLayout
         slug="memoire-reparation"
-        title="Mémoire, reconnaissance et débats internationaux"
+        title="Erinnerung, Anerkennung und internationale Debatten"
       >
         <Chapter />
       </HistoireChapterLayout>

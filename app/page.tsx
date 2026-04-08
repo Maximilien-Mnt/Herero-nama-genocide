@@ -1,43 +1,43 @@
+// 15
 import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 
 const sections = [
   {
-    href: "/histoire",
-    title: "Histoire",
-    text: "Récit structuré et contextualisé : sociétés, colonisation, violence de masse, héritages.",
+    href: "/geschichte",
+    title: "Geschichte",
+    text: "Strukturierte und kontextualisierte Erzählung: Gesellschaften, Kolonisation, Massengewalt, Erbe.",
   },
   {
     href: "/chronologie",
     title: "Chronologie",
-    text: "Frise interactive filtrable (Héréros, Nama, administration, mémoire…).",
+    text: "Interaktive, filterbare Zeitleiste (Herero, Nama, Verwaltung, Erinnerung…).",
   },
   {
-    href: "/statistiques",
-    title: "Statistiques",
-    text: "Graphiques accompagnés de sources et mises en garde sur les estimations.",
+    href: "/statistiken",
+    title: "Statistiken",
+    text: "Diagramme mit Quellenangaben und Warnhinweisen zu Schätzungen.",
   },
   {
-    href: "/documents",
-    title: "Documents",
-    text: "Corpus de sources présentées en fiches (à compléter par vos archives autorisées).",
+    href: "/dokumente",
+    title: "Dokumente",
+    text: "Quellenkorpus in Karteikartenform (durch Ihre genehmigten Archive zu ergänzen).",
   },
   {
-    href: "/carte",
-    title: "Carte",
-    text: "Lieux clés sur fond OpenStreetMap, avec filtre par période et liens transverses.",
+    href: "/karte",
+    title: "Karte",
+    text: "Schlüsselorte auf OpenStreetMap-Hintergrund, mit Zeitfilter und Querverweisen.",
   },
   {
-    href: "/ressources",
-    title: "Ressources",
-    text: "Bibliographie, archives et prolongements pour aller plus loin.",
+    href: "/ressourcen",
+    title: "Ressourcen",
+    text: "Bibliografie, Archive und Vertiefungsmöglichkeiten.",
   },
 ];
 
 export default function HomePage() {
   return (
     <PageShell>
-      {/* Remove maxWidth from the warning note */}
       <p
         style={{
           padding: "1rem 1.15rem",
@@ -49,9 +49,7 @@ export default function HomePage() {
         }}
         role="note"
       >
-        <strong>Avertissement :</strong> ce site traite de violence de masse, de déportation et de
-        captivité. Certaines images ou descriptions peuvent être perturbantes ; elles sont traitées
-        avec des encadrés méthodologiques et des crédits rigoureux.
+        <strong>Warnhinweis:</strong> Diese Website behandelt Massengewalt, Deportation und Gefangenschaft. Einige Bilder oder Beschreibungen können verstörend wirken; sie werden mit methodischen Einordnungen und genauen Quellenangaben versehen.
       </p>
 
       <header style={{ marginTop: "2rem", marginBottom: "1.5rem" }}>
@@ -64,12 +62,10 @@ export default function HomePage() {
             margin: 0,
           }}
         >
-          Génocide des Héréros et des Namas
+          Völkermord an den Herero und Nama
         </h1>
-        {/* Remove maxWidth from this paragraph */}
         <p style={{ color: "var(--muted)", marginBottom: 0 }}>
-          Projet scolaire pensé pour un jury : navigation autonome, textes explicites, sources
-          identifiables et liens entre les sections (événements, lieux, documents, graphiques).
+          Schulprojekt, konzipiert für eine Jury: eigenständige Navigation, explizite Texte, identifizierbare Quellen und Verknüpfungen zwischen den Abschnitten (Ereignisse, Orte, Dokumente, Diagramme).
         </p>
       </header>
 
@@ -84,28 +80,25 @@ export default function HomePage() {
             margin: 0,
           }}
         >
-          Comment lire ce site sans guide oral
+          Wie man diese Website ohne mündliche Führung liest
         </h2>
-        {/* Remove maxWidth from the ordered list */}
         <ol style={{ color: "var(--text-muted)", marginTop: "1rem" }}>
           <li>
-            Commencer par <Link href="/histoire/contexte">Histoire — Contexte colonial</Link> ou par
-            la <Link href="/chronologie">Chronologie</Link> si vous préférez une logique événementielle.
+            Beginnen Sie mit <Link href="/geschichte/kontext">Geschichte — Kolonialer Kontext</Link> oder mit
+            der <Link href="/chronologie">Chronologie</Link>, wenn Sie einen ereignisorientierten Zugang bevorzugen.
           </li>
           <li>
-            Utiliser la <Link href="/carte">Carte</Link> pour ancrer géographiquement les dates et les
-            articles d’histoire.
+            Nutzen Sie die <Link href="/karte">Karte</Link>, um Daten und historische Artikel geografisch zu verorten.
           </li>
           <li>
-            Vérifier les <Link href="/methodologie">méthodes et limites des chiffres</Link> avant
-            d’interpréter les graphiques.
+            Prüfen Sie die <Link href="/methodik">Methoden und Grenzen der Zahlen</Link>, bevor Sie die Diagramme interpretieren.
           </li>
         </ol>
       </section>
 
       <div
         className="home-nav-grid"
-        aria-label="Navigation principale"
+        aria-label="Hauptnavigation"
       >
         {sections.map((s) => (
           <Link

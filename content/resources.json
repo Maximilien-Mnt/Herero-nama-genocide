@@ -2,11 +2,11 @@
   {
     "id": "res-001",
     "kind": "book",
-    "authors": "Jürgen Zimmerer, Joachim Zeller (dir.)",
+    "authors": "Jürgen Zimmerer, Joachim Zeller (Hrsg.)",
     "title": "Völkermord in Deutsch-Südwestafrika: Der Kolonialkrieg (1904–1908) in Namibia und seine Folgen",
     "year": "2003",
     "url": "",
-    "notes": "Recueil fondateur pour la recherche en langue allemande."
+    "notes": "Grundlegender Sammelband für die deutschsprachige Forschung."
   },
   {
     "id": "res-002",
@@ -15,7 +15,7 @@
     "title": "The Kaiser's Holocaust: Germany's Forgotten Genocide",
     "year": "2010",
     "url": "",
-    "notes": "Synthèse accessible en anglais ; débats sur le titre et le cadre juridique."
+    "notes": "Zugängliche Synthese auf Englisch; Debatten über Titel und Rechtsrahmen."
   },
   {
     "id": "res-003",
@@ -24,51 +24,51 @@
     "title": "Absolute Destruction: Military Culture and the Practices of War in Imperial Germany",
     "year": "2005",
     "url": "",
-    "notes": "Culture militaire prussienne et rationalités de l'occupation."
+    "notes": "Preußische Militärkultur und Besatzungsrationalitäten."
   },
   {
     "id": "res-004",
     "kind": "article",
     "authors": "Reinhart Kössler",
-    "title": "Genocide and the Politics of Memory in Namibia — sélection d'articles",
+    "title": "Genocide and the Politics of Memory in Namibia — Auswahl von Artikeln",
     "year": "2000–2020",
     "url": "",
-    "notes": "Politique mémorielle et héritages."
+    "notes": "Erinnerungspolitik und Erbe."
   },
   {
     "id": "res-005",
     "kind": "archive",
     "authors": "Bundesarchiv",
-    "title": "Fonds et inventaires coloniaux (Afrique)",
+    "title": "Kolonialbestände und Findmittel (Afrika)",
     "year": "",
     "url": "https://www.bundesarchiv.de/",
-    "notes": "Données d'archives soumises à réglementation."
+    "notes": "Archivdaten unterliegen Bestimmungen."
   },
   {
     "id": "res-006",
     "kind": "website",
-    "authors": "Mémorial en Namibie / institutions partenaires",
-    "title": "Sites institutionnels (musea, centres)",
+    "authors": "Mahnmal in Namibia / Partnerinstitutionen",
+    "title": "Institutionelle Websites (Museen, Zentren)",
     "year": "",
     "url": "",
-    "notes": "Compléter avec URLs officielles."
+    "notes": "Ergänzen Sie mit offiziellen URLs."
   },
   {
     "id": "res-007",
     "kind": "film",
-    "authors": "Divers réalisateurs",
-    "title": "Documentaires et témoins filmés (liste à affiner)",
+    "authors": "Verschiedene Regisseure",
+    "title": "Dokumentarfilme und gefilmte Zeitzeugen (Liste zu präzisieren)",
     "year": "2004–",
     "url": "",
-    "notes": "Vérifier droits de projection scolaire."
+    "notes": "Vorführrechte für Schulen prüfen."
   },
   {
     "id": "res-008",
     "kind": "article",
-    "authors": "ONU / mécanismes de droits humains",
-    "title": "Rapports sur mémoire et réparation (repères)",
+    "authors": "UNO / Menschenrechtsmechanismen",
+    "title": "Berichte zu Erinnerung und Wiedergutmachung (Orientierungspunkte)",
     "year": "",
     "url": "https://www.ohchr.org/",
-    "notes": "Cadre international des droits humains."
+    "notes": "Internationaler Menschenrechtsrahmen."
   }
 ]

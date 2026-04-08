@@ -1,3 +1,4 @@
+// 7
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -5,8 +6,8 @@ import Chapter from "./chapter.mdx";
 import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayout";
 
 export const metadata: Metadata = {
-  title: "Camps et exile",
-  description: "Refoulement, camps côtiers, ordre de von Trotha, sensibilité des sources visuelles.",
+  title: "Lager und Exil",
+  description: "Vertreibung, Küstenlager, von Trotha-Befehl, sensible Bildquellen.",
 };
 
 export default function Page() {
@@ -14,14 +15,14 @@ export default function Page() {
     <PageShell>
       <Breadcrumb
         items={[
-          { href: "/", label: "Accueil" },
-          { href: "/histoire", label: "Histoire" },
-          { label: "Camps et exile" },
+          { href: "/", label: "Startseite" },
+          { href: "/geschichte", label: "Geschichte" },
+          { label: "Lager und Exil" },
         ]}
       />
       <HistoireChapterLayout
         slug="camps-extermination"
-        title="Guerre, ordres de refoulement et camps"
+        title="Krieg, Vertreibungsbefehle und Lager"
       >
         <Chapter />
       </HistoireChapterLayout>

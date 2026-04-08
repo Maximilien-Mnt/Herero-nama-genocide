@@ -1,3 +1,4 @@
+// 13
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -5,33 +6,30 @@ import { PageShell } from "@/components/PageShell";
 import { getResources } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Ressources",
-  description: "Bibliographie sélectionnée, archives et prolongements multimédia.",
-  openGraph: { title: "Ressources — Génocide héréro et nama" },
+  title: "Ressourcen",
+  description: "Ausgewählte Bibliografie, Archive und multimediale Vertiefungen.",
+  openGraph: { title: "Ressourcen — Völkermord an den Herero und Nama" },
 };
 
 const kindLabel = {
-  book: "Ouvrage",
-  article: "Article / chapitre",
-  film: "Film / vidéo",
-  website: "Site web",
-  archive: "Archive",
-  other: "Autre",
+  book: "Monografie",
+  article: "Artikel / Kapitel",
+  film: "Film / Video",
+  website: "Website",
+  archive: "Archiv",
+  other: "Sonstiges",
 } as const;
 
 export default function RessourcesPage() {
   const resources = getResources();
   return (
     <PageShell>
-      <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Ressources" }]} />
-      <h1 style={{ fontFamily: "var(--font-serif)" }}>Ressources et bibliographie</h1>
-      {/* Remove maxWidth from the paragraph */}
+      <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Ressourcen" }]} />
+      <h1 style={{ fontFamily: "var(--font-serif)" }}>Ressourcen und Bibliografie</h1>
       <p style={{ color: "var(--muted)" }}>
-        Liste de départ validée par l’équipe pédagogique : compléter les URLs institutionnelles,
-        préciser les éditions et noter les traductions disponibles. Pour la méthode de citation, voir{" "}
-        <Link href="/citer">Comment citer ce projet</Link>.
+        Ausgangsliste, vom pädagogischen Team validiert: Ergänzen Sie institutionelle URLs, präzisieren Sie Ausgaben und vermerken Sie verfügbare Übersetzungen. Zur Zitierweise siehe{" "}
+        <Link href="/zitierweise">Wie zitiere ich dieses Projekt?</Link>.
       </p>
-      {/* Remove maxWidth from the ordered list */}
       <ol style={{ paddingLeft: "1.2rem" }}>
         {resources.map((r) => (
           <li key={r.id} style={{ marginBottom: "1rem" }}>
@@ -41,7 +39,7 @@ export default function RessourcesPage() {
             {r.year ? <>, {r.year}.</> : "."}{" "}
             {r.url ? (
               <a href={r.url} rel="noopener noreferrer" target="_blank">
-                Lien
+                Link
               </a>
             ) : null}
             {r.notes ? (

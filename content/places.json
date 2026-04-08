@@ -1,82 +1,82 @@
 [
   {
     "id": "place-windhoek",
-    "name": "Windhoek (centre colonial et administratif)",
+    "name": "Windhoek (koloniales und administratives Zentrum)",
     "lat": -22.5597,
     "lng": 17.0832,
     "period": "after",
-    "yearLabel": "1900–aujourd'hui",
-    "description": "Pivot administratif de la colonie puis capitale namibienne ; lieu de politiques foncières et mémorielles.",
+    "yearLabel": "1900–heute",
+    "description": "Administrativer Dreh- und Angelpunkt der Kolonie, dann namibische Hauptstadt; Ort von Land- und Erinnerungspolitik.",
     "relatedEventIds": ["evt-002", "evt-012", "evt-014", "evt-016", "evt-017"]
   },
   {
     "id": "place-okahandja",
-    "name": "Okahandja et hinterland héréro",
+    "name": "Okahandja und Herero-Hinterland",
     "lat": -21.9833,
     "lng": 16.9167,
     "period": "1904-1908",
     "yearLabel": "1903–1904",
-    "description": "Centre de gravité politique héréro avant l'escalade militaire ; proximité des routes de mobilisation.",
+    "description": "Politisches Gravitationszentrum der Herero vor der militärischen Eskalation; Nähe zu Mobilisierungsrouten.",
     "relatedEventIds": ["evt-003", "evt-004"]
   },
   {
     "id": "place-waterberg",
-    "name": "Plateau du Waterberg",
+    "name": "Waterberg-Plateau",
     "lat": -20.45,
     "lng": 17.25,
     "period": "1904-1908",
     "yearLabel": "1904",
-    "description": "Théâtre d'une bataille décisive ; fuite des populations vers l'est et le désert.",
+    "description": "Schauplatz einer entscheidenden Schlacht; Flucht der Bevölkerung nach Osten und in die Wüste.",
     "relatedEventIds": ["evt-005"]
   },
   {
     "id": "place-omaheke",
-    "name": "Omaheke / franges du Kalahari",
+    "name": "Omaheke / Kalahari-Randgebiete",
     "lat": -21.2,
     "lng": 19.5,
     "period": "1904-1908",
     "yearLabel": "1904–1905",
-    "description": "Zones de refoulement où l'accès à l'eau devient un levier de mort par exclusion.",
+    "description": "Vertreibungszonen, in denen der Zugang zu Wasser zum Hebel des Todes durch Ausschluss wird.",
     "relatedEventIds": ["evt-007"]
   },
   {
     "id": "place-luderitz",
-    "name": "Lüderitz (côte atlantique)",
+    "name": "Lüderitz (Atlantikküste)",
     "lat": -26.6481,
     "lng": 15.1539,
     "period": "1904-1908",
     "yearLabel": "1904–1908",
-    "description": "Port et point de transit vers des sites de détention côtiers.",
+    "description": "Hafen und Durchgangspunkt zu küstennahen Haftstätten.",
     "relatedEventIds": ["evt-010"]
   },
   {
     "id": "place-shark-island",
-    "name": "Shark Island (îlot près de Lüderitz)",
+    "name": "Shark Island (Insel bei Lüderitz)",
     "lat": -26.6342,
     "lng": 15.1592,
     "period": "1904-1908",
     "yearLabel": "1904–1908",
-    "description": "Camp d'internement littoral ; mortalité élevée selon de multiples témoignages secondaires.",
+    "description": "Küsteninternierungslager; laut mehreren Sekundärzeugnissen hohe Sterblichkeit.",
     "relatedEventIds": ["evt-010", "evt-020"]
   },
   {
     "id": "place-keetmanshoop",
-    "name": "Keetmanshoop (sud)",
+    "name": "Keetmanshoop (Süden)",
     "lat": -26.5833,
     "lng": 18.15,
     "period": "1904-1908",
     "yearLabel": "1904–1906",
-    "description": "Secteur nama et routes de harcèlement contre les lignes coloniales.",
+    "description": "Nama-Sektor und Routen des Kleinkriegs gegen Koloniallinien.",
     "relatedEventIds": ["evt-008", "evt-009"]
   },
   {
     "id": "place-ai-ais",
-    "name": "Ai-Ais / sud marécageux",
+    "name": "Ai-Ais / sumpfiger Süden",
     "lat": -27.9667,
     "lng": 17.55,
     "period": "1904-1908",
     "yearLabel": "1905",
-    "description": "Lieux de reddition et de dispersal forcée Nama dans les phases tardives de la guerre.",
+    "description": "Orte der Kapitulation und erzwungenen Zerstreuung der Nama in späteren Kriegsphasen.",
     "relatedEventIds": ["evt-009"]
   },
   {
@@ -86,7 +86,7 @@
     "lng": 14.5333,
     "period": "1904-1908",
     "yearLabel": "1904–1908",
-    "description": "Nœud logistique colonial et transit des prisonniers vers la côte.",
+    "description": "Koloniale Logistikdrehscheibe und Durchgangsort für Gefangene zur Küste.",
     "relatedEventIds": ["evt-010"]
   }
 ]

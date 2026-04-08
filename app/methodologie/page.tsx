@@ -1,3 +1,4 @@
+// 12
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -6,53 +7,48 @@ import { PageShell } from "@/components/PageShell";
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: "Méthodologie",
-  description: "Choix de sources, traitement des images sensibles et limites des chiffres présentés.",
-  openGraph: { title: "Méthodologie — Projet Héréro & Nama" },
+  title: "Methodik",
+  description: "Quellenauswahl, Umgang mit sensiblen Bildern und Grenzen der präsentierten Zahlen.",
+  openGraph: { title: "Methodik — Projekt Herero & Nama" },
 };
 
 export default function MethodologiePage() {
   return (
     <PageShell>
-      <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Méthodologie" }]} />
+      <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Methodik" }]} />
       <article className="prose" style={{ maxWidth: "none" }}>
-        <h1>Méthodologie</h1>
+        <h1>Methodik</h1>
         <p>
-          Ce site vise une <strong>autonomie complète pour le jury</strong> : chaque section rappelle
-          son objet dès l’introduction et renvoie explicitement aux{" "}
-          <Link href="/ressources">Ressources</Link>. Les auteurs distinguent :
+          Diese Website strebt eine <strong>vollständige Autonomie für die Jury</strong> an: Jeder Abschnitt erinnert von der Einleitung an an seinen Zweck und verweist explizit auf die{" "}
+          <Link href="/ressourcen">Ressourcen</Link>. Die Autoren unterscheiden:
         </p>
         <ul>
           <li>
-            <strong>Faits établis</strong> par le consensus historiographique (avec débats signalés) ;
+            <strong>Gesicherte Fakten</strong> gemäß historiografischem Konsens (mit Hinweis auf Debatten);
           </li>
           <li>
-            <strong>Éléments contestés</strong> (chiffres de mortalité, interprétations juridiques) ;
+            <strong>Umstrittene Elemente</strong> (Sterblichkeitszahlen, juristische Interpretationen);
           </li>
           <li>
-            <strong>Schémas pédagogiques</strong> dans Statistiques, clairement étiquetés comme tels.
+            <strong>Didaktische Schemata</strong> im Statistikbereich, die klar als solche gekennzeichnet sind.
           </li>
         </ul>
-        <h2>Traitement des sources visuelles</h2>
+        <h2>Umgang mit visuellen Quellen</h2>
         <p>
-          Les archives coloniales et la presse produisent des images à charge idéologique élevée.
-          Lorsque les reproductions sont autorisées, elles sont accompagnées d’un crédit, d’une date
-          approximative et d’un commentaire de contextualisation. Les vignettes marquées sensibles sont
-          floutées jusqu’à ouverture dans la visionneuse — ajuster en fonction des protocoles de votre
-          établissement.
+          Kolonialarchive und Presse erzeugen Bilder mit hoher ideologischer Aufladung.
+          Wenn Reproduktionen erlaubt sind, werden sie mit Quellenangabe, ungefährem Datum und einem kontextualisierenden Kommentar versehen. Als sensibel gekennzeichnete Vorschaubilder sind unscharf, bis sie im Betrachter geöffnet werden – passen Sie dies entsprechend den Protokollen Ihrer Einrichtung an.
         </p>
-        <h2>Modèle de données et traçabilité</h2>
+        <h2>Datenmodell und Nachvollziehbarkeit</h2>
         <p>
-          Les fichiers JSON du dossier <code>content/</code> exposent des identifiants stables (
-          <code>evt-…</code>, <code>place-…</code>, <code>doc-…</code>) pour relier chronologie,
-          cartes et documents. Versionner le dépôt Git du projet et consulter le fichier{" "}
-          <code>docs/CONTENT_MODEL.md</code> dans le workspace.
+          Die JSON-Dateien im Ordner <code>content/</code> enthalten stabile Kennungen (
+          <code>evt-…</code>, <code>place-…</code>, <code>doc-…</code>), um Chronologie,
+          Karten und Dokumente miteinander zu verknüpfen. Versionieren Sie das Git-Repository des Projekts und konsultieren Sie die Datei{" "}
+          <code>docs/CONTENT_MODEL.md</code> im Workspace.
         </p>
-        <h2>Collaboration Notion → site</h2>
+        <h2>Zusammenarbeit Notion → Website</h2>
         <p>
-          Les brouillons longs sont rédigés dans Notion, puis transférés en MDX ou JSON après relecture.
-          Le fichier <code>docs/NOTION_WORKFLOW.md</code> décrit la checklist des métadonnées
-          minimales pour chaque nouveau document (crédit, licence, date, identifiants croisés).
+          Längere Entwürfe werden in Notion verfasst und nach Überprüfung in MDX oder JSON übertragen.
+          Die Datei <code>docs/NOTION_WORKFLOW.md</code> beschreibt die Checkliste der minimalen Metadaten für jedes neue Dokument (Quellenangabe, Lizenz, Datum, Querverweise).
         </p>
       </article>
     </PageShell>

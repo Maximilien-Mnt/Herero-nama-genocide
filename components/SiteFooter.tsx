@@ -24,11 +24,11 @@ export function SiteFooter() {
         }}
       >
         <p style={{ margin: 0 }}>
-          Sources &amp; citations : <Link href="/citer">Comment citer</Link>.
+          Quellen &amp; Zitate: <Link href="/zitierweise">Zitierweise</Link>.
         </p>
         <p style={{ margin: 0 }}>
-          À usage éducatif. Voir <Link href="/a-propos">mentions de droits</Link> et informations
-          sur les contenus externes.
+          Zu Bildungszwecken. Siehe <Link href="/ueber-uns">Rechtshinweise</Link> und Informationen
+          zu externen Inhalten.
         </p>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-// 3
+// 3 (app/chronologie/page.tsx) – unverändert
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";

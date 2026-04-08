@@ -1,3 +1,4 @@
+// 17 (components/SiteFooter.tsx)
 // SiteFooter contient des liens vers les pages "Citer" et "À propos".
 
 import Link from "next/link";
@@ -24,10 +25,10 @@ export function SiteFooter() {
         }}
       >
         <p style={{ margin: 0 }}>
-          Quellen &amp; Zitate: <Link href="/zitierweise">Zitierweise</Link>.
+          Quellen &amp; Zitate: <Link href="/citer">Zitierweise</Link>.
         </p>
         <p style={{ margin: 0 }}>
-          Zu Bildungszwecken. Siehe <Link href="/ueber-uns">Rechtshinweise</Link> und Informationen
+          Zu Bildungszwecken. Siehe <Link href="/a-propos">Rechtshinweise</Link> und Informationen
           zu externen Inhalten.
         </p>
       </div>

@@ -1,4 +1,4 @@
-// 11
+// 11 (app/histoire/page.tsx)
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -25,7 +25,7 @@ export default function HistoireIndexPage() {
       <ul style={{ maxWidth: "42rem" }}>
         {historyChapters.map((c) => (
           <li key={c.slug} style={{ marginBottom: "0.6rem" }}>
-            <Link href={`/geschichte/${c.slug}`}>{c.title}</Link>
+            <Link href={`/histoire/${c.slug}`}>{c.title}</Link>
           </li>
         ))}
       </ul>

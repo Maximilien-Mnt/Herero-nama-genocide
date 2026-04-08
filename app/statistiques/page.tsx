@@ -1,4 +1,4 @@
-// 14
+// 14 (app/statistiques/page.tsx)
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -20,7 +20,7 @@ export default function StatistiquesPage() {
       </h1>
 
       <p role="note" className="card" style={{ marginTop: "1rem", borderRadius: "var(--radius-md)" }}>
-        <strong>Hinweis:</strong> Die verschiedenen Diagramme zeigen Werte, die hauptsächlich aus externen Quellen stammen oder aus externen Daten berechnet wurden. Es kann sich daher um Näherungswerte handeln. Siehe auch <a href="/methodik">Methodik</a> für weitere Informationen.
+        <strong>Hinweis:</strong> Die verschiedenen Diagramme zeigen Werte, die hauptsächlich aus externen Quellen stammen oder aus externen Daten berechnet wurden. Es kann sich daher um Näherungswerte handeln. Siehe auch <a href="/methodologie">Methodik</a> für weitere Informationen.
       </p>
       <StatsCharts datasets={getDatasets()} />
     </PageShell>

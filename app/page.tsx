@@ -1,10 +1,10 @@
-// 15
+// 15 (app/page.tsx) – Startseite
 import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 
 const sections = [
   {
-    href: "/geschichte",
+    href: "/histoire",
     title: "Geschichte",
     text: "Strukturierte und kontextualisierte Erzählung: Gesellschaften, Kolonisation, Massengewalt, Erbe.",
   },
@@ -14,22 +14,22 @@ const sections = [
     text: "Interaktive, filterbare Zeitleiste (Herero, Nama, Verwaltung, Erinnerung…).",
   },
   {
-    href: "/statistiken",
+    href: "/statistiques",
     title: "Statistiken",
     text: "Diagramme mit Quellenangaben und Warnhinweisen zu Schätzungen.",
   },
   {
-    href: "/dokumente",
+    href: "/documents",
     title: "Dokumente",
     text: "Quellenkorpus in Karteikartenform (durch Ihre genehmigten Archive zu ergänzen).",
   },
   {
-    href: "/karte",
+    href: "/carte",
     title: "Karte",
     text: "Schlüsselorte auf OpenStreetMap-Hintergrund, mit Zeitfilter und Querverweisen.",
   },
   {
-    href: "/ressourcen",
+    href: "/ressources",
     title: "Ressourcen",
     text: "Bibliografie, Archive und Vertiefungsmöglichkeiten.",
   },
@@ -84,14 +84,14 @@ export default function HomePage() {
         </h2>
         <ol style={{ color: "var(--text-muted)", marginTop: "1rem" }}>
           <li>
-            Beginnen Sie mit <Link href="/geschichte/kontext">Geschichte — Kolonialer Kontext</Link> oder mit
+            Beginnen Sie mit <Link href="/histoire/contexte">Geschichte — Kolonialer Kontext</Link> oder mit
             der <Link href="/chronologie">Chronologie</Link>, wenn Sie einen ereignisorientierten Zugang bevorzugen.
           </li>
           <li>
-            Nutzen Sie die <Link href="/karte">Karte</Link>, um Daten und historische Artikel geografisch zu verorten.
+            Nutzen Sie die <Link href="/carte">Karte</Link>, um Daten und historische Artikel geografisch zu verorten.
           </li>
           <li>
-            Prüfen Sie die <Link href="/methodik">Methoden und Grenzen der Zahlen</Link>, bevor Sie die Diagramme interpretieren.
+            Prüfen Sie die <Link href="/methodologie">Methoden und Grenzen der Zahlen</Link>, bevor Sie die Diagramme interpretieren.
           </li>
         </ol>
       </section>

@@ -1,4 +1,4 @@
-// 7
+// 7 (app/histoire/camps-extermination/page.tsx)
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -16,7 +16,7 @@ export default function Page() {
       <Breadcrumb
         items={[
           { href: "/", label: "Startseite" },
-          { href: "/geschichte", label: "Geschichte" },
+          { href: "/histoire", label: "Geschichte" },
           { label: "Lager und Exil" },
         ]}
       />

@@ -1,4 +1,4 @@
-// 5
+// 5 (app/documents/page.tsx) – unverändert
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";

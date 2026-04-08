@@ -1,4 +1,4 @@
-// 4
+// 4 (app/citer/page.tsx) – unverändert
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -23,7 +23,7 @@ export default function CiterPage() {
         </blockquote>
         <p>
           Um eine bestimmte Seite zu zitieren, fügen Sie den Pfad (z. B.{" "}
-          <code>/geschichte/vernichtungslager</code>
+          <code>/histoire/camps-extermination</code>
           ) nach der URL hinzu.
         </p>
         <p>

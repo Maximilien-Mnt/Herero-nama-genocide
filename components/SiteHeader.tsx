@@ -1,4 +1,4 @@
-// 16
+// 16 (components/SiteHeader.tsx)
 "use client";
 
 // SiteHeader inclut la navigation principale et un menu burger pour les mobiles.
@@ -9,18 +9,18 @@ import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 
 const nav = [
-  { href: "/geschichte", label: "Geschichte" },
+  { href: "/histoire", label: "Geschichte" },
   { href: "/chronologie", label: "Chronologie" },
-  { href: "/statistiken", label: "Statistiken" },
-  { href: "/dokumente", label: "Dokumente" },
-  { href: "/karte", label: "Karte" },
-  { href: "/ressourcen", label: "Ressourcen" },
-  { href: "/methodik", label: "Methodik" },
+  { href: "/statistiques", label: "Statistiken" },
+  { href: "/documents", label: "Dokumente" },
+  { href: "/carte", label: "Karte" },
+  { href: "/ressources", label: "Ressourcen" },
+  { href: "/methodologie", label: "Methodik" },
 ];
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
-  if (href === "/geschichte") return pathname.startsWith("/geschichte");
+  if (href === "/histoire") return pathname.startsWith("/histoire");
   return pathname === href;
 }
 

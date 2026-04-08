@@ -1,4 +1,4 @@
-// 8
+// 8 (app/histoire/contexte/page.tsx)
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -6,7 +6,7 @@ import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayo
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Koloniale Kontext",
+  title: "Kolonialer Kontext",
   description: "Deutsche Kolonisation, Herero- und Nama-Gesellschaften, Spannungen vor 1904.",
 };
 
@@ -16,8 +16,8 @@ export default function Page() {
       <Breadcrumb
         items={[
           { href: "/", label: "Startseite" },
-          { href: "/geschichte", label: "Geschichte" },
-          { label: "Koloniale Kontext" },
+          { href: "/histoire", label: "Geschichte" },
+          { label: "Kolonialer Kontext" },
         ]}
       />
       <HistoireChapterLayout

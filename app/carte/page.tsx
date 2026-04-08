@@ -1,4 +1,4 @@
-// 2
+// 2 (app/carte/page.tsx) – unverändert, nur zur Vollständigkeit
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Breadcrumb } from "@/components/Breadcrumb";

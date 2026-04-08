@@ -1,3 +1,4 @@
+// 18 (components/CrossLinks.tsx)
 // Composants pour afficher les liens croisés vers les événements, lieux et documents liés.
 // CrossLinksForEvent: Affiche les liens croisés vers les lieux et documents liés à un événement.
 // CrossLinksForPlace: Affiche les liens croisés vers les événements liés à un lieu.
@@ -33,7 +34,7 @@ export function CrossLinksForEvent({ eventId }: { eventId: string }) {
           if (!p) return null;
           return (
             <li key={id}>
-              <Link href={`/karte?place=${id}`}>{p.name}</Link>
+              <Link href={`/carte?place=${id}`}>{p.name}</Link>
             </li>
           );
         })}
@@ -42,13 +43,13 @@ export function CrossLinksForEvent({ eventId }: { eventId: string }) {
           if (!d) return null;
           return (
             <li key={id}>
-              <Link href={`/dokumente#${id}`}>{d.title}</Link>
+              <Link href={`/documents#${id}`}>{d.title}</Link>
             </li>
           );
         })}
         {ev.relatedHistorySlugs.map((slug) => (
           <li key={slug}>
-            <Link href={`/geschichte/${slug}`}>{chapterTitle(slug)}</Link>
+            <Link href={`/histoire/${slug}`}>{chapterTitle(slug)}</Link>
           </li>
         ))}
         {ev.relatedDatasetIds.map((id) => {
@@ -56,7 +57,7 @@ export function CrossLinksForEvent({ eventId }: { eventId: string }) {
           if (!ds) return null;
           return (
             <li key={id}>
-              <Link href={`/statistiken#${id}`}>{ds.title}</Link>
+              <Link href={`/statistiques#${id}`}>{ds.title}</Link>
             </li>
           );
         })}
@@ -107,13 +108,13 @@ export function CrossLinksForDocument({ documentId }: { documentId: string }) {
           if (!p) return null;
           return (
             <li key={id}>
-              <Link href={`/karte?place=${id}`}>{p.name}</Link>
+              <Link href={`/carte?place=${id}`}>{p.name}</Link>
             </li>
           );
         })}
         {doc.relatedHistorySlugs.map((slug) => (
           <li key={slug}>
-            <Link href={`/geschichte/${slug}`}>{chapterTitle(slug)}</Link>
+            <Link href={`/histoire/${slug}`}>{chapterTitle(slug)}</Link>
           </li>
         ))}
       </ul>

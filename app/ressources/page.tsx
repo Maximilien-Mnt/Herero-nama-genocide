@@ -1,4 +1,4 @@
-// 13
+// 13 (app/ressources/page.tsx)
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -28,7 +28,7 @@ export default function RessourcesPage() {
       <h1 style={{ fontFamily: "var(--font-serif)" }}>Ressourcen und Bibliografie</h1>
       <p style={{ color: "var(--muted)" }}>
         Ausgangsliste, vom pädagogischen Team validiert: Ergänzen Sie institutionelle URLs, präzisieren Sie Ausgaben und vermerken Sie verfügbare Übersetzungen. Zur Zitierweise siehe{" "}
-        <Link href="/zitierweise">Wie zitiere ich dieses Projekt?</Link>.
+        <Link href="/citer">Wie zitiere ich dieses Projekt?</Link>.
       </p>
       <ol style={{ paddingLeft: "1.2rem" }}>
         {resources.map((r) => (

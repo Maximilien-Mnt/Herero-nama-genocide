@@ -1,4 +1,4 @@
-// 12
+// 12 (app/methodologie/page.tsx)
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -20,7 +20,7 @@ export default function MethodologiePage() {
         <h1>Methodik</h1>
         <p>
           Diese Website strebt eine <strong>vollständige Autonomie für die Jury</strong> an: Jeder Abschnitt erinnert von der Einleitung an an seinen Zweck und verweist explizit auf die{" "}
-          <Link href="/ressourcen">Ressourcen</Link>. Die Autoren unterscheiden:
+          <Link href="/ressources">Ressourcen</Link>. Die Autoren unterscheiden:
         </p>
         <ul>
           <li>

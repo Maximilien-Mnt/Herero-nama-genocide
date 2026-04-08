@@ -1,3 +1,4 @@
+// app/histoire/layout.tsx
 import Link from "next/link";
 import { historyChapters } from "@/lib/content";
 import { PageShell } from "@/components/PageShell";
@@ -26,7 +27,10 @@ export default function HistoireLayout({ children }: { children: React.ReactNode
           ))}
         </ul>
       </aside>
-      <article className="prose">{children}</article>
+      {/* Add maxWidth: "none" to override the global .prose constraint */}
+      <article className="prose" style={{ maxWidth: "none" }}>
+        {children}
+      </article>
     </PageShell>
   );
 }

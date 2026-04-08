@@ -15,7 +15,7 @@ export default function MethodologiePage() {
   return (
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Méthodologie" }]} />
-      <article className="prose">
+      <article className="prose" style={{ maxWidth: "none" }}>
         <h1>Méthodologie</h1>
         <p>
           Ce site vise une <strong>autonomie complète pour le jury</strong> : chaque section rappelle

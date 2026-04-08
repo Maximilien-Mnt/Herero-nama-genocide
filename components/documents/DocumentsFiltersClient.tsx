@@ -1,11 +1,12 @@
-// Gère le filtrage des documents par type (DocumentType).
-
 "use client";
 
 import { useMemo, useState } from "react";
 import type { DocumentType, HistoricalDocument } from "@/lib/types";
 import { FilterPill } from "@/components/FilterPill";
 import { DocumentsGallery } from "@/components/documents/DocumentsGallery";
+import { Grid, LayoutGrid, List } from "lucide-react";
+
+type ViewMode = "grid" | "gallery" | "list";
 
 const FILTERS: Array<{ value: DocumentType | "all"; label: string }> = [
   { value: "all", label: "Tout" },
@@ -16,25 +17,72 @@ const FILTERS: Array<{ value: DocumentType | "all"; label: string }> = [
 ];
 
 export function DocumentsFiltersClient({ documents }: { documents: HistoricalDocument[] }) {
-  const [active, setActive] = useState<DocumentType | "all">("all");
+  const [activeFilter, setActiveFilter] = useState<DocumentType | "all">("all");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   const filtered = useMemo(() => {
-    if (active === "all") return documents;
-    return documents.filter((d) => d.type === active);
-  }, [documents, active]);
+    if (activeFilter === "all") return documents;
+    return documents.filter((d) => d.type === activeFilter);
+  }, [documents, activeFilter]);
 
   return (
     <div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", margin: "1rem 0" }}>
-        {FILTERS.map((f) => (
-          <FilterPill key={f.value} active={active === f.value} onClick={() => setActive(f.value)}>
-            {f.label}
-          </FilterPill>
-        ))}
+      {/* Filter and view options */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "1rem",
+          margin: "1rem 0",
+        }}
+      >
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+          {FILTERS.map((f) => (
+            <FilterPill
+              key={f.value}
+              active={activeFilter === f.value}
+              onClick={() => setActiveFilter(f.value)}
+            >
+              {f.label}
+            </FilterPill>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <button
+            onClick={() => setViewMode("grid")}
+            className={`view-switch-btn ${viewMode === "grid" ? "view-switch-btn--active" : ""}`}
+            aria-label="Vue grille compacte"
+            title="Grille compacte"
+          >
+            <Grid size={18} />
+          </button>
+          <button
+            onClick={() => setViewMode("gallery")}
+            className={`view-switch-btn ${viewMode === "gallery" ? "view-switch-btn--active" : ""}`}
+            aria-label="Vue galerie aérée"
+            title="Galerie aérée"
+          >
+            <LayoutGrid size={18} />
+          </button>
+          <button
+            onClick={() => setViewMode("list")}
+            className={`view-switch-btn ${viewMode === "list" ? "view-switch-btn--active" : ""}`}
+            aria-label="Vue liste"
+            title="Liste"
+          >
+            <List size={18} />
+          </button>
+        </div>
       </div>
 
-      <DocumentsGallery documents={filtered} />
+      <DocumentsGallery
+        allDocuments={documents}
+        filteredDocuments={filtered}
+        viewMode={viewMode}
+      />
     </div>
   );
 }
-

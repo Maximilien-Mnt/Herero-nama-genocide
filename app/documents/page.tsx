@@ -18,20 +18,7 @@ export default function DocumentsPage() {
         Documents
       </h1>
 
-      <p
-        role="note"
-        className="card"
-        style={{
-          marginTop: "1rem",
-          borderRadius: "var(--radius-md)",
-          background: "rgba(155, 90, 60, 0.12)",
-          borderColor: "rgba(155, 90, 60, 0.35)",
-          padding: "1rem 1.15rem",
-        }}
-      >
-        <strong>Avertissement de contenu :</strong> ce corpus comporte des images potentiellement sensibles
-        (floutage par défaut). Certaines vignettes nécessitent une interaction pour être consultées en clair.
-      </p>
+      
 
       <DocumentsFiltersClient documents={getDocuments()} />
     </PageShell>

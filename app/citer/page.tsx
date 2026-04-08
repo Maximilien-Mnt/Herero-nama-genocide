@@ -13,7 +13,7 @@ export default function CiterPage() {
   return (
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Comment citer" }]} />
-      <article className="prose">
+      <article className="prose" style={{ maxWidth: "none" }}>
         <h1>Comment citer ce site</h1>
         <p>Exemple (adapter la date de consultation) :</p>
         <blockquote>

@@ -25,12 +25,14 @@ export default function RessourcesPage() {
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Ressources" }]} />
       <h1 style={{ fontFamily: "var(--font-serif)" }}>Ressources et bibliographie</h1>
-      <p style={{ color: "var(--muted)", maxWidth: "44rem" }}>
+      {/* Remove maxWidth from the paragraph */}
+      <p style={{ color: "var(--muted)" }}>
         Liste de départ validée par l’équipe pédagogique : compléter les URLs institutionnelles,
         préciser les éditions et noter les traductions disponibles. Pour la méthode de citation, voir{" "}
         <Link href="/citer">Comment citer ce projet</Link>.
       </p>
-      <ol style={{ maxWidth: "48rem", paddingLeft: "1.2rem" }}>
+      {/* Remove maxWidth from the ordered list */}
+      <ol style={{ paddingLeft: "1.2rem" }}>
         {resources.map((r) => (
           <li key={r.id} style={{ marginBottom: "1rem" }}>
             <strong>{kindLabel[r.kind]}</strong>

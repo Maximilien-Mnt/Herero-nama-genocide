@@ -1,8 +1,4 @@
-// Représente une carte d'événement individuelle sur la frise.
-// Il affiche la date, le titre, le résumé, les tags stylisés et, surtout, résout dynamiquement les identifiants liés (relatedPlaceIds, relatedDocumentIds, relatedDatasetIds, relatedHistorySlugs) pour créer des liens vers les sections correspondantes du site (/carte, /documents, /histoire/[slug], /statistiques).
-// La couleur de la bordure de la carte est déterminée par la catégorie sémantique de l'événement.
 import type { EventTag, TimelineEvent } from "@/lib/types";
-import type { CSSProperties } from "react";
 import {
   getDatasetById,
   getDocumentById,
@@ -10,14 +6,16 @@ import {
   historyChapters,
 } from "@/lib/content";
 import { CrossLinkTag } from "@/components/CrossLink";
+import { parse, format } from "date-fns";
+import { de } from "date-fns/locale";
 
 const TAG_LABELS: Record<EventTag, string> = {
-  herero: "Héréro",
+  herero: "Herero",
   nama: "Nama",
-  colonial: "Colonisation / administration",
-  military: "Militaire",
-  aftermath: "Après 1908",
-  memory: "Mémoire",
+  colonial: "Koloniale Verwaltung",
+  military: "Militär",
+  aftermath: "Nach 1908",
+  memory: "Erinnerung",
 };
 
 function chapterTitle(slug: string): string {
@@ -25,134 +23,165 @@ function chapterTitle(slug: string): string {
   return c?.title ?? slug;
 }
 
-function dateLabel(e: TimelineEvent): string {
-  if (e.endDate) return `${e.date} — ${e.endDate}`;
-  return e.date;
+function formatGermanDate(dateStr: string): string {
+  let d = new Date(dateStr);
+  if (isNaN(d.getTime())) {
+    const germanPattern = /^(\d+)\.?\s*(\w+)\s+(\d{4})$/i;
+    const match = dateStr.match(germanPattern);
+    if (match) {
+      const [, day, monthName, year] = match;
+      d = parse(`${day} ${monthName} ${year}`, "d MMMM yyyy", new Date(), { locale: de });
+    } else {
+      return dateStr;
+    }
+  }
+  if (isNaN(d.getTime())) return dateStr;
+  return format(d, "d. MMMM yyyy", { locale: de });
 }
 
 function tagColor(t: EventTag): string {
   switch (t) {
-    case "herero":
-      return "var(--color-herero)";
-    case "nama":
-      return "var(--color-nama)";
-    case "colonial":
-      return "var(--color-colonial)";
-    case "military":
-      return "var(--color-military)";
-    case "aftermath":
-      return "var(--accent-rust)";
-    case "memory":
-      return "var(--color-memory)";
+    case "herero": return "var(--color-herero)";
+    case "nama": return "var(--color-nama)";
+    case "colonial": return "var(--color-colonial)";
+    case "military": return "var(--color-military)";
+    case "aftermath": return "var(--accent-rust)";
+    case "memory": return "var(--color-memory)";
+    default: return "var(--accent-gold)";
   }
 }
 
-function primaryBorderColor(e: TimelineEvent): string {
-  // Prioritize the four semantic categories.
+function primaryTag(event: TimelineEvent): EventTag {
   const priority: EventTag[] = ["herero", "nama", "colonial", "military", "aftermath", "memory"];
-  const found = priority.find((t) => e.tags.includes(t));
-  return found ? tagColor(found) : "var(--accent-gold)";
+  return priority.find((t) => event.tags.includes(t)) ?? event.tags[0] ?? "colonial";
 }
 
-export function TimelineEventCard({ event }: { event: TimelineEvent }) {
-  const borderColor = primaryBorderColor(event);
+interface TimelineEventCardProps {
+  event: TimelineEvent;
+  isExpanded: boolean;
+  onToggle: () => void;
+}
+
+export function TimelineEventCard({ event, isExpanded, onToggle }: TimelineEventCardProps) {
+  const mainTag = primaryTag(event);
+  const color = tagColor(mainTag);
+  const dateLabel = formatGermanDate(event.date);
+  const tagLabel = TAG_LABELS[mainTag] || "Ereignis";
 
   return (
     <article
-      className="timeline-card"
-      style={
-        { ["--timeline-border" as string]: borderColor } as CSSProperties
-      }
+      className="timeline-card-horizontal"
+      style={{ "--card-accent": color } as React.CSSProperties}
       aria-labelledby={`event-${event.id}-title`}
     >
-      <div className="timeline-date">{dateLabel(event)}</div>
-      <div className="timeline-meta" aria-label="Thèmes">
-        {event.tags.map((t) => (
-          <span
-            key={t}
-            className="tag"
-            style={{
-              borderColor: tagColor(t),
-              background: "rgba(255,255,255,0.02)",
-              color: "var(--text-body)",
-            }}
-          >
-            {TAG_LABELS[t]}
-          </span>
-        ))}
-      </div>
-
-      <h3
-        id={`event-${event.id}-title`}
+      {/* Clickable header: always visible */}
+      <button
+        onClick={onToggle}
+        className="timeline-card-header-button"
         style={{
-          margin: "0 0 0.5rem",
-          fontFamily: "var(--font-sans)",
-          fontSize: "1rem",
-          fontWeight: 500,
-          lineHeight: "1.25",
-          color: "var(--text-primary)",
+          width: "100%",
+          textAlign: "left",
+          background: "none",
+          border: "none",
+          padding: 0,
+          cursor: "pointer",
         }}
       >
-        {event.title}
-      </h3>
+        <div
+          className="card-header"
+          style={{
+            backgroundColor: color,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "0.5rem 0.75rem",
+            borderTopLeftRadius: "var(--radius-md)",
+            borderTopRightRadius: "var(--radius-md)",
+            color: "#14110c",
+            fontWeight: 500,
+            fontSize: "0.85rem",
+          }}
+        >
+          <span>{dateLabel}</span>
+          <span style={{ background: "rgba(0,0,0,0.2)", padding: "0.15rem 0.4rem", borderRadius: "999px" }}>
+            {tagLabel}
+          </span>
+        </div>
+        <div style={{ padding: "0.75rem" }}>
+          <h3
+            id={`event-${event.id}-title`}
+            style={{
+              margin: 0,
+              fontFamily: "var(--font-sans)",
+              fontSize: "1rem",
+              fontWeight: 600,
+              lineHeight: "1.25",
+              color: "var(--text-primary)",
+            }}
+          >
+            {event.title}
+          </h3>
+        </div>
+      </button>
 
-      <p style={{ margin: 0, color: "var(--text-body)" }}>{event.summary}</p>
-
-      <div className="crosslink-tags" aria-label="Liens croisés">
-        {event.relatedPlaceIds.map((id) => {
-          const p = getPlaceById(id);
-          if (!p) return null;
-          const sectionId = `place-${p.id}`;
-          return (
-            <CrossLinkTag
-              key={id}
-              href={`/carte?place=${p.id}#${sectionId}`}
-              icon="📍"
-              label={p.name}
-              sectionId={sectionId}
-            />
-          );
-        })}
-
-        {event.relatedDocumentIds.map((id) => {
-          const d = getDocumentById(id);
-          if (!d) return null;
-          return (
-            <CrossLinkTag
-              key={id}
-              href={`/documents#${d.id}`}
-              icon="📖"
-              label={d.title}
-              sectionId={d.id}
-            />
-          );
-        })}
-
-        {event.relatedHistorySlugs.map((slug) => (
-          <CrossLinkTag
-            key={slug}
-            href={`/histoire/${slug}#histoire-${slug}`}
-            icon="📚"
-            label={chapterTitle(slug)}
-            sectionId={`histoire-${slug}`}
-          />
-        ))}
-
-        {event.relatedDatasetIds.map((id) => {
-          const ds = getDatasetById(id);
-          if (!ds) return null;
-          return (
-            <CrossLinkTag
-              key={id}
-              href={`/statistiques#${ds.id}`}
-              icon="📊"
-              label={ds.title}
-              sectionId={ds.id}
-            />
-          );
-        })}
-      </div>
+      {/* Expandable content */}
+      {isExpanded && (
+        <div style={{ padding: "0 0.75rem 0.75rem 0.75rem", borderTop: "1px solid var(--border-subtle)" }}>
+          <p style={{ margin: "0.5rem 0 0.75rem", color: "var(--text-body)", fontSize: "0.9rem" }}>
+            {event.summary}
+          </p>
+          <div className="crosslink-tags" aria-label="Querverweise">
+            {event.relatedPlaceIds.map((id) => {
+              const p = getPlaceById(id);
+              if (!p) return null;
+              return (
+                <CrossLinkTag
+                  key={id}
+                  href={`/carte?place=${p.id}#place-${p.id}`}
+                  icon="📍"
+                  label={p.name}
+                  sectionId={`place-${p.id}`}
+                />
+              );
+            })}
+            {event.relatedDocumentIds.map((id) => {
+              const d = getDocumentById(id);
+              if (!d) return null;
+              return (
+                <CrossLinkTag
+                  key={id}
+                  href={`/documents#${d.id}`}
+                  icon="📖"
+                  label={d.title}
+                  sectionId={d.id}
+                />
+              );
+            })}
+            {event.relatedHistorySlugs.map((slug) => (
+              <CrossLinkTag
+                key={slug}
+                href={`/histoire/${slug}#histoire-${slug}`}
+                icon="📚"
+                label={chapterTitle(slug)}
+                sectionId={`histoire-${slug}`}
+              />
+            ))}
+            {event.relatedDatasetIds.map((id) => {
+              const ds = getDatasetById(id);
+              if (!ds) return null;
+              return (
+                <CrossLinkTag
+                  key={id}
+                  href={`/statistiken#${ds.id}`}
+                  icon="📊"
+                  label={ds.title}
+                  sectionId={ds.id}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
     </article>
   );
 }
-

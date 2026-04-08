@@ -37,6 +37,7 @@ const sections = [
 export default function HomePage() {
   return (
     <PageShell>
+      {/* Remove maxWidth from the warning note */}
       <p
         style={{
           padding: "1rem 1.15rem",
@@ -45,7 +46,6 @@ export default function HomePage() {
           background: "rgba(155, 90, 60, 0.12)",
           color: "var(--text-primary)",
           fontSize: "0.95rem",
-          maxWidth: "54rem",
         }}
         role="note"
       >
@@ -66,7 +66,8 @@ export default function HomePage() {
         >
           Génocide des Héréros et des Namas
         </h1>
-        <p style={{ color: "var(--muted)", maxWidth: "40rem", marginBottom: 0 }}>
+        {/* Remove maxWidth from this paragraph */}
+        <p style={{ color: "var(--muted)", marginBottom: 0 }}>
           Projet scolaire pensé pour un jury : navigation autonome, textes explicites, sources
           identifiables et liens entre les sections (événements, lieux, documents, graphiques).
         </p>
@@ -85,7 +86,8 @@ export default function HomePage() {
         >
           Comment lire ce site sans guide oral
         </h2>
-        <ol style={{ maxWidth: "42rem", color: "var(--text-muted)", marginTop: "1rem" }}>
+        {/* Remove maxWidth from the ordered list */}
+        <ol style={{ color: "var(--text-muted)", marginTop: "1rem" }}>
           <li>
             Commencer par <Link href="/histoire/contexte">Histoire — Contexte colonial</Link> ou par
             la <Link href="/chronologie">Chronologie</Link> si vous préférez une logique événementielle.

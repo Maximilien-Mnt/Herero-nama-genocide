@@ -343,6 +343,7 @@ main {
   gap: 0.5rem;
 }
 
+/* Document thumb base */
 .document-thumb {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -353,6 +354,8 @@ main {
 }
 
 .document-thumb img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transition: filter 150ms ease, transform 150ms ease;
 }
@@ -385,6 +388,22 @@ main {
 
 .document-card:hover .document-thumb img {
   filter: brightness(1.1);
+}
+
+/* List mode thumbnail – takes full height of flex row */
+.document-thumb--list {
+  width: 160px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: auto;
+}
+
+.document-thumb--list img {
+  flex: 1;
+  width: 100%;
+  object-fit: cover;
+  height: auto;
 }
 
 .reveal {
@@ -507,3 +526,221 @@ main {
   }
 }
 
+/* View mode switcher buttons */
+.view-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 0.4rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 150ms ease;
+}
+
+.view-switch-btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: rgba(185, 147, 90, 0.08);
+}
+
+.view-switch-btn--active {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: rgba(185, 147, 90, 0.12);
+}
+
+/* Document containers for each view mode */
+.doc-view {
+  margin-top: 1rem;
+}
+
+/* Grid mode: compact, no gaps, thin borders collapse */
+.doc-view--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0;
+  background: transparent;
+}
+.doc-view--grid .document-card {
+  border: 1px solid var(--border-default);
+  border-radius: 0;
+  margin: -1px 0 0 -1px;
+  background: var(--bg-surface);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.doc-view--grid .document-card > button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.doc-view--grid .document-card .document-thumb {
+  flex-shrink: 0;
+}
+.doc-view--grid .document-card:hover {
+  z-index: 2;
+  position: relative;
+}
+
+/* Gallery mode: spacious grid */
+.doc-view--gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.doc-view--gallery .document-card--gallery .document-thumb--gallery {
+  aspect-ratio: 16 / 9;
+}
+.doc-view--gallery .document-card {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.doc-view--gallery .document-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+/* List mode: vertical stack with same gap as gallery */
+.doc-view--list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---------- Full‑width timeline (breaks out of container) ---------- */
+.full-width-timeline {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+  left: 0;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Custom horizontal scrollbar */
+.horizontal-timeline-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-gold) var(--border-subtle);
+  padding-bottom: 1rem; /* space for scrollbar */
+}
+
+.horizontal-timeline-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+
+.horizontal-timeline-scroll::-webkit-scrollbar-track {
+  background: var(--border-subtle);
+  border-radius: 6px;
+}
+
+.horizontal-timeline-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 6px;
+}
+
+.horizontal-timeline-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-warm);
+}
+
+/* Timeline nav buttons */
+.timeline-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-right: 0.5rem;
+}
+
+.timeline-nav-button {
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.timeline-nav-button:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: rgba(185, 147, 90, 0.08);
+}
+
+/* Card styling */
+.timeline-card-horizontal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.timeline-card-horizontal:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+
+/* Responsive: smaller cards on mobile */
+@media (max-width: 768px) {
+  .timeline-card-wrapper {
+    width: 260px !important;
+  }
+  .full-width-timeline {
+    margin-left: calc(-50vw + 50%);
+  }
+}
+.timeline-card-header-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: opacity 0.15s ease;
+}
+
+.timeline-card-header-button:hover {
+  opacity: 0.9;
+}
+/* Ensure year dotted lines are visible and don't overflow */
+.timeline-year-dotted-line {
+  opacity: 0.4;
+}
+
+/* Make the central line transition zones clear */
+.timeline-track svg line {
+  transition: stroke-dasharray 0.2s ease;
+}
+/* Make connector lines and dots interactive */
+.timeline-dot {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.timeline-dot:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 0 0 3px rgba(185, 147, 90, 0.5);
+}
+.timeline-connector {
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+.timeline-connector:hover {
+  opacity: 1 !important;
+  background-color: var(--accent-gold) !important;
+}
+/* Ensure dots and polylines are interactive */
+.timeline-track circle {
+  transition: r 0.1s ease, filter 0.1s ease;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+}
+.timeline-track polyline {
+  transition: opacity 0.15s ease, stroke 0.15s ease;
+  pointer-events: stroke;
+}

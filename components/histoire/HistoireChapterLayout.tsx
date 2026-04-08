@@ -162,7 +162,7 @@ export function HistoireChapterLayout({
           </h1>
         </div>
 
-        <div ref={articleRef} className="prose" style={{ marginTop: "1rem" }}>
+        <div ref={articleRef} className="prose" style={{ marginTop: "1rem", maxWidth: "none" }}>
           {children}
         </div>
 

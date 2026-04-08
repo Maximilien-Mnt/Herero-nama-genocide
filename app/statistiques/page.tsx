@@ -19,8 +19,7 @@ export default function StatistiquesPage() {
       </h1>
 
       <p role="note" className="card" style={{ marginTop: "1rem", borderRadius: "var(--radius-md)" }}>
-        <strong>Note de méthode :</strong> les graphiques affichent des valeurs pédagogiques. Pour le
-        cadre de lecture et les limites, voir <a href="/methodologie">Méthodologie</a>.
+        <strong>Hinweis :</strong> Die verschiedenen Diagramme zeigen Werte, die hauptsächlich aus externen Quellen stammen oder aus externen Daten berechnet wurden. Es kann sich daher um Näherungswerte handeln. Siehe auch <a href="/methodologie">Méthodologie</a> für mehr Informationen.
       </p>
       <StatsCharts datasets={getDatasets()} />
     </PageShell>

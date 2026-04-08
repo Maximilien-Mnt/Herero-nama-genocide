@@ -18,7 +18,7 @@ import { getEventById } from "@/lib/content";
 import { CrossLinkTag } from "@/components/CrossLink";
 import { Reveal } from "@/components/Reveal";
 
-// Custom tooltip with clear formatting and unit display
+// Custom tooltip with clear formatting and gold accent
 const CustomTooltip = ({ active, payload, label, unit }: any) => {
   if (!active || !payload || !payload.length) return null;
   const value = payload[0]?.value;
@@ -48,7 +48,7 @@ const CustomTooltip = ({ active, payload, label, unit }: any) => {
 
 function ChartForDataset({ ds }: { ds: Dataset }) {
   const unitLabel = ds.unit ?? "valeur";
-  const legendName = unitLabel; // use unit as legend label
+  const legendName = unitLabel;
 
   const commonFooter = (
     <div style={{ marginTop: "0.75rem" }}>
@@ -79,6 +79,9 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
     margin: { top: 10, right: 10, left: 0, bottom: 5 },
   };
 
+  // Common gradient for bar and area charts
+  const gradientId = `gradient-${ds.id}`;
+
   if (ds.chartType === "bar") {
     return (
       <div className="card" style={{ marginBottom: "1.5rem" }} id={ds.id}>
@@ -88,6 +91,12 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
         <div style={{ width: "100%", minWidth: 0, height: 280 }}>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={ds.points} {...chartProps}>
+              <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#B8935A" stopOpacity={0.9} />
+                  <stop offset="95%" stopColor="#B8935A" stopOpacity={0.6} />
+                </linearGradient>
+              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#3D342A" />
               <XAxis
                 dataKey="label"
@@ -108,11 +117,14 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
               />
               <Bar
                 dataKey="value"
-                fill="#4D6B58"
+                fill={`url(#${gradientId})`}
+                stroke="#B8935A"
+                strokeWidth={1}
                 name={legendName}
                 animationDuration={800}
                 animationEasing="ease-out"
                 radius={[4, 4, 0, 0]}
+                activeBar={{ fill: "#D4A96A", stroke: "#D4A96A", strokeWidth: 1 }}
               />
             </BarChart>
           </ResponsiveContainer>
@@ -133,7 +145,7 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={ds.points} {...chartProps}>
               <defs>
-                <linearGradient id={`g-${ds.id}`} x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#B8935A" stopOpacity={0.35} />
                   <stop offset="95%" stopColor="#B8935A" stopOpacity={0} />
                 </linearGradient>
@@ -147,7 +159,7 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
                 dataKey="value"
                 stroke="#B8935A"
                 fillOpacity={1}
-                fill={`url(#g-${ds.id})`}
+                fill={`url(#${gradientId})`}
                 animationDuration={800}
                 animationEasing="ease-out"
               />
@@ -195,7 +207,8 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
 export function StatsCharts({ datasets }: { datasets: Dataset[] }) {
   return (
     <div>
-      <p style={{ color: "var(--text-muted)", maxWidth: "44rem" }}>
+      {/* Removed maxWidth constraint to allow full width */}
+      <p style={{ color: "var(--text-muted)" }}>
         Les graphiques ci-dessous incluent des <strong>valeurs pédagogiques</strong> (à compléter avec un tableau sourcé).
         Les visuels citent une piste de référence ; pour les limites méthodologiques, voir{" "}
         <a href="/methodologie">Méthodologie</a>.

@@ -1,3 +1,4 @@
+// ./components/timeline/TimelineEvent.tsx
 import type { EventTag, TimelineEvent } from "@/lib/types";
 import {
   getDatasetById,
@@ -172,7 +173,7 @@ export function TimelineEventCard({ event, isExpanded, onToggle }: TimelineEvent
               return (
                 <CrossLinkTag
                   key={id}
-                  href={`/statistiken#${ds.id}`}
+                  href={`/statistiques#${ds.id}`}
                   icon="📊"
                   label={ds.title}
                   sectionId={ds.id}

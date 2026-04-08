@@ -1,18 +1,20 @@
+/* CSS Main file - app/globals.css */
+
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
   /* Layout */
-  --max-layout: 72rem; /* 1152px */
-  --max-prose: 44rem; /* 704px */
-  --sidebar-w: 16rem; /* 256px */
+  --max-layout: 72rem;
+  --max-prose: 44rem;
+  --sidebar-w: 16rem;
 
   /* Spacing scale */
-  --space-xs: 0.25rem; /* 4px */
-  --space-sm: 0.5rem; /* 8px */
-  --space-md: 1rem; /* 16px */
-  --space-lg: 1.5rem; /* 24px */
-  --space-xl: 2.5rem; /* 40px */
-  --space-2xl: 4rem; /* 64px */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
 
   /* Radius */
   --radius-md: 4px;
@@ -46,7 +48,7 @@
   --font-sans: "DM Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* Compatibility aliases (existing code uses older token names). */
+  /* Compatibility aliases */
   --bg: var(--bg-page);
   --surface: var(--bg-surface);
   --surface2: var(--bg-subtle);
@@ -111,7 +113,7 @@ main {
 
 .prose h1 {
   font-family: var(--font-serif);
-  font-size: 2.75rem; /* 44px */
+  font-size: 2.75rem;
   line-height: 44px;
   font-weight: 600;
   margin: 0 0 0.75rem;
@@ -119,7 +121,7 @@ main {
 
 .prose h2 {
   font-family: var(--font-serif);
-  font-size: 1.85rem; /* 30px */
+  font-size: 1.85rem;
   line-height: 30px;
   font-weight: 600;
   margin: 1.75rem 0 0.75rem;
@@ -127,7 +129,7 @@ main {
 
 .prose h3 {
   font-family: var(--font-sans);
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   line-height: 16px;
   font-weight: 500;
   margin: 1.25rem 0 0.5rem;
@@ -176,7 +178,6 @@ main {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* Old class kept for Timeline theme tags. */
 .tag {
   display: inline-block;
   font-size: 0.75rem;
@@ -343,7 +344,6 @@ main {
   gap: 0.5rem;
 }
 
-/* Document thumb base */
 .document-thumb {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -390,7 +390,6 @@ main {
   filter: brightness(1.1);
 }
 
-/* List mode thumbnail – takes full height of flex row */
 .document-thumb--list {
   width: 160px;
   flex-shrink: 0;
@@ -421,54 +420,6 @@ main {
   font-family: var(--font-sans);
 }
 
-/* Map marker (Leaflet DivIcon) */
-.map-marker {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 150ms ease, filter 150ms ease, brightness 150ms ease;
-  background: rgba(185, 147, 90, 0.35);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-}
-
-.map-marker::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--accent-gold);
-}
-
-.map-marker:hover {
-  transform: translateY(-2px) scale(1.15);
-  filter: brightness(1.3);
-}
-
-.map-marker--before {
-  background: rgba(77, 107, 88, 0.25);
-}
-.map-marker--before::after {
-  background: var(--accent-sage);
-}
-.map-marker--1904-1908 {
-  background: rgba(185, 147, 90, 0.25);
-}
-.map-marker--1904-1908::after {
-  background: var(--accent-gold);
-}
-.map-marker--after {
-  background: rgba(155, 90, 60, 0.22);
-}
-.map-marker--after::after {
-  background: var(--accent-rust);
-}
-
-/* Home navigation grid */
 .home-nav-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -487,7 +438,6 @@ main {
   }
 }
 
-/* Chapter responsive layout */
 .chapter-layout {
   display: grid;
   grid-template-columns: var(--sidebar-w) 1fr;
@@ -501,7 +451,6 @@ main {
   }
 }
 
-/* Header responsiveness */
 .site-header-burger {
   display: none;
 }
@@ -526,7 +475,6 @@ main {
   }
 }
 
-/* View mode switcher buttons */
 .view-switch-btn {
   display: inline-flex;
   align-items: center;
@@ -552,12 +500,10 @@ main {
   background: rgba(185, 147, 90, 0.12);
 }
 
-/* Document containers for each view mode */
 .doc-view {
   margin-top: 1rem;
 }
 
-/* Grid mode: compact, no gaps, thin borders collapse */
 .doc-view--grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -587,7 +533,6 @@ main {
   position: relative;
 }
 
-/* Gallery mode: spacious grid */
 .doc-view--gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -604,14 +549,12 @@ main {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
-/* List mode: vertical stack with same gap as gallery */
 .doc-view--list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-/* ---------- Full‑width timeline (breaks out of container) ---------- */
 .full-width-timeline {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -621,13 +564,12 @@ main {
   margin-bottom: 2rem;
 }
 
-/* Custom horizontal scrollbar */
 .horizontal-timeline-scroll {
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-gold) var(--border-subtle);
-  padding-bottom: 1rem; /* space for scrollbar */
+  padding-bottom: 1rem;
 }
 
 .horizontal-timeline-scroll::-webkit-scrollbar {
@@ -648,7 +590,6 @@ main {
   background: var(--accent-warm);
 }
 
-/* Timeline nav buttons */
 .timeline-nav {
   display: flex;
   justify-content: flex-end;
@@ -674,7 +615,6 @@ main {
   background: rgba(185, 147, 90, 0.08);
 }
 
-/* Card styling */
 .timeline-card-horizontal {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
@@ -690,7 +630,6 @@ main {
   border-color: var(--border-strong);
 }
 
-/* Responsive: smaller cards on mobile */
 @media (max-width: 768px) {
   .timeline-card-wrapper {
     width: 260px !important;
@@ -711,16 +650,15 @@ main {
 .timeline-card-header-button:hover {
   opacity: 0.9;
 }
-/* Ensure year dotted lines are visible and don't overflow */
+
 .timeline-year-dotted-line {
   opacity: 0.4;
 }
 
-/* Make the central line transition zones clear */
 .timeline-track svg line {
   transition: stroke-dasharray 0.2s ease;
 }
-/* Make connector lines and dots interactive */
+
 .timeline-dot {
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
@@ -735,7 +673,6 @@ main {
   opacity: 1 !important;
   background-color: var(--accent-gold) !important;
 }
-/* Ensure dots and polylines are interactive */
 .timeline-track circle {
   transition: r 0.1s ease, filter 0.1s ease;
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
@@ -743,4 +680,131 @@ main {
 .timeline-track polyline {
   transition: opacity 0.15s ease, stroke 0.15s ease;
   pointer-events: stroke;
+}
+
+/* ------------------------------------------------------------
+   MAP MARKERS – INTERACTIVITÉ AMÉLIORÉE
+------------------------------------------------------------ */
+.leaflet-container .leaflet-div-icon.map-marker,
+.leaflet-div-icon.map-marker {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin-left: -14px !important;
+  margin-top: -14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+}
+
+.map-marker-shape {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 0 !important; /* Carré */
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.map-marker:hover .map-marker-shape {
+  transform: scale(1.2) !important;
+  box-shadow: 0 0 0 4px rgba(185, 147, 90, 0.3) !important;
+}
+
+/* Leaflet tooltip */
+.leaflet-tooltip {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 0.25rem 0.6rem !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.8rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  margin-top: -4px !important;
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: var(--border-default) !important;
+}
+
+/* Légende de la carte – hauteur adaptative */
+.map-legend {
+  height: 70vh; /* Desktop */
+}
+
+@media (max-width: 900px) {
+  .map-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-layout > div:first-child {
+    height: 50vh !important;
+  }
+
+  .map-legend {
+    height: auto !important;
+    max-height: none !important;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Conteneur de filtres dans la légende */
+.legend-filters-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-filter-pill {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+.legend-filter-label {
+  flex: 1;
+  text-align: left;
+}
+
+.legend-filter-count {
+  margin-left: 0.5rem;
+  opacity: 0.8;
+}
+
+/* Mobile : deux colonnes */
+@media (max-width: 640px) {
+  .legend-filters-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .legend-filter-pill {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .legend-filter-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Très petit écran : une colonne */
+@media (max-width: 400px) {
+  .legend-filters-container {
+    grid-template-columns: 1fr;
+  }
 }

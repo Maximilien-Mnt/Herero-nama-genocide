@@ -1,3 +1,5 @@
+// lib/types.ts
+
 export type EventTag =
   | "herero"
   | "nama"
@@ -6,6 +8,27 @@ export type EventTag =
   | "aftermath"
   | "memory";
 
+export type PlaceType =
+  | "city"
+  | "battlefield"
+  | "camp"
+  | "memorial"
+  | "mountain"
+  | "coastal"
+  | "desert"
+  | "other";
+
+// Les 8 types d'événements unifiés
+export type EventType =
+  | "battle"
+  | "massacre"
+  | "camp"
+  | "political"
+  | "resistance"
+  | "testimony"
+  | "memorial"
+  | "other";
+
 export interface TimelineEvent {
   id: string;
   date: string;
@@ -13,6 +36,7 @@ export interface TimelineEvent {
   title: string;
   summary: string;
   tags: EventTag[];
+  eventType: EventType; // remplace "category"
   relatedPlaceIds: string[];
   relatedDocumentIds: string[];
   relatedHistorySlugs: string[];
@@ -30,6 +54,8 @@ export interface Place {
   yearLabel: string;
   description: string;
   relatedEventIds: string[];
+  eventType: EventType; // remplace "primaryCategory"
+  placeType: PlaceType;
 }
 
 export type DocumentType =

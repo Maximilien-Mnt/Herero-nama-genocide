@@ -5,23 +5,58 @@
 // Il gère le filtrage des lieux par période (PlacePeriod) et l'affichage des détails d'un lieu sélectionné. 
 // Les marqueurs sont stylisés avec des DivIcon personnalisés et colorés selon leur période.
 
-import { useEffect, useMemo, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import type { Place, PlacePeriod } from "@/lib/types";
+import type { Place, PlacePeriod, EventType } from "@/lib/types";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FilterPill } from "@/components/FilterPill";
 import { CrossLinkTag } from "@/components/CrossLink";
 import { getEventById } from "@/lib/content";
 
-const PERIOD_LABEL: Record<PlacePeriod, string> = {
-  before: "Avant 1904",
-  "1904-1908": "1904–1908",
-  after: "Après / contemporain",
+// --- 8 catégories d'événements avec leurs libellés et couleurs ---
+export const EVENT_CATEGORIES = [
+  "battle",
+  "massacre",
+  "camp",
+  "political",
+  "resistance",
+  "testimony",
+  "memorial",
+  "other",
+] as const;
+
+const CATEGORY_LABELS: Record<EventType, string> = {
+  battle: "Schlacht / Krieg",
+  massacre: "Massaker / Vertreibung",
+  camp: "Konzentrationslager",
+  political: "Politische Entscheidung",
+  resistance: "Widerstand / Aufstand",
+  testimony: "Zeugnis / Bericht",
+  memorial: "Gedenken / Erinnerung",
+  other: "Anderes",
 };
 
+const CATEGORY_COLORS: Record<EventType, string> = {
+  battle: "#B85C5C",
+  massacre: "#C77D40",
+  camp: "#6A4E9E",
+  political: "#B8935A",
+  resistance: "#4D9E6A",
+  testimony: "#4A7A9E",
+  memorial: "#9E6A9E",
+  other: "#7D6E5D",
+};
+
+const PERIOD_LABEL: Record<PlacePeriod, string> = {
+  before: "Vor 1904",
+  "1904-1908": "1904–1908",
+  after: "Nach / zeitgenössisch",
+};
+
+// --- Composants utilitaires Leaflet ---
 function MapFlyTo({ place }: { place: Place | null }) {
   const map = useMap();
   useEffect(() => {
@@ -44,51 +79,98 @@ function FixLeafletDefaultIcons() {
   return null;
 }
 
-const PERIOD_ORDER: PlacePeriod[] = ["before", "1904-1908", "after"];
-
-function markerIcon(period: PlacePeriod) {
+// Crée une icône carrée – la couleur sera appliquée via useEffect
+function markerIcon() {
   return L.divIcon({
-    className: "",
-    html: `<div class="map-marker map-marker--${period}"></div>`,
-    iconSize: [22, 22],
-    iconAnchor: [11, 11],
-    popupAnchor: [0, -10],
+    className: "map-marker",
+    html: `<div class="map-marker-shape"></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    popupAnchor: [0, -14],
+    tooltipAnchor: [0, -14],
   });
 }
 
+// --- Composant principal ---
 export function MapClient({ places }: { places: Place[] }) {
-  const search = useSearchParams();
-  const highlightId = search.get("place");
-  const [periodFilter, setPeriodFilter] = useState<PlacePeriod | "all">("all");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const highlightId = searchParams.get("place");
 
-  const filtered = useMemo(() => {
-    if (periodFilter === "all") return places;
-    return places.filter((p) => p.period === periodFilter);
-  }, [places, periodFilter]);
+  const [activeFilters, setActiveFilters] = useState<Set<EventType>>(new Set());
+  const markerRefs = useRef<Record<string, L.Marker>>({});
 
-  const highlighted = useMemo(
+  const selectedPlace = useMemo(
     () => (highlightId ? places.find((p) => p.id === highlightId) ?? null : null),
-    [highlightId, places],
+    [highlightId, places]
   );
+
+  // Filtrage par type d'événement
+  const filteredPlaces = useMemo(() => {
+    if (activeFilters.size === 0) return places;
+    return places.filter((place) => activeFilters.has(place.eventType));
+  }, [places, activeFilters]);
+
+  // Compteurs pour la légende
+  const categoryCounts = useMemo(() => {
+    const counts: Record<EventType, number> = {} as any;
+    EVENT_CATEGORIES.forEach((cat) => (counts[cat] = 0));
+    places.forEach((place) => {
+      const cat = place.eventType;
+      if (counts[cat] !== undefined) counts[cat]++;
+    });
+    return counts;
+  }, [places]);
+
+  // Applique la couleur de fond après que les marqueurs sont ajoutés
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      Object.entries(markerRefs.current).forEach(([id, marker]) => {
+        const el = marker.getElement();
+        if (!el) return;
+        const shape = el.querySelector(".map-marker-shape") as HTMLElement | null;
+        if (!shape) return;
+        const place = places.find((p) => p.id === id);
+        if (!place) return;
+        const color = CATEGORY_COLORS[place.eventType];
+        shape.style.backgroundColor = color;
+      });
+    }, 50);
+    return () => clearTimeout(timeout);
+  }, [filteredPlaces, places]);
+
+  // Ouvre la popup du lieu sélectionné après le zoom
+  useEffect(() => {
+    if (selectedPlace && markerRefs.current[selectedPlace.id]) {
+      setTimeout(() => {
+        markerRefs.current[selectedPlace.id].openPopup();
+      }, 800);
+    }
+  }, [selectedPlace]);
+
+  const handleMarkerClick = (place: Place) => {
+    router.push(`/carte?place=${place.id}`, { scroll: false });
+  };
+
+  const toggleFilter = (cat: EventType) => {
+    setActiveFilters((prev) => {
+      const next = new Set(prev);
+      if (next.has(cat)) next.delete(cat);
+      else next.add(cat);
+      return next;
+    });
+  };
+
+  const clearFilters = () => setActiveFilters(new Set());
 
   return (
     <div>
       <p style={{ color: "var(--text-muted)", maxWidth: "44rem" }}>
-        Carte pédagogique : fond OpenStreetMap. Les points sont filtrables par période ; le partage
-        d’URL avec <code>?place=…</code> ouvre le lieu correspondant (ex. lien depuis la chronologie).
+        Didaktische Karte. Die Farben zeigen den Ereignistyp des Ortes.
       </p>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", margin: "1rem 0" }}>
-        <FilterPill active={periodFilter === "all"} onClick={() => setPeriodFilter("all")}>
-          Toutes périodes
-        </FilterPill>
-        {PERIOD_ORDER.map((p) => (
-          <FilterPill key={p} active={periodFilter === p} onClick={() => setPeriodFilter(p)}>
-            {PERIOD_LABEL[p]}
-          </FilterPill>
-        ))}
-      </div>
 
-      <div className="map-layout" style={{ gap: "1rem", alignItems: "start" }}>
+      <div className="map-layout" style={{ gap: "1rem", alignItems: "stretch", marginTop: "1.5rem" }}>
+        {/* Carte */}
         <div
           style={{
             height: "70vh",
@@ -97,30 +179,40 @@ export function MapClient({ places }: { places: Place[] }) {
             border: "1px solid var(--border-subtle)",
           }}
         >
-          <MapContainer
-            center={[-22.5, 17.5]}
-            zoom={6}
-            scrollWheelZoom
-            style={{ height: "100%", width: "100%" }}
-          >
+          <MapContainer center={[-22.5, 17.5]} zoom={6} scrollWheelZoom style={{ height: "100%", width: "100%" }}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <FixLeafletDefaultIcons />
-            <MapFlyTo place={highlighted} />
-            {filtered.map((p) => (
-              <Marker key={p.id} position={[p.lat, p.lng]} icon={markerIcon(p.period)}>
+            <MapFlyTo place={selectedPlace} />
+
+            {filteredPlaces.map((place) => (
+              <Marker
+                key={place.id}
+                position={[place.lat, place.lng]}
+                icon={markerIcon()}
+                ref={(ref) => {
+                  if (ref) markerRefs.current[place.id] = ref;
+                }}
+                eventHandlers={{
+                  click: () => handleMarkerClick(place),
+                  mouseover: (e) => e.target.openTooltip(),
+                  mouseout: (e) => e.target.closeTooltip(),
+                }}
+              >
+                <Tooltip permanent={false} direction="top" offset={[0, -14]}>
+                  <strong>{place.name}</strong>
+                </Tooltip>
                 <Popup>
-                  <strong>{p.name}</strong>
-                  <div style={{ fontSize: "0.85rem", marginTop: "0.35rem" }}>{p.description}</div>
-                  <div style={{ marginTop: "0.35rem", fontSize: "0.8rem", color: "#444" }}>
-                    {PERIOD_LABEL[p.period]} — {p.yearLabel}
+                  <strong>{place.name}</strong>
+                  <div style={{ fontSize: "0.85rem", marginTop: "0.35rem" }}>
+                    {place.description.length > 80
+                      ? place.description.slice(0, 80) + "…"
+                      : place.description}
                   </div>
                   <div style={{ marginTop: "0.5rem" }}>
-                    <Link href={`/carte?place=${p.id}`}>Lien</Link>
-                    {" · "}
-                    <Link href="/chronologie">Chronologie</Link>
+                    <Link href={`/carte?place=${place.id}`}>Details anzeigen →</Link>
                   </div>
                 </Popup>
               </Marker>
@@ -128,73 +220,117 @@ export function MapClient({ places }: { places: Place[] }) {
           </MapContainer>
         </div>
 
-        <aside className="card" style={{ position: "sticky", top: 72 }}>
-          <h3 style={{ marginTop: 0, marginBottom: "0.75rem" }}>Légende & lieu</h3>
-
-          <div style={{ marginBottom: "1rem" }}>
-            <div
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Périodes
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.6rem" }}>
-              {PERIOD_ORDER.map((p) => (
-                <div key={p} style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
-                  <span
-                    aria-hidden
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 999,
-                      background:
-                        p === "before"
-                          ? "var(--accent-sage)"
-                          : p === "1904-1908"
-                            ? "var(--accent-gold)"
-                            : "var(--accent-rust)",
-                      border: "1px solid rgba(255,255,255,0.12)",
-                    }}
-                  />
-                  <span style={{ color: "var(--text-body)", fontSize: "0.9rem" }}>{PERIOD_LABEL[p]}</span>
-                </div>
-              ))}
-            </div>
+        {/* Légende interactive */}
+        <aside
+          className="card map-legend"
+          style={{
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <h3 style={{ margin: 0 }}>Legende</h3>
+            {activeFilters.size > 0 && (
+              <button
+                onClick={clearFilters}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "var(--accent-warm)",
+                  cursor: "pointer",
+                  fontSize: "0.8rem",
+                  textDecoration: "underline",
+                }}
+              >
+                Alle anzeigen
+              </button>
+            )}
           </div>
 
-          {highlighted ? (
-            <div id={`place-${highlighted.id}`} style={{ scrollMarginTop: "6.5rem" }}>
-              <h3 style={{ marginTop: 0, marginBottom: "0.5rem", fontSize: "1rem", fontWeight: 500 }}>
-                {highlighted.name}
-              </h3>
-              <p style={{ margin: "0 0 0.75rem", color: "var(--text-body)" }}>{highlighted.description}</p>
+          {/* Conteneur responsive pour les filtres */}
+          <div className="legend-filters-container">
+            {EVENT_CATEGORIES.map((cat) => {
+              const count = categoryCounts[cat];
+              const isActive = activeFilters.has(cat);
+              return (
+                <FilterPill
+                  key={cat}
+                  active={isActive}
+                  onClick={() => toggleFilter(cat)}
+                  className="legend-filter-pill"
+                >
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: 16,
+                      height: 16,
+                      borderRadius: 0, // carré
+                      backgroundColor: CATEGORY_COLORS[cat],
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <span className="legend-filter-label">{CATEGORY_LABELS[cat]}</span>
+                  <span className="legend-filter-count">({count})</span>
+                </FilterPill>
+              );
+            })}
+          </div>
 
-              <div className="crosslink-tags" style={{ marginTop: 0 }} aria-label="Liens croisés du lieu">
-                {highlighted.relatedEventIds.map((id) => {
-                  const ev = getEventById(id);
-                  if (!ev) return null;
-                  return (
-                    <CrossLinkTag
-                      key={id}
-                      href={`/chronologie#${id}`}
-                      icon="📅"
-                      label={ev.title}
-                      sectionId={id}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            <p style={{ margin: 0, color: "var(--text-muted)" }}>Sélectionnez un lieu via l’URL ou un marqueur.</p>
-          )}
+          <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.75rem" }}>
+            Klicken Sie auf einen Filter, um die Karte einzuschränken.
+          </p>
         </aside>
       </div>
+
+      {/* Boîte de détails */}
+      {selectedPlace && (
+        <div
+          className="card"
+          style={{
+            marginTop: "2rem",
+            padding: "1.5rem",
+          }}
+        >
+          <h2 style={{ marginTop: 0, marginBottom: "0.5rem", fontSize: "1.75rem" }}>
+            {selectedPlace.name}
+          </h2>
+          <p style={{ marginBottom: "1rem", color: "var(--text-body)" }}>{selectedPlace.description}</p>
+          <div style={{ display: "flex", gap: "2rem", marginBottom: "1.5rem" }}>
+            <div>
+              <span style={{ color: "var(--text-muted)" }}>Zeitraum: </span>
+              <span>{PERIOD_LABEL[selectedPlace.period]}</span>
+            </div>
+            <div>
+              <span style={{ color: "var(--text-muted)" }}>Jahr: </span>
+              <span>{selectedPlace.yearLabel}</span>
+            </div>
+            <div>
+              <span style={{ color: "var(--text-muted)" }}>Kategorie: </span>
+              <span>{CATEGORY_LABELS[selectedPlace.eventType]}</span>
+            </div>
+          </div>
+          <div>
+            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.75rem" }}>Verknüpfte Ereignisse</h3>
+            <div className="crosslink-tags">
+              {selectedPlace.relatedEventIds.map((id) => {
+                const ev = getEventById(id);
+                if (!ev) return null;
+                return (
+                  <CrossLinkTag
+                    key={id}
+                    href={`/chronologie#${id}`}
+                    icon="📅"
+                    label={ev.title}
+                    sectionId={id}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,9 @@
     "period": "after",
     "yearLabel": "1900–heute",
     "description": "Administrativer Dreh- und Angelpunkt der Kolonie, dann namibische Hauptstadt; Ort von Land- und Erinnerungspolitik.",
-    "relatedEventIds": ["evt-002", "evt-012", "evt-014", "evt-016", "evt-017"]
+    "relatedEventIds": ["evt-002", "evt-012", "evt-014", "evt-016", "evt-017"],
+    "eventType": "political",
+    "placeType": "city"
   },
   {
     "id": "place-okahandja",
@@ -17,7 +19,9 @@
     "period": "1904-1908",
     "yearLabel": "1903–1904",
     "description": "Politisches Gravitationszentrum der Herero vor der militärischen Eskalation; Nähe zu Mobilisierungsrouten.",
-    "relatedEventIds": ["evt-003", "evt-004"]
+    "relatedEventIds": ["evt-003", "evt-004"],
+    "eventType": "battle",
+    "placeType": "city"
   },
   {
     "id": "place-waterberg",
@@ -27,7 +31,9 @@
     "period": "1904-1908",
     "yearLabel": "1904",
     "description": "Schauplatz einer entscheidenden Schlacht; Flucht der Bevölkerung nach Osten und in die Wüste.",
-    "relatedEventIds": ["evt-005"]
+    "relatedEventIds": ["evt-005"],
+    "eventType": "battle",
+    "placeType": "battlefield"
   },
   {
     "id": "place-omaheke",
@@ -37,7 +43,9 @@
     "period": "1904-1908",
     "yearLabel": "1904–1905",
     "description": "Vertreibungszonen, in denen der Zugang zu Wasser zum Hebel des Todes durch Ausschluss wird.",
-    "relatedEventIds": ["evt-007"]
+    "relatedEventIds": ["evt-007"],
+    "eventType": "massacre",
+    "placeType": "desert"
   },
   {
     "id": "place-luderitz",
@@ -47,7 +55,9 @@
     "period": "1904-1908",
     "yearLabel": "1904–1908",
     "description": "Hafen und Durchgangspunkt zu küstennahen Haftstätten.",
-    "relatedEventIds": ["evt-010"]
+    "relatedEventIds": ["evt-010"],
+    "eventType": "camp",
+    "placeType": "coastal"
   },
   {
     "id": "place-shark-island",
@@ -57,7 +67,9 @@
     "period": "1904-1908",
     "yearLabel": "1904–1908",
     "description": "Küsteninternierungslager; laut mehreren Sekundärzeugnissen hohe Sterblichkeit.",
-    "relatedEventIds": ["evt-010", "evt-020"]
+    "relatedEventIds": ["evt-010", "evt-020"],
+    "eventType": "camp",
+    "placeType": "camp"
   },
   {
     "id": "place-keetmanshoop",
@@ -67,7 +79,9 @@
     "period": "1904-1908",
     "yearLabel": "1904–1906",
     "description": "Nama-Sektor und Routen des Kleinkriegs gegen Koloniallinien.",
-    "relatedEventIds": ["evt-008", "evt-009"]
+    "relatedEventIds": ["evt-008", "evt-009"],
+    "eventType": "battle",
+    "placeType": "battlefield"
   },
   {
     "id": "place-ai-ais",
@@ -77,7 +91,9 @@
     "period": "1904-1908",
     "yearLabel": "1905",
     "description": "Orte der Kapitulation und erzwungenen Zerstreuung der Nama in späteren Kriegsphasen.",
-    "relatedEventIds": ["evt-009"]
+    "relatedEventIds": ["evt-009"],
+    "eventType": "political",
+    "placeType": "mountain"
   },
   {
     "id": "place-swakopmund",
@@ -87,6 +103,20 @@
     "period": "1904-1908",
     "yearLabel": "1904–1908",
     "description": "Koloniale Logistikdrehscheibe und Durchgangsort für Gefangene zur Küste.",
-    "relatedEventIds": ["evt-010"]
+    "relatedEventIds": ["evt-010"],
+    "eventType": "camp",
+    "placeType": "coastal"
+  },
+  {
+    "id": "place-exemple",
+    "name": "Exemple 1",
+    "lat": -28.5,
+    "lng": 15,
+    "period": "1904-1908",
+    "yearLabel": "1905",
+    "description": "Orte der Kapitulation und erzwungenen Zerstreuung der Nama in späteren Kriegsphasen.",
+    "relatedEventIds": ["evt-009"],
+    "eventType": "other",
+    "placeType": "mountain"
   }
 ]

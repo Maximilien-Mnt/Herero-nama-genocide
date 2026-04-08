@@ -1,3 +1,4 @@
+// ./components/documents/DocumentsFiltersClient.tsx
 "use client";
 
 import { useMemo, useState } from "react";
@@ -9,11 +10,11 @@ import { Grid, LayoutGrid, List } from "lucide-react";
 type ViewMode = "grid" | "gallery" | "list";
 
 const FILTERS: Array<{ value: DocumentType | "all"; label: string }> = [
-  { value: "all", label: "Tout" },
-  { value: "photograph", label: "Photo" },
-  { value: "map", label: "Carte" },
-  { value: "text", label: "Texte" },
-  { value: "artifact", label: "Artefact" },
+  { value: "all", label: "Alle" },
+  { value: "photograph", label: "Foto" },
+  { value: "map", label: "Karte" },
+  { value: "text", label: "Text" },
+  { value: "artifact", label: "Artefakt" },
 ];
 
 export function DocumentsFiltersClient({ documents }: { documents: HistoricalDocument[] }) {
@@ -54,23 +55,23 @@ export function DocumentsFiltersClient({ documents }: { documents: HistoricalDoc
           <button
             onClick={() => setViewMode("grid")}
             className={`view-switch-btn ${viewMode === "grid" ? "view-switch-btn--active" : ""}`}
-            aria-label="Vue grille compacte"
-            title="Grille compacte"
+            aria-label="Kompakte Rasteransicht"
+            title="Kompaktes Raster"
           >
             <Grid size={18} />
           </button>
           <button
             onClick={() => setViewMode("gallery")}
             className={`view-switch-btn ${viewMode === "gallery" ? "view-switch-btn--active" : ""}`}
-            aria-label="Vue galerie aérée"
-            title="Galerie aérée"
+            aria-label="Luftige Galerieansicht"
+            title="Luftige Galerie"
           >
             <LayoutGrid size={18} />
           </button>
           <button
             onClick={() => setViewMode("list")}
             className={`view-switch-btn ${viewMode === "list" ? "view-switch-btn--active" : ""}`}
-            aria-label="Vue liste"
+            aria-label="Listenansicht"
             title="Liste"
           >
             <List size={18} />

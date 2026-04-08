@@ -1,3 +1,4 @@
+// ./components/charts/StatsCharts.tsx
 "use client";
 import type { Dataset } from "@/lib/types";
 import {
@@ -47,24 +48,24 @@ const CustomTooltip = ({ active, payload, label, unit }: any) => {
 };
 
 function ChartForDataset({ ds }: { ds: Dataset }) {
-  const unitLabel = ds.unit ?? "valeur";
+  const unitLabel = ds.unit ?? "Wert";
   const legendName = unitLabel;
 
   const commonFooter = (
     <div style={{ marginTop: "0.75rem" }}>
       <div style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>
-        <strong style={{ color: "var(--text-primary)" }}>Source :</strong> {ds.sourceCitation}
+        <strong style={{ color: "var(--text-primary)" }}>Quelle:</strong> {ds.sourceCitation}
       </div>
       {ds.notes && (
         <div style={{ marginTop: "0.35rem", fontSize: "0.875rem", color: "var(--text-body)" }}>
-          <strong style={{ color: "var(--text-primary)" }}>Note :</strong> {ds.notes}
+          <strong style={{ color: "var(--text-primary)" }}>Hinweis:</strong> {ds.notes}
         </div>
       )}
     </div>
   );
 
   const crosslinks = ds.relatedEventIds.length > 0 && (
-    <div className="crosslink-tags" aria-label="Liens croisés vers la chronologie">
+    <div className="crosslink-tags" aria-label="Querverweise zur Chronologie">
       {ds.relatedEventIds.map((id) => {
         const ev = getEventById(id);
         if (!ev) return null;
@@ -207,11 +208,10 @@ function ChartForDataset({ ds }: { ds: Dataset }) {
 export function StatsCharts({ datasets }: { datasets: Dataset[] }) {
   return (
     <div>
-      {/* Removed maxWidth constraint to allow full width */}
       <p style={{ color: "var(--text-muted)" }}>
-        Les graphiques ci-dessous incluent des <strong>valeurs pédagogiques</strong> (à compléter avec un tableau sourcé).
-        Les visuels citent une piste de référence ; pour les limites méthodologiques, voir{" "}
-        <a href="/methodologie">Méthodologie</a>.
+        Die folgenden Diagramme enthalten <strong>didaktische Werte</strong> (zu ergänzen durch eine belegte Tabelle).
+        Die Visualisierungen geben eine Referenz an; zu methodischen Grenzen siehe{" "}
+        <a href="/methodologie">Methodik</a>.
       </p>
       {datasets.map((ds, i) => (
         <Reveal key={ds.id} delayMs={i * 80}>

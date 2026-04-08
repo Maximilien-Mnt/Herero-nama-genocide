@@ -1,3 +1,4 @@
+// ./components/timeline/HorizontalTimeline.tsx
 "use client";
 
 import { useRef, useMemo, useState, useEffect } from "react";

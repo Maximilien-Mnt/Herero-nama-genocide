@@ -1,3 +1,4 @@
+// ./components/documents/DocumentsGallery.tsx
 "use client";
 import { useState, useEffect } from "react";
 import Lightbox from "yet-another-react-lightbox";
@@ -71,7 +72,7 @@ function DocumentDetailModal({
         <button
           className="modal-close"
           onClick={onClose}
-          aria-label="Fermer"
+          aria-label="Schließen"
           style={{
             position: "absolute",
             top: "0.75rem",
@@ -101,7 +102,7 @@ function DocumentDetailModal({
                 display: "block",
                 width: "100%",
               }}
-              aria-label="Agrandir l'image"
+              aria-label="Bild vergrößern"
             >
               <div
                 className={`document-thumb ${
@@ -114,12 +115,12 @@ function DocumentDetailModal({
                   src={document.thumbPath}
                   alt={
                     document.sensitive
-                      ? "Contenu sensible — cliquer pour révéler agrandi"
+                      ? "Sensibler Inhalt – zum Vergrößern klicken"
                       : document.title
                   }
                 />
                 <div className="document-thumb-overlay" aria-hidden>
-                  Agrandir →
+                  Vergrößern →
                 </div>
               </div>
             </button>
@@ -144,7 +145,7 @@ function DocumentDetailModal({
                     background: "rgba(155, 90, 60, 0.15)",
                   }}
                 >
-                  Sensible
+                  Sensibel
                 </span>
               )}
               {document.year && <span className="theme-tag">{document.year}</span>}
@@ -153,9 +154,9 @@ function DocumentDetailModal({
             <p style={{ margin: "0 0 1rem" }}>{document.blurb}</p>
 
             <p style={{ margin: "0 0 0.5rem", fontSize: "0.9rem" }}>
-              <span style={{ color: "var(--text-muted)" }}>Crédit :</span> {document.credit}
+              <span style={{ color: "var(--text-muted)" }}>Credit:</span> {document.credit}
               <br />
-              <span style={{ color: "var(--text-muted)" }}>Licence :</span> {document.licenseNote}
+              <span style={{ color: "var(--text-muted)" }}>Lizenz:</span> {document.licenseNote}
             </p>
 
             <div className="crosslink-tags" style={{ marginTop: "1rem" }}>

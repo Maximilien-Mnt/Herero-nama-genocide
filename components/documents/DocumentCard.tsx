@@ -1,3 +1,4 @@
+// ./components/documents/DocumentCard.tsx
 import type { HistoricalDocument, DocumentType } from "@/lib/types";
 import { CrossLinkTag } from "@/components/CrossLink";
 import {
@@ -9,17 +10,17 @@ import {
 function documentTypeLabel(t: DocumentType): string {
   switch (t) {
     case "photograph":
-      return "Photo";
+      return "Foto";
     case "map":
-      return "Carte";
+      return "Karte";
     case "newspaper":
       return "Presse";
     case "artifact":
-      return "Artefact";
+      return "Artefakt";
     case "text":
-      return "Texte";
+      return "Text";
     case "other":
-      return "Autre";
+      return "Sonstiges";
   }
 }
 
@@ -56,10 +57,10 @@ export function DocumentCard({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={document.thumbPath}
-        alt={document.sensitive ? "Contenu sensible — cliquer pour révéler agrandi" : document.title}
+        alt={document.sensitive ? "Sensibler Inhalt – zum Vergrößern klicken" : document.title}
       />
       <div className="document-thumb-overlay" aria-hidden>
-        Voir →
+        Ansehen →
       </div>
     </div>
   );
@@ -86,7 +87,7 @@ export function DocumentCard({
               background: "rgba(155, 90, 60, 0.15)",
             }}
           >
-            Sensible
+            Sensibel
           </span>
         ) : null}
       </div>
@@ -110,11 +111,11 @@ export function DocumentCard({
       </p>
 
       <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--text-body)" }}>
-        <span style={{ color: "var(--text-muted)" }}>Crédit :</span> {document.credit}.{" "}
-        <span style={{ color: "var(--text-muted)" }}>Licence :</span> {document.licenseNote}
+        <span style={{ color: "var(--text-muted)" }}>Credit:</span> {document.credit}.{" "}
+        <span style={{ color: "var(--text-muted)" }}>Lizenz:</span> {document.licenseNote}
       </p>
 
-      <div className="crosslink-tags" aria-label="Liens croisés du document">
+      <div className="crosslink-tags" aria-label="Querverweise des Dokuments">
         {document.relatedEventIds.map((id) => {
           const ev = getEventById(id);
           if (!ev) return null;
@@ -166,7 +167,7 @@ export function DocumentCard({
           type="button"
           onClick={onOpen}
           style={{ all: "unset", cursor: "pointer", display: "block", width: "100%" }}
-          aria-label={`Voir : ${document.title}`}
+          aria-label={`Ansehen: ${document.title}`}
         >
           <div style={{ display: "flex", gap: "1rem", alignItems: "stretch" }}>
             {thumbnail}
@@ -188,7 +189,7 @@ export function DocumentCard({
         type="button"
         onClick={onOpen}
         style={{ all: "unset", cursor: "pointer", display: "block", width: "100%" }}
-        aria-label={`Voir : ${document.title}`}
+        aria-label={`Ansehen: ${document.title}`}
       >
         {thumbnail}
         {meta}

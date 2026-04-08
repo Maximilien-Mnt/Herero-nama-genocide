@@ -1,3 +1,4 @@
+// ./components/histoire/HistoireChapterLayout.tsx
 "use client";
 
 // Il gère la structure de chaque chapitre MDX, y compris la génération d'une table des matières (TOC) et l'affichage des liens croisés vers d'autres sections du site.
@@ -103,7 +104,7 @@ export function HistoireChapterLayout({
       >
         <div className="card" style={{ padding: "1rem", background: "rgba(255,255,255,0.02)" }}>
           <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)" }}>
-            Table des matières
+            Inhaltsverzeichnis
           </div>
           <ul style={{ listStyle: "none", padding: 0, margin: "0.75rem 0 0", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {toc.slice(0, 12).map((item) => (
@@ -124,7 +125,7 @@ export function HistoireChapterLayout({
 
           <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid var(--border-subtle)" }}>
             <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)" }}>
-              Liens liés
+              Verknüpfte Links
             </div>
 
             <div className="crosslink-tags" style={{ marginTop: "0.75rem" }}>
@@ -166,7 +167,7 @@ export function HistoireChapterLayout({
           {children}
         </div>
 
-        <div className="crosslink-tags" aria-label="Liens croisés du chapitre" style={{ marginTop: "1.25rem" }}>
+        <div className="crosslink-tags" aria-label="Querverweise des Kapitels" style={{ marginTop: "1.25rem" }}>
           {related.events.map((ev) => (
             <CrossLinkTag
               key={ev.id}
@@ -237,4 +238,3 @@ export function HistoireChapterLayout({
     </div>
   );
 }
-

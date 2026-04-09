@@ -97,7 +97,7 @@ a:hover {
 }
 
 main {
-  padding-bottom: 4rem;
+  padding-bottom: 10px;
 }
 
 .page-container {
@@ -738,7 +738,7 @@ main {
   height: 70vh; /* Desktop */
 }
 
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   .map-layout {
     display: flex;
     flex-direction: column;
@@ -782,8 +782,8 @@ main {
   opacity: 0.8;
 }
 
-/* Mobile : deux colonnes */
-@media (max-width: 640px) {
+/* Légende SOUS la carte (< 900px) : deux colonnes si l'écran est assez large (≥ 540px) */
+@media (max-width: 899px) and (min-width: 540px) {
   .legend-filters-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -792,7 +792,7 @@ main {
 
   .legend-filter-pill {
     padding: 0.5rem 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   .legend-filter-label {
@@ -802,9 +802,26 @@ main {
   }
 }
 
-/* Très petit écran : une colonne */
-@media (max-width: 400px) {
+/* Écran très étroit (< 540px) : retour à une colonne */
+@media (max-width: 539px) {
   .legend-filters-container {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
+}
+/* Marqueur sélectionné */
+.map-marker--selected {
+  z-index: 1000 !important;
+}
+
+.map-marker--selected .map-marker-shape {
+  border: 3px solid var(--text-primary) !important;
+  box-shadow: 0 0 0 4px rgba(185, 147, 90, 0.4) !important;
+  transform: scale(1.1);
+  transition: all 0.15s ease;
+}
+
+/* Optionnel : ajuster la transition pour une animation fluide */
+.map-marker-shape {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border 0.15s ease;
 }

@@ -1,4 +1,5 @@
 // ./components/timeline/HorizontalTimeline.tsx
+
 "use client";
 
 import { useRef, useMemo, useState, useEffect } from "react";
@@ -6,7 +7,6 @@ import type { TimelineEvent } from "@/lib/types";
 import { TimelineEventCard } from "./TimelineEvent";
 import { parse, differenceInDays, startOfYear } from "date-fns";
 import { de } from "date-fns/locale";
-import React from "react";
 
 // ---------- helpers ----------
 function parseEventDate(dateStr: string): Date {
@@ -34,6 +34,27 @@ function parseEventDate(dateStr: string): Date {
 
   return new Date(1900, 0, 1);
 }
+
+function getTagColor(tag: string): string {
+  switch (tag) {
+    case "herero": return "var(--color-herero)";
+    case "nama": return "var(--color-nama)";
+    case "colonial": return "var(--color-colonial)";
+    case "military": return "var(--color-military)";
+    case "aftermath": return "var(--accent-rust)";
+    case "memory": return "var(--color-memory)";
+    default: return "var(--accent-gold)";
+  }
+}
+
+// Constantes
+const CARD_WIDTH = 300;
+const CARD_MIN_HEIGHT = 120;
+const CARD_EXPANDED_EXTRA = 140; // hauteur supplémentaire en mode étendu
+const LANE_HEIGHT = 180; // espace vertical réservé par voie
+const TIMELINE_Y = 60; // position Y de la ligne centrale
+const DOT_RADIUS = 8;
+const CARD_TOP_MARGIN = 30; // distance entre la ligne et le haut des cartes
 
 interface ScalingSegment {
   startYear: number;
@@ -69,6 +90,7 @@ function computeScalingSegments(events: TimelineEvent[], minYear: number, maxYea
   }
   segments.push({ startYear: currentStart, endYear: maxYear, pxPerYear: currentPx });
 
+  // Fusion des segments trop courts
   for (let i = 1; i < segments.length; i++) {
     const prev = segments[i-1];
     const curr = segments[i];
@@ -84,7 +106,7 @@ function computeScalingSegments(events: TimelineEvent[], minYear: number, maxYea
   return segments;
 }
 
-function buildYearToX(segments: ScalingSegment[], startYear: number): Map<number, number> {
+function buildYearToX(segments: ScalingSegment[]): Map<number, number> {
   const map = new Map<number, number>();
   let x = 200;
   for (const seg of segments) {
@@ -93,7 +115,7 @@ function buildYearToX(segments: ScalingSegment[], startYear: number): Map<number
       x += seg.pxPerYear;
     }
   }
-  const lastYear = segments[segments.length-1]?.endYear || startYear;
+  const lastYear = segments[segments.length-1]?.endYear || 1900;
   map.set(lastYear + 1, x + 100);
   return map;
 }
@@ -117,21 +139,6 @@ function getMajorTickInterval(pxPerYear: number): number {
   return 10;
 }
 
-// ---------- constants ----------
-const CARD_WIDTH = 300;
-const CARD_HALF = CARD_WIDTH / 2;
-const MIN_DISTANCE = 20;
-const MAX_SHIFT = 120;
-const SHIFT_STEP = 20;
-const LANE_HEIGHT = 140;
-
-const LANES = [
-  { id: 0, isAbove: true, yOffset: LANE_HEIGHT * 1 },
-  { id: 1, isAbove: true, yOffset: LANE_HEIGHT * 2 },
-  { id: 2, isAbove: false, yOffset: LANE_HEIGHT * 1 },
-];
-
-// ---------- main component ----------
 interface HorizontalTimelineProps {
   events: TimelineEvent[];
 }
@@ -140,9 +147,8 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const [, forceUpdate] = useState({});
 
-  // Date range
+  // Plage d'années
   const { minYear, maxYear } = useMemo(() => {
     if (events.length === 0) {
       const now = new Date();
@@ -152,7 +158,7 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
     return { minYear: Math.min(...years), maxYear: Math.max(...years) };
   }, [events]);
 
-  // Scaling segments and mapping
+  // Échelle horizontale
   const { segments, yearToX, pxPerYearAtYear, totalWidth } = useMemo(() => {
     if (events.length === 0) {
       const dummySeg = [{ startYear: minYear, endYear: maxYear, pxPerYear: 60 }];
@@ -161,7 +167,7 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
       return { segments: dummySeg, yearToX: dummyMap, pxPerYearAtYear: () => 60, totalWidth: 800 };
     }
     const segs = computeScalingSegments(events, minYear, maxYear);
-    const y2x = buildYearToX(segs, minYear);
+    const y2x = buildYearToX(segs);
     const getPx = (year: number) => {
       const seg = segs.find(s => year >= s.startYear && year <= s.endYear);
       return seg ? seg.pxPerYear : 60;
@@ -172,7 +178,7 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
     return { segments: segs, yearToX: y2x, pxPerYearAtYear: getPx, totalWidth: total };
   }, [events, minYear, maxYear]);
 
-  // Year markers (dotted vertical lines)
+  // Marqueurs d'années (lignes pointillées)
   const yearMarkers = useMemo(() => {
     const markers = [];
     for (let y = minYear; y <= maxYear; y++) {
@@ -182,7 +188,7 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
     return markers;
   }, [minYear, maxYear, yearToX]);
 
-  // Major ticks
+  // Graduations majeures
   const majorTicks = useMemo(() => {
     const ticks: { year: number; x: number; label: string }[] = [];
     for (let y = minYear; y <= maxYear; y++) {
@@ -196,101 +202,79 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
     return ticks.filter((t, i, arr) => arr.findIndex(a => a.year === t.year) === i);
   }, [minYear, maxYear, pxPerYearAtYear, yearToX]);
 
-  // Position events with lane assignment and horizontal shifting
-  const positionedEvents = useMemo(() => {
-    const eventsWithX = events.map(event => ({
+  // Calcul des positions X des points
+  const eventsWithX = useMemo(() => {
+    return events.map(event => ({
       event,
       dotX: getXForDate(parseEventDate(event.date), yearToX, pxPerYearAtYear),
     }));
-    eventsWithX.sort((a, b) => a.dotX - b.dotX);
+  }, [events, yearToX, pxPerYearAtYear]);
 
-    const laneOccupancy: { [laneId: number]: { left: number; right: number; cardX: number }[] } = { 0: [], 1: [], 2: [] };
+  // Placement des cartes dans des voies (toutes en dessous de la ligne)
+  const positionedEvents = useMemo(() => {
+    const sorted = [...eventsWithX].sort((a, b) => a.dotX - b.dotX);
+    const lanes: { x: number; width: number; eventId: string }[][] = [];
+    
     const result: {
       event: TimelineEvent;
       dotX: number;
       cardX: number;
-      laneId: number;
-      isAbove: boolean;
+      lane: number;
       yOffset: number;
     }[] = [];
 
-    for (const { event, dotX } of eventsWithX) {
-      let bestLane = -1;
-      let bestShift = 0;
-      let bestOverlap = Infinity;
-
-      for (const lane of LANES) {
-        const existing = laneOccupancy[lane.id];
-        for (let shift = -MAX_SHIFT; shift <= MAX_SHIFT; shift += SHIFT_STEP) {
-          const cardLeft = dotX + shift - CARD_HALF;
-          const cardRight = dotX + shift + CARD_HALF;
-          let overlaps = false;
-          for (const occ of existing) {
-            if (cardRight + MIN_DISTANCE > occ.left && cardLeft - MIN_DISTANCE < occ.right) {
-              overlaps = true;
-              break;
-            }
-          }
-          if (!overlaps) {
-            bestLane = lane.id;
-            bestShift = shift;
-            bestOverlap = 0;
-            break;
-          } else {
-            let totalOverlap = 0;
-            for (const occ of existing) {
-              const overlapLeft = Math.max(cardLeft, occ.left);
-              const overlapRight = Math.min(cardRight, occ.right);
-              if (overlapLeft < overlapRight) totalOverlap += overlapRight - overlapLeft;
-            }
-            if (totalOverlap < bestOverlap) {
-              bestOverlap = totalOverlap;
-              bestLane = lane.id;
-              bestShift = shift;
-            }
-          }
+    for (const { event, dotX } of sorted) {
+      const cardHalf = CARD_WIDTH / 2;
+      let placed = false;
+      
+      // Chercher une voie existante où la carte peut être placée sans chevauchement
+      for (let laneIdx = 0; laneIdx < lanes.length; laneIdx++) {
+        const lane = lanes[laneIdx];
+        // Vérifier le chevauchement avec les cartes déjà dans cette voie
+        const overlap = lane.some(card => 
+          Math.abs(card.x - dotX) < (card.width/2 + cardHalf + 20) // marge de 20px
+        );
+        if (!overlap) {
+          lane.push({ x: dotX, width: CARD_WIDTH, eventId: event.id });
+          result.push({
+            event,
+            dotX,
+            cardX: dotX,
+            lane: laneIdx,
+            yOffset: TIMELINE_Y + CARD_TOP_MARGIN + laneIdx * LANE_HEIGHT,
+          });
+          placed = true;
+          break;
         }
-        if (bestOverlap === 0) break;
       }
-
-      const lane = LANES.find(l => l.id === bestLane)!;
-      const finalCardX = dotX + bestShift;
-      laneOccupancy[bestLane].push({ left: finalCardX - CARD_HALF, right: finalCardX + CARD_HALF, cardX: finalCardX });
-      result.push({
-        event,
-        dotX,
-        cardX: finalCardX,
-        laneId: bestLane,
-        isAbove: lane.isAbove,
-        yOffset: lane.yOffset,
-      });
+      
+      // Si aucune voie ne convient, en créer une nouvelle
+      if (!placed) {
+        const newLane = [{ x: dotX, width: CARD_WIDTH, eventId: event.id }];
+        lanes.push(newLane);
+        result.push({
+          event,
+          dotX,
+          cardX: dotX,
+          lane: lanes.length - 1,
+          yOffset: TIMELINE_Y + CARD_TOP_MARGIN + (lanes.length - 1) * LANE_HEIGHT,
+        });
+      }
     }
-    return result;
-  }, [events, yearToX, pxPerYearAtYear]);
 
-  const lineY = LANES.filter(l => l.isAbove).reduce((max, l) => Math.max(max, l.yOffset), 0) + 40;
-  const trackHeight = lineY + LANES.filter(l => !l.isAbove).reduce((max, l) => Math.max(max, l.yOffset), 0) + 60;
+    return result;
+  }, [eventsWithX]);
+
+  const totalHeight = TIMELINE_Y + CARD_TOP_MARGIN + (positionedEvents.length > 0 
+    ? Math.max(...positionedEvents.map(p => p.lane)) * LANE_HEIGHT + 200 
+    : 200);
 
   const toggleExpand = (id: string) => {
     setExpandedId(prev => prev === id ? null : id);
-    setTimeout(() => forceUpdate({}), 50);
   };
 
-  useEffect(() => {
-    const observers: ResizeObserver[] = [];
-    positionedEvents.forEach(({ event }) => {
-      const cardEl = cardRefs.current.get(event.id);
-      if (cardEl) {
-        const observer = new ResizeObserver(() => forceUpdate({}));
-        observer.observe(cardEl);
-        observers.push(observer);
-      }
-    });
-    return () => observers.forEach(obs => obs.disconnect());
-  }, [positionedEvents, expandedId]);
-
-  const scrollToStart = () => scrollContainerRef.current?.scrollTo({ left: 0, behavior: "auto" });
-  const scrollToEnd = () => scrollContainerRef.current?.scrollTo({ left: totalWidth, behavior: "auto" });
+  const scrollToStart = () => scrollContainerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
+  const scrollToEnd = () => scrollContainerRef.current?.scrollTo({ left: totalWidth, behavior: "smooth" });
 
   if (events.length === 0) {
     return (
@@ -321,13 +305,13 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
           style={{
             position: "relative",
             width: totalWidth,
-            height: trackHeight,
+            height: totalHeight,
             margin: "0 auto",
           }}
         >
-          {/* Central line with dotted transitions */}
+          {/* Ligne centrale */}
           <svg
-            style={{ position: "absolute", top: lineY, left: 0, width: "100%", height: "2px", pointerEvents: "none" }}
+            style={{ position: "absolute", top: TIMELINE_Y, left: 0, width: "100%", height: "2px", pointerEvents: "none" }}
           >
             {segments.map((seg, idx) => {
               const startX = yearToX.get(seg.startYear) || 200;
@@ -348,9 +332,9 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
             })}
           </svg>
 
-          {/* Vertical dotted year lines + labels at top */}
+          {/* Lignes pointillées verticales par année */}
           {yearMarkers.map(({ year, x }) => (
-            <React.Fragment key={`year-${year}`}>
+            <div key={`year-${year}`}>
               <div
                 className="timeline-year-dotted-line"
                 style={{
@@ -381,17 +365,17 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
               >
                 {year}
               </div>
-            </React.Fragment>
+            </div>
           ))}
 
-          {/* Major tick marks */}
+          {/* Graduations majeures */}
           {majorTicks.map(({ year, x }) => (
             <div
               key={`major-${year}`}
               style={{
                 position: "absolute",
                 left: `${x}px`,
-                top: lineY - 8,
+                top: TIMELINE_Y - 8,
                 transform: "translateX(-50%)",
                 width: "1px",
                 height: "16px",
@@ -417,7 +401,7 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
             </div>
           ))}
 
-          {/* SVG container for dots and connectors (vertical+diagonal, no horizontal) */}
+          {/* Points et connecteurs */}
           <svg
             style={{
               position: "absolute",
@@ -429,52 +413,17 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
               overflow: "visible",
             }}
           >
-            {positionedEvents.map(({ event, dotX, cardX, isAbove, yOffset }) => {
-              const dotColor = getTagColor(event.tags[0]);
-              const cardTop = isAbove ? lineY - yOffset : lineY + yOffset;
-              const cardEl = cardRefs.current.get(event.id);
-              const cardHeight = cardEl?.offsetHeight || 100;
-              const connectorEndY = isAbove ? cardTop + cardHeight : cardTop;
-
-              // Build polyline: vertical then diagonal (max 45°), no horizontal segment
-              const getConnectorPoints = (
-                startX: number,
-                startY: number,
-                endX: number,
-                endY: number,
-                maxAngleDeg: number = 45
-              ): string => {
-                const dx = Math.abs(endX - startX);
-                const dy = Math.abs(endY - startY);
-                const angleRad = Math.atan2(dy, dx);
-                const maxAngleRad = (maxAngleDeg * Math.PI) / 180;
-
-                // If direct angle is ≤ max, draw straight diagonal
-                if (angleRad <= maxAngleRad) {
-                  return `${startX},${startY} ${endX},${endY}`;
-                }
-
-                // Otherwise add a vertical segment first, then diagonal
-                const tanMax = Math.tan(maxAngleRad);
-                let v = dy - dx * tanMax;
-                if (v < 0) v = 0;
-                v = Math.min(v, dy);
-
-                const xDir = Math.sign(endX - startX);
-                const yDir = Math.sign(endY - startY);
-                const midY = startY + v * yDir;
-                return `${startX},${startY} ${startX},${midY} ${endX},${endY}`;
-              };
-
-              const points = getConnectorPoints(dotX, lineY, cardX, connectorEndY, 45);
-
+            {positionedEvents.map(({ event, dotX, cardX, yOffset }) => {
+              const color = getTagColor(event.tags[0] || "colonial");
+              const cardTopY = yOffset;
+              // Ligne droite simple (point -> haut de la carte)
               return (
                 <g key={event.id}>
                   <circle
                     cx={dotX}
-                    cy={lineY}
-                    r={8}
-                    fill={dotColor}
+                    cy={TIMELINE_Y}
+                    r={DOT_RADIUS}
+                    fill={color}
                     stroke="var(--bg-page)"
                     strokeWidth={2}
                     style={{ cursor: "pointer", transition: "all 0.15s ease", pointerEvents: "visible" }}
@@ -488,13 +437,14 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
                       e.currentTarget.style.filter = "none";
                     }}
                   />
-                  <polyline
-                    points={points}
-                    fill="none"
-                    stroke={dotColor}
-                    strokeWidth={3}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                  <line
+                    x1={dotX}
+                    y1={TIMELINE_Y}
+                    x2={cardX}
+                    y2={cardTopY}
+                    stroke={color}
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
                     style={{
                       cursor: "pointer",
                       opacity: 0.6,
@@ -508,7 +458,7 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.opacity = "0.6";
-                      e.currentTarget.style.stroke = dotColor;
+                      e.currentTarget.style.stroke = color;
                     }}
                   />
                 </g>
@@ -516,9 +466,9 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
             })}
           </svg>
 
-          {/* Cards (HTML, positioned absolutely) */}
-          {positionedEvents.map(({ event, cardX, isAbove, yOffset }) => {
-            const cardTop = isAbove ? lineY - yOffset : lineY + yOffset;
+          {/* Cartes (HTML) */}
+          {positionedEvents.map(({ event, cardX, yOffset }) => {
+            const isExpanded = expandedId === event.id;
             return (
               <div
                 key={event.id}
@@ -532,12 +482,12 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
                   left: `${cardX}px`,
                   transform: "translateX(-50%)",
                   width: `${CARD_WIDTH}px`,
-                  top: `${cardTop}px`,
+                  top: `${yOffset}px`,
                 }}
               >
                 <TimelineEventCard
                   event={event}
-                  isExpanded={expandedId === event.id}
+                  isExpanded={isExpanded}
                   onToggle={() => toggleExpand(event.id)}
                 />
               </div>
@@ -547,16 +497,4 @@ export function HorizontalTimeline({ events }: HorizontalTimelineProps) {
       </div>
     </div>
   );
-}
-
-function getTagColor(tag: string): string {
-  switch (tag) {
-    case "herero": return "var(--color-herero)";
-    case "nama": return "var(--color-nama)";
-    case "colonial": return "var(--color-colonial)";
-    case "military": return "var(--color-military)";
-    case "aftermath": return "var(--accent-rust)";
-    case "memory": return "var(--color-memory)";
-    default: return "var(--accent-gold)";
-  }
 }

@@ -1,4 +1,5 @@
 // ./components/timeline/TimelineEvent.tsx
+
 import type { EventTag, TimelineEvent } from "@/lib/types";
 import {
   getDatasetById,
@@ -72,10 +73,13 @@ export function TimelineEventCard({ event, isExpanded, onToggle }: TimelineEvent
   return (
     <article
       className="timeline-card-horizontal"
-      style={{ "--card-accent": color } as React.CSSProperties}
+      style={{ 
+        "--card-accent": color,
+        width: "100%",
+        transition: "height 0.2s ease",
+      } as React.CSSProperties}
       aria-labelledby={`event-${event.id}-title`}
     >
-      {/* Clickable header: always visible */}
       <button
         onClick={onToggle}
         className="timeline-card-header-button"
@@ -125,7 +129,6 @@ export function TimelineEventCard({ event, isExpanded, onToggle }: TimelineEvent
         </div>
       </button>
 
-      {/* Expandable content */}
       {isExpanded && (
         <div style={{ padding: "0 0.75rem 0.75rem 0.75rem", borderTop: "1px solid var(--border-subtle)" }}>
           <p style={{ margin: "0.5rem 0 0.75rem", color: "var(--text-body)", fontSize: "0.9rem" }}>

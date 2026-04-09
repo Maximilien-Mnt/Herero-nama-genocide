@@ -1,12 +1,14 @@
-"use client";
-
+// 19 (./components/map/MapClient.tsx)
 //Le cœur de la carte interactive.
 // Il utilise react-leaflet pour afficher une carte OpenStreetMap avec des marqueurs pour les lieux historiques.
 // Il gère le filtrage des lieux par période (PlacePeriod) et l'affichage des détails d'un lieu sélectionné. 
 // Les marqueurs sont stylisés avec des DivIcon personnalisés et colorés selon leur période.
 
+// components/map/MapClient.tsx
+"use client";
+
 import { useEffect, useMemo, useRef, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Place, PlacePeriod, EventType } from "@/lib/types";
@@ -79,13 +81,14 @@ function FixLeafletDefaultIcons() {
   return null;
 }
 
-// Crée une icône carrée – la couleur sera appliquée via useEffect
-function markerIcon() {
+// Remplacer la fonction existante par celle-ci :
+function markerIcon(color: string, isSelected: boolean = false) {
+  const className = `map-marker${isSelected ? ' map-marker--selected' : ''}`;
   return L.divIcon({
-    className: "map-marker",
-    html: `<div class="map-marker-shape"></div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 14],
+    className,
+    html: `<div class="map-marker-shape" style="background-color: ${color};"></div>`,
+    iconSize: isSelected ? [34, 34] : [28, 28],
+    iconAnchor: isSelected ? [17, 17] : [14, 14],
     popupAnchor: [0, -14],
     tooltipAnchor: [0, -14],
   });
@@ -105,13 +108,11 @@ export function MapClient({ places }: { places: Place[] }) {
     [highlightId, places]
   );
 
-  // Filtrage par type d'événement
   const filteredPlaces = useMemo(() => {
     if (activeFilters.size === 0) return places;
     return places.filter((place) => activeFilters.has(place.eventType));
   }, [places, activeFilters]);
 
-  // Compteurs pour la légende
   const categoryCounts = useMemo(() => {
     const counts: Record<EventType, number> = {} as any;
     EVENT_CATEGORIES.forEach((cat) => (counts[cat] = 0));
@@ -122,34 +123,30 @@ export function MapClient({ places }: { places: Place[] }) {
     return counts;
   }, [places]);
 
-  // Applique la couleur de fond après que les marqueurs sont ajoutés
+  // --- Gestion manuelle des tooltips en fonction de la sélection ---
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      Object.entries(markerRefs.current).forEach(([id, marker]) => {
-        const el = marker.getElement();
-        if (!el) return;
-        const shape = el.querySelector(".map-marker-shape") as HTMLElement | null;
-        if (!shape) return;
-        const place = places.find((p) => p.id === id);
-        if (!place) return;
-        const color = CATEGORY_COLORS[place.eventType];
-        shape.style.backgroundColor = color;
-      });
-    }, 50);
-    return () => clearTimeout(timeout);
-  }, [filteredPlaces, places]);
+    // Fermer tous les tooltips d'abord
+    Object.values(markerRefs.current).forEach((marker) => {
+      marker.closeTooltip();
+    });
 
-  // Ouvre la popup du lieu sélectionné après le zoom
-  useEffect(() => {
-    if (selectedPlace && markerRefs.current[selectedPlace.id]) {
+    // Si un lieu est sélectionné, ouvrir son tooltip
+    if (highlightId && markerRefs.current[highlightId]) {
+      // Petit délai pour s'assurer que le zoom est terminé et le marker prêt
       setTimeout(() => {
-        markerRefs.current[selectedPlace.id].openPopup();
-      }, 800);
+        markerRefs.current[highlightId]?.openTooltip();
+      }, 100);
     }
-  }, [selectedPlace]);
+  }, [highlightId]);
 
   const handleMarkerClick = (place: Place) => {
-    router.push(`/carte?place=${place.id}`, { scroll: false });
+    if (highlightId === place.id) {
+      // Désélection
+      router.push("/carte", { scroll: false });
+    } else {
+      // Sélection
+      router.push(`/carte?place=${place.id}`, { scroll: false });
+    }
   };
 
   const toggleFilter = (cat: EventType) => {
@@ -191,30 +188,25 @@ export function MapClient({ places }: { places: Place[] }) {
               <Marker
                 key={place.id}
                 position={[place.lat, place.lng]}
-                icon={markerIcon()}
+                icon={markerIcon(CATEGORY_COLORS[place.eventType], highlightId === place.id)}
                 ref={(ref) => {
                   if (ref) markerRefs.current[place.id] = ref;
                 }}
                 eventHandlers={{
                   click: () => handleMarkerClick(place),
-                  mouseover: (e) => e.target.openTooltip(),
-                  mouseout: (e) => e.target.closeTooltip(),
+                  mouseover: (e) => {
+                    // N'ouvre le tooltip au survol que si ce lieu n'est PAS le lieu sélectionné
+                    if (highlightId !== place.id) e.target.openTooltip();
+                  },
+                  mouseout: (e) => {
+                    if (highlightId !== place.id) e.target.closeTooltip();
+                  },
                 }}
               >
-                <Tooltip permanent={false} direction="top" offset={[0, -14]}>
+                {/* Tooltip simple, pas de "permanent" */}
+                <Tooltip direction="top" offset={[0, -14]} opacity={1}>
                   <strong>{place.name}</strong>
                 </Tooltip>
-                <Popup>
-                  <strong>{place.name}</strong>
-                  <div style={{ fontSize: "0.85rem", marginTop: "0.35rem" }}>
-                    {place.description.length > 80
-                      ? place.description.slice(0, 80) + "…"
-                      : place.description}
-                  </div>
-                  <div style={{ marginTop: "0.5rem" }}>
-                    <Link href={`/carte?place=${place.id}`}>Details anzeigen →</Link>
-                  </div>
-                </Popup>
               </Marker>
             ))}
           </MapContainer>
@@ -248,7 +240,6 @@ export function MapClient({ places }: { places: Place[] }) {
             )}
           </div>
 
-          {/* Conteneur responsive pour les filtres */}
           <div className="legend-filters-container">
             {EVENT_CATEGORIES.map((cat) => {
               const count = categoryCounts[cat];
@@ -265,7 +256,7 @@ export function MapClient({ places }: { places: Place[] }) {
                       display: "inline-block",
                       width: 16,
                       height: 16,
-                      borderRadius: 0, // carré
+                      borderRadius: 0,
                       backgroundColor: CATEGORY_COLORS[cat],
                       border: "1px solid rgba(255,255,255,0.2)",
                       marginRight: "0.5rem",
@@ -284,7 +275,7 @@ export function MapClient({ places }: { places: Place[] }) {
         </aside>
       </div>
 
-      {/* Boîte de détails */}
+      {/* Boîte de détails sous la carte */}
       {selectedPlace && (
         <div
           className="card"

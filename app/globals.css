@@ -284,66 +284,6 @@ main {
   transform: translateY(-1px);
 }
 
-.timeline-list {
-  position: relative;
-  padding: 0.5rem 0;
-}
-
-.timeline-spine {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0.85rem;
-  width: 2px;
-  background: rgba(77, 107, 88, 0.35);
-  border-radius: 2px;
-}
-
-.timeline-row {
-  display: grid;
-  grid-template-columns: 2.1rem 1fr;
-  gap: var(--space-sm);
-  margin: 0.65rem 0;
-}
-
-.timeline-card {
-  position: relative;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-left: 4px solid var(--timeline-border, var(--accent-gold));
-  border-radius: var(--radius-md);
-  padding: 1rem 1rem 0.9rem;
-  transition: opacity 250ms ease, transform 250ms ease, border-color 250ms ease,
-    box-shadow 250ms ease, border-left-color 250ms ease;
-  opacity: 0.7;
-  transform: translateX(-4px);
-}
-
-.timeline-card:hover,
-.timeline-card:focus-within {
-  opacity: 1;
-  transform: translateX(0px);
-  border-left-color: var(--accent-gold);
-  border-color: var(--border-strong);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-}
-
-.timeline-date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.timeline-meta {
-  margin-top: 0.45rem;
-  margin-bottom: 0.45rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
 .document-thumb {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -506,18 +446,19 @@ main {
 
 .doc-view--grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0;
+  /* Minimum 2 columns on all screens */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
   background: transparent;
 }
 .doc-view--grid .document-card {
   border: 1px solid var(--border-default);
-  border-radius: 0;
-  margin: -1px 0 0 -1px;
+  border-radius: var(--radius-md);
   background: var(--bg-surface);
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0; /* remove negative margins */
 }
 .doc-view--grid .document-card > button {
   flex: 1;
@@ -531,6 +472,15 @@ main {
 .doc-view--grid .document-card:hover {
   z-index: 2;
   position: relative;
+  border-color: var(--border-strong);
+}
+
+/* On larger screens (tablet and desktop), allow more columns */
+@media (min-width: 640px) {
+  .doc-view--grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
 }
 
 .doc-view--gallery {
@@ -553,133 +503,6 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-.full-width-timeline {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  position: relative;
-  left: 0;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.horizontal-timeline-scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-gold) var(--border-subtle);
-  padding-bottom: 1rem;
-}
-
-.horizontal-timeline-scroll::-webkit-scrollbar {
-  height: 10px;
-}
-
-.horizontal-timeline-scroll::-webkit-scrollbar-track {
-  background: var(--border-subtle);
-  border-radius: 6px;
-}
-
-.horizontal-timeline-scroll::-webkit-scrollbar-thumb {
-  background: var(--accent-gold);
-  border-radius: 6px;
-}
-
-.horizontal-timeline-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-warm);
-}
-
-.timeline-nav {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  padding-right: 0.5rem;
-}
-
-.timeline-nav-button {
-  background: transparent;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: 0.4rem 0.9rem;
-  font-size: 0.875rem;
-  color: var(--text-body);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.timeline-nav-button:hover {
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
-  background: rgba(185, 147, 90, 0.08);
-}
-
-.timeline-card-horizontal {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.timeline-card-horizontal:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
-}
-
-@media (max-width: 768px) {
-  .timeline-card-wrapper {
-    width: 260px !important;
-  }
-  .full-width-timeline {
-    margin-left: calc(-50vw + 50%);
-  }
-}
-.timeline-card-header-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  transition: opacity 0.15s ease;
-}
-
-.timeline-card-header-button:hover {
-  opacity: 0.9;
-}
-
-.timeline-year-dotted-line {
-  opacity: 0.4;
-}
-
-.timeline-track svg line {
-  transition: stroke-dasharray 0.2s ease;
-}
-
-.timeline-dot {
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-.timeline-dot:hover {
-  transform: translate(-50%, -50%) scale(1.2);
-  box-shadow: 0 0 0 3px rgba(185, 147, 90, 0.5);
-}
-.timeline-connector {
-  transition: opacity 0.15s ease, background-color 0.15s ease;
-}
-.timeline-connector:hover {
-  opacity: 1 !important;
-  background-color: var(--accent-gold) !important;
-}
-.timeline-track circle {
-  transition: r 0.1s ease, filter 0.1s ease;
-  filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
-}
-.timeline-track polyline {
-  transition: opacity 0.15s ease, stroke 0.15s ease;
-  pointer-events: stroke;
 }
 
 /* ------------------------------------------------------------

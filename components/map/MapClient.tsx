@@ -12,13 +12,12 @@ import { MapContainer, Marker, TileLayer, Tooltip, useMap } from "react-leaflet"
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Place, PlacePeriod, EventType } from "@/lib/types";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FilterPill } from "@/components/FilterPill";
 import { CrossLinkTag } from "@/components/CrossLink";
 import { getEventById } from "@/lib/content";
 
-// --- 8 catégories d'événements avec leurs libellés et couleurs ---
+// --- Event categories (unchanged) ---
 export const EVENT_CATEGORIES = [
   "battle",
   "massacre",
@@ -58,7 +57,7 @@ const PERIOD_LABEL: Record<PlacePeriod, string> = {
   after: "Nach / zeitgenössisch",
 };
 
-// --- Composants utilitaires Leaflet ---
+// --- Helper components (unchanged) ---
 function MapFlyTo({ place }: { place: Place | null }) {
   const map = useMap();
   useEffect(() => {
@@ -81,7 +80,6 @@ function FixLeafletDefaultIcons() {
   return null;
 }
 
-// Remplacer la fonction existante par celle-ci :
 function markerIcon(color: string, isSelected: boolean = false) {
   const className = `map-marker${isSelected ? ' map-marker--selected' : ''}`;
   return L.divIcon({
@@ -94,7 +92,7 @@ function markerIcon(color: string, isSelected: boolean = false) {
   });
 }
 
-// --- Composant principal ---
+// --- Main component ---
 export function MapClient({ places }: { places: Place[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -123,16 +121,17 @@ export function MapClient({ places }: { places: Place[] }) {
     return counts;
   }, [places]);
 
-  // --- Gestion manuelle des tooltips en fonction de la sélection ---
+  // Close modal (clear URL parameter)
+  const closeModal = () => {
+    router.push("/carte", { scroll: false });
+  };
+
+  // Tooltip management (unchanged)
   useEffect(() => {
-    // Fermer tous les tooltips d'abord
     Object.values(markerRefs.current).forEach((marker) => {
       marker.closeTooltip();
     });
-
-    // Si un lieu est sélectionné, ouvrir son tooltip
     if (highlightId && markerRefs.current[highlightId]) {
-      // Petit délai pour s'assurer que le zoom est terminé et le marker prêt
       setTimeout(() => {
         markerRefs.current[highlightId]?.openTooltip();
       }, 100);
@@ -141,10 +140,8 @@ export function MapClient({ places }: { places: Place[] }) {
 
   const handleMarkerClick = (place: Place) => {
     if (highlightId === place.id) {
-      // Désélection
-      router.push("/carte", { scroll: false });
+      closeModal();
     } else {
-      // Sélection
       router.push(`/carte?place=${place.id}`, { scroll: false });
     }
   };
@@ -167,7 +164,7 @@ export function MapClient({ places }: { places: Place[] }) {
       </p>
 
       <div className="map-layout" style={{ gap: "1rem", alignItems: "stretch", marginTop: "1.5rem" }}>
-        {/* Carte */}
+        {/* Map container */}
         <div
           style={{
             height: "70vh",
@@ -195,7 +192,6 @@ export function MapClient({ places }: { places: Place[] }) {
                 eventHandlers={{
                   click: () => handleMarkerClick(place),
                   mouseover: (e) => {
-                    // N'ouvre le tooltip au survol que si ce lieu n'est PAS le lieu sélectionné
                     if (highlightId !== place.id) e.target.openTooltip();
                   },
                   mouseout: (e) => {
@@ -203,7 +199,6 @@ export function MapClient({ places }: { places: Place[] }) {
                   },
                 }}
               >
-                {/* Tooltip simple, pas de "permanent" */}
                 <Tooltip direction="top" offset={[0, -14]} opacity={1}>
                   <strong>{place.name}</strong>
                 </Tooltip>
@@ -212,7 +207,7 @@ export function MapClient({ places }: { places: Place[] }) {
           </MapContainer>
         </div>
 
-        {/* Légende interactive */}
+        {/* Legend aside */}
         <aside
           className="card map-legend"
           style={{
@@ -275,49 +270,92 @@ export function MapClient({ places }: { places: Place[] }) {
         </aside>
       </div>
 
-      {/* Boîte de détails sous la carte */}
+      {/* MODAL OVERLAY – appears centered above the map when a place is selected */}
       {selectedPlace && (
         <div
-          className="card"
           style={{
-            marginTop: "2rem",
-            padding: "1.5rem",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.85)",
+            zIndex: 2000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeModal();
           }}
         >
-          <h2 style={{ marginTop: 0, marginBottom: "0.5rem", fontSize: "1.75rem" }}>
-            {selectedPlace.name}
-          </h2>
-          <p style={{ marginBottom: "1rem", color: "var(--text-body)" }}>{selectedPlace.description}</p>
-          <div style={{ display: "flex", gap: "2rem", marginBottom: "1.5rem" }}>
-            <div>
-              <span style={{ color: "var(--text-muted)" }}>Zeitraum: </span>
-              <span>{PERIOD_LABEL[selectedPlace.period]}</span>
+          <div
+            className="card"
+            style={{
+              maxWidth: "600px",
+              width: "100%",
+              maxHeight: "85vh",
+              overflowY: "auto",
+              padding: "1.5rem",
+              position: "relative",
+            }}
+          >
+            <button
+              onClick={closeModal}
+              aria-label="Schließen"
+              style={{
+                position: "absolute",
+                top: "0.75rem",
+                right: "0.75rem",
+                background: "none",
+                border: "none",
+                fontSize: "1.5rem",
+                cursor: "pointer",
+                color: "var(--text-muted)",
+                lineHeight: 1,
+              }}
+            >
+              ×
+            </button>
+
+            <h2 style={{ marginTop: 0, marginBottom: "0.5rem", fontSize: "1.75rem" }}>
+              {selectedPlace.name}
+            </h2>
+            <p style={{ marginBottom: "1rem", color: "var(--text-body)" }}>
+              {selectedPlace.description}
+            </p>
+            <div style={{ display: "flex", gap: "2rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+              <div>
+                <span style={{ color: "var(--text-muted)" }}>Zeitraum: </span>
+                <span>{PERIOD_LABEL[selectedPlace.period]}</span>
+              </div>
+              <div>
+                <span style={{ color: "var(--text-muted)" }}>Jahr: </span>
+                <span>{selectedPlace.yearLabel}</span>
+              </div>
+              <div>
+                <span style={{ color: "var(--text-muted)" }}>Kategorie: </span>
+                <span>{CATEGORY_LABELS[selectedPlace.eventType]}</span>
+              </div>
             </div>
             <div>
-              <span style={{ color: "var(--text-muted)" }}>Jahr: </span>
-              <span>{selectedPlace.yearLabel}</span>
-            </div>
-            <div>
-              <span style={{ color: "var(--text-muted)" }}>Kategorie: </span>
-              <span>{CATEGORY_LABELS[selectedPlace.eventType]}</span>
-            </div>
-          </div>
-          <div>
-            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.75rem" }}>Verknüpfte Ereignisse</h3>
-            <div className="crosslink-tags">
-              {selectedPlace.relatedEventIds.map((id) => {
-                const ev = getEventById(id);
-                if (!ev) return null;
-                return (
-                  <CrossLinkTag
-                    key={id}
-                    href={`/chronologie#${id}`}
-                    icon="📅"
-                    label={ev.title}
-                    sectionId={id}
-                  />
-                );
-              })}
+              <h3 style={{ fontSize: "1.1rem", marginBottom: "0.75rem" }}>Verknüpfte Ereignisse</h3>
+              <div className="crosslink-tags">
+                {selectedPlace.relatedEventIds.map((id) => {
+                  const ev = getEventById(id);
+                  if (!ev) return null;
+                  return (
+                    <CrossLinkTag
+                      key={id}
+                      href={`/chronologie#${id}`}
+                      icon="📅"
+                      label={ev.title}
+                      sectionId={id}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

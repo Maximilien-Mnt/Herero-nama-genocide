@@ -120,7 +120,7 @@ export function SiteHeader() {
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/genocide-herero+nama.png" alt="" width={32} height={32} />
+          <img src="/assets/favicon_white.png" alt="" width={32} height={32} />
           <span style={{ whiteSpace: "nowrap" }}>Herero &amp; Nama — 1904–1908</span>
         </Link>
 

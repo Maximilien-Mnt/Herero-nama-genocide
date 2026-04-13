@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: `%s — ${siteTitle}`,
   },
   icons: {
-    icon: './public/assets/favicon.png', // Path to your icon file
+    icon: '/assets/favicon_black.png', // Path to your icon file
   },
   description,
   openGraph: {

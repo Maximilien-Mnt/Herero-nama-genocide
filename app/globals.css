@@ -246,7 +246,9 @@ main {
 }
 
 .filter-pill:hover {
-  border-color: var(--border-strong);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: rgba(185, 147, 90, 0.05);
 }
 
 .filter-pill--active {
@@ -561,6 +563,8 @@ main {
   height: 70vh; /* Desktop */
 }
 
+/* Mobile (legend under map) – already inline by default, no extra rules needed */
+
 @media (max-width: 899px) {
   .map-layout {
     display: flex;
@@ -647,4 +651,643 @@ main {
 /* Optionnel : ajuster la transition pour une animation fluide */
 .map-marker-shape {
   transition: transform 0.15s ease, box-shadow 0.15s ease, border 0.15s ease;
+}
+/* Legend header responsive layout */
+.legend-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.legend-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend-clear-button {
+  background: none;
+  border: none;
+  color: var(--accent-warm);
+  cursor: pointer;
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+.legend-toggle-button {
+  width: 100%;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+}
+
+/* When legend is under the map (mobile), revert to inline title+button */
+@media (max-width: 899px) {
+  .legend-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .legend-toggle-button {
+    width: auto;
+    margin-left: auto;
+  }
+
+  .legend-title-row {
+    flex: 1;
+  }
+}
+/* Legend header responsive layout */
+.legend-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.legend-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend-clear-button {
+  background: none;
+  border: none;
+  color: var(--accent-warm);
+  cursor: pointer;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  transition: color 150ms ease;
+}
+
+.legend-clear-button:hover {
+  color: var(--accent-gold);
+}
+
+.legend-toggle-button {
+  width: 100%;
+  /* Inherits all .button styles, we just adjust width and padding */
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+/* When legend is under the map (mobile), revert to inline title+button */
+@media (max-width: 899px) {
+  .legend-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .legend-toggle-button {
+    width: auto;
+    margin-left: auto;
+  }
+
+  .legend-title-row {
+    flex: 1;
+  }
+}
+/* ---------- TIMELINE VERTICAL ---------- */
+.timeline-vertical-wrapper {
+  margin-top: 1rem;
+}
+
+.timeline-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.timeline-vertical-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-left-width: 5px;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.15s;
+}
+
+.timeline-vertical-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-color: var(--border-strong);
+}
+
+.timeline-vertical-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-vertical-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.timeline-vertical-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.timeline-vertical-card-summary {
+  margin: 0.75rem 0 1rem;
+  color: var(--text-body);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.timeline-vertical-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-vertical-card-tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.timeline-vertical-card-cta {
+  font-size: 0.85rem;
+  color: var(--accent-warm);
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+
+.timeline-vertical-card:hover .timeline-vertical-card-cta {
+  opacity: 1;
+}
+
+/* ---------- TIMELINE MODAL ---------- */
+.timeline-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 14, 12, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.timeline-modal-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-top-width: 6px;
+  border-radius: var(--radius-md);
+  max-width: 700px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.2s ease;
+}
+
+.timeline-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  transition: background 0.15s, color 0.15s;
+}
+
+.timeline-modal-close:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.timeline-modal-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+  padding-right: 2rem;
+}
+
+.timeline-modal-date {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+}
+
+.timeline-modal-description {
+  color: var(--text-body);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.timeline-modal-description p {
+  margin: 0 0 1rem;
+}
+
+.timeline-modal-crosslinks {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .timeline-vertical-card {
+    padding: 1rem;
+  }
+  .timeline-vertical-card-title {
+    font-size: 1.25rem;
+  }
+  .timeline-modal-content {
+    padding: 1.5rem;
+  }
+  .timeline-modal-title {
+    font-size: 1.6rem;
+  }
+}
+/* ---------- TIMELINE MODERN (avec ligne et colonne d'années) ---------- */
+.timeline-modern-wrapper {
+  margin-top: 2rem;
+}
+
+.timeline-modern-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.timeline-modern-years {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  padding-top: 2.5rem;
+}
+
+.timeline-modern-years-title {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.5rem;
+}
+
+.timeline-modern-years-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.timeline-modern-year-item {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-body);
+  padding: 0.25rem 0;
+  cursor: default;
+  transition: color 0.15s;
+}
+
+.timeline-modern-year-item:hover {
+  color: var(--accent-warm);
+}
+
+.timeline-modern-track {
+  position: relative;
+  padding-left: 0;
+}
+
+.timeline-modern-line {
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-strong);
+  transform: translateX(-50%);
+}
+
+.timeline-modern-event-row {
+  position: relative;
+  display: flex;
+  margin-bottom: 2rem;
+  padding-left: 40px;
+}
+
+.timeline-modern-dot {
+  position: absolute;
+  left: 18px;
+  top: 1.2rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-surface);
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+}
+
+.timeline-modern-card {
+  flex: 1;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-left-width: 5px;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.timeline-modern-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-modern-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-modern-card-year {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.03);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-md);
+}
+
+.timeline-modern-card-type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.timeline-modern-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.25rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.timeline-modern-card-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .timeline-modern-grid {
+    grid-template-columns: 1fr;
+  }
+  .timeline-modern-years {
+    position: static;
+    padding-top: 0;
+  }
+  .timeline-modern-years-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .timeline-modern-track {
+    margin-top: 1.5rem;
+  }
+}
+
+/* ---------- TIMELINE MODAL (inchangé, déjà fourni) ---------- */
+/* Assurez-vous d'avoir les styles de la modale dans votre CSS */
+/* ---------- TIMELINE PRO (précise, connectée, compacte) ---------- */
+.timeline-pro-wrapper {
+  margin-top: 2rem;
+  position: relative;
+}
+
+.timeline-pro-grid {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+
+.timeline-pro-years {
+  width: 70px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.timeline-pro-year {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.timeline-pro-year-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg-page);
+  padding: 0.1rem 0.3rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.timeline-pro-track {
+  flex: 1;
+  position: relative;
+  margin-left: 10px;
+}
+
+.timeline-pro-line {
+  position: absolute;
+  left: 30px;
+  top: 0;
+  width: 2px;
+  background: var(--border-strong);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.timeline-pro-year-dash {
+  position: absolute;
+  left: 30px;
+  right: 0;
+  height: 1px;
+  border-top: 1px dashed var(--border-subtle);
+  transform: translateY(-50%);
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.timeline-pro-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-surface);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.timeline-pro-dot:hover {
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+.timeline-pro-svg {
+  z-index: 2;
+}
+
+.timeline-pro-card {
+  position: absolute;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 5;
+  transform: translateY(-0%);
+  font-size: 0.85rem;
+}
+
+.timeline-pro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  z-index: 20;
+}
+
+.timeline-pro-card-year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.timeline-pro-card-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.timeline-pro-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.timeline-pro-card-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.timeline-pro-card-type {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .timeline-pro-grid {
+    flex-direction: column;
+  }
+  .timeline-pro-years {
+    width: 100%;
+    height: auto !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .timeline-pro-year {
+    position: static;
+    transform: none;
+    display: inline-block;
+    padding: 0;
+  }
+  .timeline-pro-track {
+    margin-left: 0;
+  }
+  .timeline-pro-card {
+    width: calc(100% - 60px) !important;
+    max-width: 260px;
+  }
 }

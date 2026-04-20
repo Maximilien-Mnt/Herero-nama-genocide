@@ -2,27 +2,27 @@
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
-import { TimelineClient } from "@/components/timeline/TimelineClient";
+import { TimelinePro } from "@/components/timeline/TimelinePro";
 import { getEvents } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Chronologie",
-  description: "Interaktive Zeitleiste des Völkermords an den Herero und Nama und seines Kontexts.",
-  openGraph: { title: "Chronologie — Völkermord an den Herero und Nama" },
+  description: "Frise chronologique interactive du génocide des Herero et Nama.",
+  openGraph: { title: "Chronologie — Génocide des Herero et Nama" },
 };
 
 export default function ChronologiePage() {
   const events = getEvents();
   return (
     <PageShell>
-      <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Chronologie" }]} />
-      <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.75rem", lineHeight: "44px", fontWeight: 600, margin: 0 }}>
+      <Breadcrumb items={[{ href: "/", label: "Accueil" }, { label: "Chronologie" }]} />
+      <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.75rem", lineHeight: "44px", fontWeight: 600, margin: "0 0 0.5rem" }}>
         Chronologie
       </h1>
-      <p style={{ color: "var(--text-muted)", maxWidth: "44rem", marginTop: "0.75rem" }}>
-        Zwanzig Meilensteine verbinden die koloniale Aufteilung, die Eskalation von 1904, die Internierung, das Erbe unter südafrikanischem Mandat und die Anerkennungsdebatten im 21. Jahrhundert. Die Filter ermöglichen die Fokussierung auf eine bestimmte Perspektive (Herero, Nama, Verwaltung…).
+      <p style={{ color: "var(--text-muted)", maxWidth: "44rem", marginBottom: "2rem" }}>
+        Chaque point est positionné précisément sur l'axe temporel. Les cartes sont reliées et ne se chevauchent jamais.
       </p>
-      <TimelineClient events={events} />
+      <TimelinePro events={events} />
     </PageShell>
   );
 }

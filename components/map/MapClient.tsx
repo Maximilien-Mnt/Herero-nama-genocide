@@ -5,6 +5,8 @@
 // Les marqueurs sont stylisés avec des DivIcon personnalisés et colorés selon leur période.
 
 // components/map/MapClient.tsx
+// components/map/MapClient.tsx
+// components/map/MapClient.tsx
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -57,7 +59,7 @@ const PERIOD_LABEL: Record<PlacePeriod, string> = {
   after: "Nach / zeitgenössisch",
 };
 
-// --- Helper components (unchanged) ---
+// --- Helper components ---
 function MapFlyTo({ place }: { place: Place | null }) {
   const map = useMap();
   useEffect(() => {
@@ -99,6 +101,7 @@ export function MapClient({ places }: { places: Place[] }) {
   const highlightId = searchParams.get("place");
 
   const [activeFilters, setActiveFilters] = useState<Set<EventType>>(new Set());
+  const [showAllLabels, setShowAllLabels] = useState(false);
   const markerRefs = useRef<Record<string, L.Marker>>({});
 
   const selectedPlace = useMemo(
@@ -121,13 +124,13 @@ export function MapClient({ places }: { places: Place[] }) {
     return counts;
   }, [places]);
 
-  // Close modal (clear URL parameter)
   const closeModal = () => {
     router.push("/carte", { scroll: false });
   };
 
-  // Tooltip management (unchanged)
+  // Tooltip management: when permanent labels are OFF, we close all and open the selected one.
   useEffect(() => {
+    if (showAllLabels) return;
     Object.values(markerRefs.current).forEach((marker) => {
       marker.closeTooltip();
     });
@@ -136,7 +139,7 @@ export function MapClient({ places }: { places: Place[] }) {
         markerRefs.current[highlightId]?.openTooltip();
       }, 100);
     }
-  }, [highlightId]);
+  }, [showAllLabels, highlightId]);
 
   const handleMarkerClick = (place: Place) => {
     if (highlightId === place.id) {
@@ -156,6 +159,8 @@ export function MapClient({ places }: { places: Place[] }) {
   };
 
   const clearFilters = () => setActiveFilters(new Set());
+
+  const toggleLabels = () => setShowAllLabels((prev) => !prev);
 
   return (
     <div>
@@ -183,7 +188,7 @@ export function MapClient({ places }: { places: Place[] }) {
 
             {filteredPlaces.map((place) => (
               <Marker
-                key={place.id}
+                key={`${place.id}-${showAllLabels}`}
                 position={[place.lat, place.lng]}
                 icon={markerIcon(CATEGORY_COLORS[place.eventType], highlightId === place.id)}
                 ref={(ref) => {
@@ -191,15 +196,25 @@ export function MapClient({ places }: { places: Place[] }) {
                 }}
                 eventHandlers={{
                   click: () => handleMarkerClick(place),
-                  mouseover: (e) => {
-                    if (highlightId !== place.id) e.target.openTooltip();
-                  },
-                  mouseout: (e) => {
-                    if (highlightId !== place.id) e.target.closeTooltip();
-                  },
+                  ...(showAllLabels
+                    ? {}
+                    : {
+                        mouseover: (e) => {
+                          if (highlightId !== place.id) e.target.openTooltip();
+                        },
+                        mouseout: (e) => {
+                          if (highlightId !== place.id) e.target.closeTooltip();
+                        },
+                      }),
                 }}
               >
-                <Tooltip direction="top" offset={[0, -14]} opacity={1}>
+                <Tooltip
+                  direction="top"
+                  offset={[0, -14]}
+                  opacity={1}
+                  permanent={showAllLabels}
+                  sticky={!showAllLabels}
+                >
                   <strong>{place.name}</strong>
                 </Tooltip>
               </Marker>
@@ -207,7 +222,7 @@ export function MapClient({ places }: { places: Place[] }) {
           </MapContainer>
         </div>
 
-        {/* Legend aside */}
+        {/* Legend aside with responsive toggle button layout */}
         <aside
           className="card map-legend"
           style={{
@@ -216,23 +231,24 @@ export function MapClient({ places }: { places: Place[] }) {
             flexDirection: "column",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-            <h3 style={{ margin: 0 }}>Legende</h3>
-            {activeFilters.size > 0 && (
-              <button
-                onClick={clearFilters}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "var(--accent-warm)",
-                  cursor: "pointer",
-                  fontSize: "0.8rem",
-                  textDecoration: "underline",
-                }}
-              >
-                Alle anzeigen
-              </button>
-            )}
+          <div className="legend-header">
+            <div className="legend-title-row">
+              <h3 style={{ margin: 0 }}>Legende</h3>
+              {activeFilters.size > 0 && (
+                <button
+                  onClick={clearFilters}
+                  className="legend-clear-button"
+                >
+                  Alle anzeigen
+                </button>
+              )}
+            </div>
+            <button
+              onClick={toggleLabels}
+              className="button legend-toggle-button"
+            >
+              {showAllLabels ? "🏷️ Labels ausblenden" : "🏷️ Labels immer anzeigen"}
+            </button>
           </div>
 
           <div className="legend-filters-container">
@@ -270,7 +286,7 @@ export function MapClient({ places }: { places: Place[] }) {
         </aside>
       </div>
 
-      {/* MODAL OVERLAY – appears centered above the map when a place is selected */}
+      {/* Modal overlay (unchanged) */}
       {selectedPlace && (
         <div
           style={{

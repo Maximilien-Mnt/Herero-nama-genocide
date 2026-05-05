@@ -5,10 +5,10 @@ import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayo
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)",
-  description: "Das koloniale Nachkriegsregime in DSWA, die Eingeborenenordnungen von 1907–1908, der Diamantenboom, Zwangsarbeit der Überlebenden und das Ende der deutschen Herrschaft 1915.",
+  title: "Die Omaheke: Massenflucht, Verdursten und der Tod in der Wüste",
+  description: "Die Flucht der Herero in die Omaheke-Sandwüste, der deutsche Wasserkordon, das Massensterben durch Verdursten und Hunger sowie die Zeugnisse der Überlebenden.",
   openGraph: {
-    title: "Nach dem Krieg (1908–1915) — Geschichte des Genozids an den Herero und Nama",
+    title: "Die Omaheke: Tod in der Wüste — Geschichte des Genozids an den Herero und Nama",
   },
 };
 
@@ -19,12 +19,12 @@ export default function Page() {
         items={[
           { href: "/", label: "Startseite" },
           { href: "/histoire", label: "Geschichte" },
-          { label: "Nach dem Krieg (1908–1915)" },
+          { label: "Die Omaheke: Tod in der Wüste" },
         ]}
       />
       <HistoireChapterLayout
-        slug="apres-1908"
-        title="Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)"
+        slug="omaheke-vertreibung"
+        title="Die Omaheke: Massenflucht, Verdursten und der Tod in der Wüste"
       >
         <Chapter />
       </HistoireChapterLayout>

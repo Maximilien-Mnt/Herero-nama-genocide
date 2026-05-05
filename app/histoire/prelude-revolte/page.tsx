@@ -1,13 +1,15 @@
-// 10 (app/histoire/prelude-revolte/page.tsx)
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
-import Chapter from "./chapter.mdx";
 import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayout";
+import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Vorspiel und Aufstände",
-  description: "1904: militärische Eskalation, erzwungener Rückzug, Wortschatzdebatten.",
+  title: "Am Vorabend des Aufstands: Krisen, Eskalation und der Ausbruch des Krieges (1903–1904)",
+  description: "Die unmittelbaren Ursachen des Herero-Aufstands, der Bondelswarts-Konflikt, Samuel Mahareros Entscheidung und der Beginn der Rebellion im Januar 1904.",
+  openGraph: {
+    title: "Am Vorabend des Aufstands (1903–1904) — Geschichte des Genozids an den Herero und Nama",
+  },
 };
 
 export default function Page() {
@@ -17,12 +19,12 @@ export default function Page() {
         items={[
           { href: "/", label: "Startseite" },
           { href: "/histoire", label: "Geschichte" },
-          { label: "Vorspiel — 1904" },
+          { label: "Am Vorabend des Aufstands (1903–1904)" },
         ]}
       />
       <HistoireChapterLayout
         slug="prelude-revolte"
-        title="Vorspiel: Spannungen und Aufstände von 1904"
+        title="Am Vorabend des Aufstands: Krisen, Eskalation und der Ausbruch des Krieges (1903–1904)"
       >
         <Chapter />
       </HistoireChapterLayout>

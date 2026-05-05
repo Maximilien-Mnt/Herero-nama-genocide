@@ -5,10 +5,10 @@ import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayo
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)",
-  description: "Das koloniale Nachkriegsregime in DSWA, die Eingeborenenordnungen von 1907–1908, der Diamantenboom, Zwangsarbeit der Überlebenden und das Ende der deutschen Herrschaft 1915.",
+  title: "Der Aufstand der Herero (Januar–Juli 1904): Kriegführung, Eskalation und deutsche Reaktion",
+  description: "Der militärische Verlauf des Herero-Aufstands von Januar bis Juli 1904, die frühen deutschen Rückschläge, das Eintreffen von Verstärkungen und die Ernennung von Trothas.",
   openGraph: {
-    title: "Nach dem Krieg (1908–1915) — Geschichte des Genozids an den Herero und Nama",
+    title: "Der Herero-Aufstand (1904) — Geschichte des Genozids an den Herero und Nama",
   },
 };
 
@@ -19,12 +19,12 @@ export default function Page() {
         items={[
           { href: "/", label: "Startseite" },
           { href: "/histoire", label: "Geschichte" },
-          { label: "Nach dem Krieg (1908–1915)" },
+          { label: "Der Herero-Aufstand (1904)" },
         ]}
       />
       <HistoireChapterLayout
-        slug="apres-1908"
-        title="Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)"
+        slug="herero-aufstand-1904"
+        title="Der Aufstand der Herero (Januar–Juli 1904): Kriegführung, Eskalation und deutsche Reaktion"
       >
         <Chapter />
       </HistoireChapterLayout>

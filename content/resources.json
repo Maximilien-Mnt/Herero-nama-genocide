@@ -2,73 +2,438 @@
   {
     "id": "res-001",
     "kind": "book",
-    "authors": "Jürgen Zimmerer, Joachim Zeller (Hrsg.)",
-    "title": "Völkermord in Deutsch-Südwestafrika: Der Kolonialkrieg (1904–1908) in Namibia und seine Folgen",
-    "year": "2003",
-    "url": "",
-    "notes": "Grundlegender Sammelband für die deutschsprachige Forschung."
+    "authors": "Gewald, Jan-Bart",
+    "title": "Herero Heroes: A Socio-Political History of the Herero of Namibia, 1890–1923",
+    "year": "1999",
+    "notes": "Grundlegendes Werk zur politischen und sozialen Geschichte der Herero. Basiert auf umfassender Archivarbeit in namibischen und deutschen Quellen. Standardreferenz für die Vorkriegsperiode, den Aufstand und die unmittelbaren Folgen. James Currey, Oxford."
   },
   {
     "id": "res-002",
     "kind": "book",
-    "authors": "David Olusoga, Casper W. Erichsen",
-    "title": "The Kaiser's Holocaust: Germany's Forgotten Genocide",
-    "year": "2010",
-    "url": "",
-    "notes": "Zugängliche Synthese auf Englisch; Debatten über Titel und Rechtsrahmen."
+    "authors": "Drechsler, Horst",
+    "title": "Let Us Die Fighting: The Struggle of the Herero and Nama against German Imperialism, 1884–1915",
+    "year": "1980",
+    "notes": "Englische Übersetzung der deutschen Erstausgabe 'Südwestafrika unter deutscher Kolonialherrschaft' (Akademie-Verlag Berlin, 1966). Pionierwerk der kritischen Kolonialgeschichtsschreibung; trotz marxistisch-ideologischer Rahmung nach wie vor quellenreiche Grundlage. Zed Press / Akademie-Verlag."
   },
   {
     "id": "res-003",
     "kind": "book",
-    "authors": "Isabel V. Hull",
-    "title": "Absolute Destruction: Military Culture and the Practices of War in Imperial Germany",
-    "year": "2005",
-    "url": "",
-    "notes": "Preußische Militärkultur und Besatzungsrationalitäten."
+    "authors": "Olusoga, David; Erichsen, Casper W.",
+    "title": "The Kaiser's Holocaust: Germany's Forgotten Genocide and the Colonial Roots of Nazism",
+    "year": "2010",
+    "notes": "Gut lesbares, quellengestütztes Werk für ein breiteres Publikum. Betont Verbindungslinien zwischen Kolonialgenozid und späterer NS-Vernichtungspolitik — eine in der Forschung diskutierte These. Faber and Faber, London."
   },
   {
     "id": "res-004",
-    "kind": "article",
-    "authors": "Reinhart Kössler",
-    "title": "Genocide and the Politics of Memory in Namibia — Auswahl von Artikeln",
-    "year": "2000–2020",
-    "url": "",
-    "notes": "Erinnerungspolitik und Erbe."
+    "kind": "book",
+    "authors": "Hull, Isabel V.",
+    "title": "Absolute Destruction: Military Culture and the Practices of War in Imperial Germany",
+    "year": "2005",
+    "notes": "Zentrale militärgeschichtliche Analyse des Vernichtungskrieges im Kontext der deutschen Militärkultur. These: eine institutionelle Eskalationslogik war entscheidender als rein ideologische Direktiven. Cornell University Press, Ithaca."
   },
   {
     "id": "res-005",
-    "kind": "archive",
-    "authors": "Bundesarchiv",
-    "title": "Kolonialbestände und Findmittel (Afrika)",
-    "year": "",
-    "url": "https://www.bundesarchiv.de/",
-    "notes": "Archivdaten unterliegen Bestimmungen."
+    "kind": "book",
+    "authors": "Zimmerer, Jürgen; Zeller, Joachim (Hrsg.)",
+    "title": "Völkermord in Deutsch-Südwestafrika: Der Kolonialkrieg (1904–1908) in Namibia und seine Folgen",
+    "year": "2003",
+    "notes": "Zentrales deutschsprachiges Sammelwerk mit Beiträgen verschiedener Spezialisten (militärische, administrative, wissenschaftliche und erinnerungspolitische Dimensionen). Ch. Links Verlag, Berlin. Standardreferenz im deutschen Sprachraum."
   },
   {
     "id": "res-006",
-    "kind": "website",
-    "authors": "Mahnmal in Namibia / Partnerinstitutionen",
-    "title": "Institutionelle Websites (Museen, Zentren)",
-    "year": "",
-    "url": "",
-    "notes": "Ergänzen Sie mit offiziellen URLs."
+    "kind": "book",
+    "authors": "Sarkin, Jeremy",
+    "title": "Germany's Genocide of the Herero: Kaiser Wilhelm II, His General, His Settlers, His Soldiers",
+    "year": "2011",
+    "notes": "Rechtlich und historisch ausgerichtete Analyse der Verantwortlichkeit auf verschiedenen Ebenen der deutschen Kolonialstruktur. UCT Press / James Currey, Kapstadt / Woodbridge."
   },
   {
     "id": "res-007",
-    "kind": "film",
-    "authors": "Verschiedene Regisseure",
-    "title": "Dokumentarfilme und gefilmte Zeitzeugen (Liste zu präzisieren)",
-    "year": "2004–",
-    "url": "",
-    "notes": "Vorführrechte für Schulen prüfen."
+    "kind": "book",
+    "authors": "Bridgman, Jon M.",
+    "title": "The Revolt of the Hereros",
+    "year": "1981",
+    "notes": "Detaillierte militärgeschichtliche Darstellung des Herero-Aufstands. University of California Press, Berkeley. Älteres, aber solides Werk auf Basis verfügbarer Archivquellen."
   },
   {
     "id": "res-008",
+    "kind": "book",
+    "authors": "Krüger, Gesine",
+    "title": "Kriegsbewältigung und Geschichtsbewusstsein: Realität, Deutung und Verarbeitung des deutschen Kolonialkriegs in Namibia 1904 bis 1907",
+    "year": "1999",
+    "notes": "Untersuchung der Erinnerungskultur und der psychologischen Verarbeitung des Krieges in verschiedenen Gruppen (deutsche Soldaten, Missionare, Herero). Vandenhoeck & Ruprecht, Göttingen."
+  },
+  {
+    "id": "res-009",
+    "kind": "book",
+    "authors": "Erichsen, Casper W.",
+    "title": "\"The Angel of Death Has Descended Violently among Them\": Concentration Camps and Prisoners-of-War in Namibia, 1904–08",
+    "year": "2005",
+    "notes": "Umfassendste Einzelstudie zum Lagersystem in DSWA. Basler Afrika Bibliographien, Basel. Enthält detaillierte Auswertungen von Lagerregistern und Sterblichkeitsdaten."
+  },
+  {
+    "id": "res-010",
+    "kind": "book",
+    "authors": "Zimmerer, Jürgen",
+    "title": "Von Windhuk nach Auschwitz? Beiträge zum Verhältnis von Kolonialismus und Holocaust",
+    "year": "2011",
+    "notes": "Aufsatzsammlung zur vieldiskutierten These einer Kontinuität zwischen deutschem Kolonialgenozid und Holocaust. LIT Verlag, Münster. Die Thesen sind in der Fachwelt umstritten; das Werk ist zentral für die Debatte."
+  },
+  {
+    "id": "res-011",
+    "kind": "book",
+    "authors": "Kößler, Reinhart; Melber, Henning",
+    "title": "Völkermord und Gedenken: Der Genozid an den Herero und Nama in Deutsch-Südwestafrika 1904–1908",
+    "year": "2004",
+    "notes": "Behandelt Erinnerungspolitik und die Nachgeschichte des Genozids in Namibia und Deutschland. Wichtig für das Verständnis heutiger Debatten über Anerkennung und Reparationen."
+  },
+  {
+    "id": "res-012",
+    "kind": "book",
+    "authors": "Steinmetz, Georg",
+    "title": "The Devil's Handwriting: Precoloniality and the German Colonial State in Qingdao, Samoa, and Southwest Africa",
+    "year": "2007",
+    "notes": "Soziologisch-historische Vergleichsstudie des deutschen Kolonialstaats. University of Chicago Press. Analysiert den spezifischen Charakter der deutschen Kolonialverwaltung in DSWA im Vergleich mit anderen deutschen Kolonien."
+  },
+  {
+    "id": "res-013",
+    "kind": "book",
+    "authors": "Bley, Helmut",
+    "title": "Kolonialherrschaft und Sozialstruktur in Deutsch-Südwestafrika 1894–1914",
+    "year": "1968",
+    "notes": "Grundlegendes sozialgeschichtliches Werk zur deutschen Kolonialherrschaft in DSWA. Leibniz Verlag, Hamburg. Wichtige Analyse der Siedlergesellschaft und der Strukturen kolonialer Ausbeutung."
+  },
+  {
+    "id": "res-014",
+    "kind": "book",
+    "authors": "Pool, Gerhardus",
+    "title": "Samuel Maharero",
+    "year": "1991",
+    "notes": "Biografie des Herero-Anführers Samuel Maharero. Gamsberg Macmillan, Windhoek. Wichtig für das Verständnis der Herero-Perspektive und der Führungsentscheidungen vor und während des Aufstands."
+  },
+  {
+    "id": "res-015",
+    "kind": "book",
+    "authors": "Silvester, Jeremy; Gewald, Jan-Bart (Hrsg.)",
+    "title": "Words Cannot Be Found: German Colonial Rule in Namibia — An Annotated Reprint of the 1918 Blue Book",
+    "year": "2003",
+    "notes": "Kommentierter Nachdruck des britischen 'Blue Book' von 1918, das Zeugenaussagen zu deutschen Kolonialverbrechen enthält. Brill, Leiden. Wichtige kommentierte Primärquellensammlung."
+  },
+  {
+    "id": "res-016",
+    "kind": "book",
+    "authors": "Melber, Henning",
+    "title": "Understanding Namibia: The Trials of Independence",
+    "year": "2014",
+    "notes": "Überblickswerk zur Geschichte und Politik Namibias nach der Unabhängigkeit. Hurst, London. Behandelt auch die Langzeitfolgen des Genozids und aktuelle Debatten zur Aufarbeitung."
+  },
+  {
+    "id": "res-017",
+    "kind": "book",
+    "authors": "Conrad, Sebastian",
+    "title": "German Colonialism: A Short History",
+    "year": "2012",
+    "notes": "Knappe, verständliche Einführung in die deutsche Kolonialgeschichte als Ganzes. Cambridge University Press. Enthält einen Abschnitt zu DSWA und den Aufständen von 1904–1908; gut als Einstiegswerk geeignet."
+  },
+  {
+    "id": "res-018",
+    "kind": "book",
+    "authors": "Lindqvist, Sven",
+    "title": "Exterminate All the Brutes",
+    "year": "1996",
+    "notes": "Englische Übersetzung des schwedischen Originals 'Utrota varenda jävel' (1992). Einflussreiches Essay über koloniale Gewalt und ihren Zusammenhang mit europäischem Rassismus. Literarisch-essayistischer Stil; kein klassisches akademisches Werk, aber historisch relevant und vielzitiert."
+  },
+  {
+    "id": "res-019",
+    "kind": "book",
+    "authors": "Henrichsen, Dag; Förster, Larissa; Erichsen, Casper W. (Hrsg.)",
+    "title": "Namibia – Deutschland: Eine geteilte Geschichte. Widerstand, Gewalt, Erinnerung",
+    "year": "2004",
+    "notes": "Begleitbuch zur gleichnamigen Ausstellung (Ethnologisches Museum Berlin / Nationalmuseum Windhoek). Deutsch-namibisches Gemeinschaftsprojekt zum Gedenkjahr 2004. Ch. Links Verlag, Berlin."
+  },
+  {
+    "id": "res-020",
+    "kind": "book",
+    "authors": "Zeller, Joachim",
+    "title": "Kolonialdenkmäler und Geschichtsbewusstsein: Eine Untersuchung der kolonialdeutschen Erinnerungskultur",
+    "year": "2000",
+    "notes": "Analyse der kolonialen Gedenkkultur in Deutschland, einschließlich Denkmälern zu DSWA. IKO-Verlag, Frankfurt. Wichtig für das Kapitel zu Erinnerung und Reparationen."
+  },
+  {
+    "id": "res-021",
     "kind": "article",
-    "authors": "UNO / Menschenrechtsmechanismen",
-    "title": "Berichte zu Erinnerung und Wiedergutmachung (Orientierungspunkte)",
-    "year": "",
-    "url": "https://www.ohchr.org/",
-    "notes": "Internationaler Menschenrechtsrahmen."
+    "authors": "Madley, Benjamin",
+    "title": "From Africa to Auschwitz: How German South West Africa Incubated Ideas and Methods Adopted and Developed by the Nazis",
+    "year": "2005",
+    "notes": "Erschienen in: European History Quarterly, Bd. 35, Nr. 3, S. 429–464. Einflussreicher Artikel zur Frage der Kontinuität zwischen Kolonialgenozid und Holocaust. Die spezifischen Thesen sind in der Fachgemeinschaft umstritten."
+  },
+  {
+    "id": "res-022",
+    "kind": "article",
+    "authors": "Dedering, Tilman",
+    "title": "The German-Herero War of 1904: Revisionism of Genocide or Imaginary Historiography?",
+    "year": "1993",
+    "notes": "Erschienen in: Journal of Southern African Studies, Bd. 19, Nr. 1, S. 80–88. Kritische Auseinandersetzung mit revisionistischen Tendenzen in der Forschung (insbesondere Brigitte Laus Positionen) bezüglich der Bewertung des Herero-Krieges als Genozid."
+  },
+  {
+    "id": "res-023",
+    "kind": "article",
+    "authors": "Hillebrecht, Werner",
+    "title": "The Nama and the War in the South",
+    "year": "2003",
+    "notes": "Kapitel in: Zimmerer/Zeller (Hrsg.), 'Völkermord in Deutsch-Südwestafrika', S. 142–177. Detaillierte Darstellung der Nama-Beteiligung am Krieg, ihrer Behandlung und ihres Schicksals in den Lagern."
+  },
+  {
+    "id": "res-024",
+    "kind": "article",
+    "authors": "Kößler, Reinhart",
+    "title": "Facing a Fragmented Past: Memory, Culture and Politics in Namibia",
+    "year": "2007",
+    "notes": "Erschienen in: Journal of Southern African Studies, Bd. 33, Nr. 2, S. 361–382. Zur fragmentierten Erinnerungskultur in Namibia nach der Unabhängigkeit und zu den politischen Implikationen des Gedenkens."
+  },
+  {
+    "id": "res-025",
+    "kind": "article",
+    "authors": "Zimmerer, Jürgen",
+    "title": "The Birth of the 'Ostland' out of the Spirit of Colonialism: A Postcolonial Perspective on the Nazi Policy of Conquest and Extermination",
+    "year": "2005",
+    "notes": "Erschienen in: Patterns of Prejudice, Bd. 39, Nr. 2, S. 197–219. Untersucht die kolonialen Wurzeln der nationalsozialistischen Vernichtungspolitik aus postkolonialer Perspektive."
+  },
+  {
+    "id": "res-026",
+    "kind": "article",
+    "authors": "Förster, Larissa",
+    "title": "Postkoloniale Erinnerungslandschaften: Wie Deutsche und Herero in Namibia des Krieges von 1904 gedenken",
+    "year": "2010",
+    "notes": "Erschienen in: Periplus: Jahrbuch für Außereuropäische Geschichte. Feldforschungsbasierte Analyse konkurrierender Erinnerungspraktiken in Namibia; wichtig für das Gedenkkapitel."
+  },
+  {
+    "id": "res-027",
+    "kind": "article",
+    "authors": "Dedering, Tilman",
+    "title": "A Certain Rigorous Treatment of All Parts of the Nation: The Annihilation of the Herero in German South West Africa, 1904",
+    "year": "1999",
+    "notes": "Erschienen in: Mark Levene / Penny Roberts (Hrsg.), 'The Massacre in History', Berghahn Books, S. 205–222. Präzise militärhistorische Analyse der Vernichtungsstrategie."
+  },
+  {
+    "id": "res-028",
+    "kind": "archive",
+    "authors": "Bundesarchiv Berlin-Lichterfelde",
+    "title": "Bestand R 1001: Reichskolonialamt — Akten zum Deutschen Schutzgebiet Südwestafrika",
+    "url": "https://www.bundesarchiv.de",
+    "notes": "Hauptbestand für die Verwaltungsgeschichte von DSWA. Enthält Korrespondenz, Berichte, Verordnungen und Lageberichte aus der Kolonialzeit. Zugang über das Bundesarchiv-Portal oder persönlich in Berlin-Lichterfelde."
+  },
+  {
+    "id": "res-029",
+    "kind": "archive",
+    "authors": "Bundesarchiv-Militärarchiv Freiburg im Breisgau (BArch-MA)",
+    "title": "Akten zur Kaiserlichen Schutztruppe und zum Krieg in DSWA 1904–1908",
+    "url": "https://www.bundesarchiv.de",
+    "notes": "Militärische Befehle, Kriegstagebücher und Schlachtberichte der Schutztruppe. Beinhaltet Originaldokumente zum Vernichtungsbefehl und zur Lagerverwaltung. Zugang: persönlich oder über Reproduktionsservice Freiburg."
+  },
+  {
+    "id": "res-030",
+    "kind": "archive",
+    "authors": "National Archives of Namibia (NAN), Windhoek",
+    "title": "Bestände ZBU, BSW, BOM u. a. — Quellen zur deutschen Kolonialzeit in Namibia",
+    "url": "https://www.national-archives.gov.na",
+    "notes": "Hauptarchiv Namibias. Enthält originale Verwaltungsdokumente, Korrespondenz, Volkszählungen und Fotografien aus der deutschen und südafrikanischen Kolonialzeit. Unverzichtbar für die namibische Seite der Geschichte."
+  },
+  {
+    "id": "res-031",
+    "kind": "archive",
+    "authors": "Auswärtiges Amt, Politisches Archiv, Berlin",
+    "title": "Akten zur deutschen Kolonialpolitik in Südwestafrika und zur diplomatischen Korrespondenz 1884–1920",
+    "notes": "Diplomatische Korrespondenz zwischen Berlin und dem Gouvernement sowie Akten zu internationalen Aspekten der Kolonialherrschaft. Zugang über das Politische Archiv des Auswärtigen Amts, Berlin."
+  },
+  {
+    "id": "res-032",
+    "kind": "archive",
+    "authors": "Basler Afrika Bibliographien (BAB), Basel",
+    "title": "Archiv und Spezialsammlung zur Geschichte Namibias und des südlichen Afrika",
+    "url": "https://www.baslerafrika.ch",
+    "notes": "Spezialarchiv und -bibliothek mit umfangreichen Beständen zur Kolonialgeschichte Namibias, darunter Fotografien, Karten und Missionsdokumente. Herausgeberin zentraler Forschungsmonographien (u. a. Erichsen 2005)."
+  },
+  {
+    "id": "res-033",
+    "kind": "archive",
+    "authors": "Vereinte Evangelische Mission (VEM), Wuppertal",
+    "title": "Archiv der Rheinischen Missionsgesellschaft — Berichte aus Deutsch-Südwestafrika 1890–1920",
+    "notes": "Missionsarchiv mit zeitgenössischen Berichten, Briefen und Zeugenaussagen der in DSWA tätigen Missionare. Wichtige Gegenquellen zur offiziellen militärischen Berichterstattung."
+  },
+  {
+    "id": "res-034",
+    "kind": "website",
+    "authors": "Auswärtiges Amt der Bundesrepublik Deutschland",
+    "title": "Gemeinsame Erklärung der Bundesregierung Deutschland und der Republik Namibia (28. Mai 2021)",
+    "year": "2021",
+    "url": "https://www.auswaertiges-amt.de/de/newsroom/namibia-erklaerung/2463396",
+    "notes": "Offizieller Text der Gemeinsamen Erklärung vom 28. Mai 2021, in der Deutschland die Ereignisse 1904–1908 als Völkermord anerkennt. Auf Deutsch und Englisch zugänglich."
+  },
+  {
+    "id": "res-035",
+    "kind": "website",
+    "authors": "Bundesarchiv (Deutschland)",
+    "title": "Archivportal — Bestände zur deutschen Kolonialgeschichte",
+    "url": "https://www.bundesarchiv.de",
+    "notes": "Einstiegsportal des deutschen Bundesarchivs. Ermöglicht Recherche in den Beständen zu DSWA (R 1001, BArch-MA u. a.)."
+  },
+  {
+    "id": "res-036",
+    "kind": "website",
+    "authors": "United States Holocaust Memorial Museum (USHMM)",
+    "title": "Genocide under German Colonial Rule in Namibia, 1904–1908",
+    "url": "https://www.ushmm.org/genocide-prevention/countries/namibia/case-study",
+    "notes": "Kurzer Überblicksartikel im Kontext der Genozidforschung. Nützlich für vergleichende Perspektiven; quellensparsam, aber zugänglich."
+  },
+  {
+    "id": "res-037",
+    "kind": "website",
+    "authors": "Ovaherero Genocide Foundation",
+    "title": "Official Website of the Ovaherero Genocide Foundation",
+    "url": "https://www.ovahererogenocide.com",
+    "notes": "Plattform der Ovaherero-Vertreter für Anerkennung und Wiedergutmachung. Kein akademisches Werk, aber primäre Quelle für die Forderungen und Positionen der betroffenen Gemeinschaft."
+  },
+  {
+    "id": "res-038",
+    "kind": "website",
+    "authors": "Namibia Scientific Society, Windhoek",
+    "title": "Publications and Historical Resources on Namibian History",
+    "url": "https://www.namscience.com",
+    "notes": "Wissenschaftliche Gesellschaft in Windhoek. Herausgeberin des Journal of the Namibia Scientific Society; verfügt über historische Bestände und Fachliteratur zur namibischen Geschichte."
+  },
+  {
+    "id": "res-039",
+    "kind": "other",
+    "authors": "Whitaker, Benjamin (UN-Sonderberichterstatter)",
+    "title": "Revised and Updated Report on the Question of the Prevention and Punishment of the Crime of Genocide (UN-Dokument E/CN.4/Sub.2/1985/6)",
+    "year": "1985",
+    "notes": "Der sogenannte 'Whitaker-Bericht' nennt explizit den Herero-Nama-Genozid als einen der ersten anerkannten Völkermordfälle des 20. Jahrhunderts. Erste offizielle UN-Bezugnahme auf diese Ereignisse als Genozid."
+  },
+  {
+    "id": "res-040",
+    "kind": "other",
+    "authors": "Bundesregierung Deutschland / Regierung der Republik Namibia",
+    "title": "Deutsch-Namibische Gemeinsame Erklärung: Annahme durch das Bundeskabinett (28. Mai 2021)",
+    "year": "2021",
+    "notes": "Offizielles Regierungsdokument, das die Anerkennung der Ereignisse als Völkermord formalisiert und eine freiwillige Leistung in Höhe von 1,1 Milliarden Euro über 30 Jahre ankündigt. Die namibische Zivilgesellschaft und insbesondere Vertreter der Herero und Nama haben den Prozess als unzureichend abgelehnt."
+  },
+  {
+    "id": "res-041",
+    "kind": "film",
+    "authors": "Arte / ZDF",
+    "title": "Der Herero-Aufstand: Deutschlands vergessener Völkermord",
+    "year": "2004",
+    "notes": "Dokumentarfilm, produziert im Gedenkjahr 2004. Gut zugänglich für ein breiteres Publikum; historisch informiert, wenn auch vereinfachend. Empfehlenswert als Einführung."
+  },
+  {
+    "id": "res-042",
+    "kind": "film",
+    "authors": "Geissler, Ulrich (Regie)",
+    "title": "Namibia — Ein Volk kämpft um seine Würde",
+    "year": "2004",
+    "notes": "Deutsche Fernsehdokumentation zum Gedenkjahr 2004. Enthält Interviews mit namibischen Überlebenden-Nachkommen und deutschen Historikern."
+  },
+  {
+    "id": "res-043",
+    "kind": "book",
+    "authors": "Fischer, Eugen",
+    "title": "Die Rehobother Bastards und das Bastardierungsproblem beim Menschen",
+    "year": "1913",
+    "notes": "WICHTIG: Als Primärbeleg für rassenideologische Pseudowissenschaft aus dem Kolonialkontext zu verwenden — nicht als wissenschaftliche Autorität. Fischer entwickelte hier rassenbiologische Theorien auf Basis von Feldforschungen in DSWA, die später von NS-Ideologen rezipiert wurden. Gustav Fischer Verlag, Jena."
+  },
+  {
+    "id": "res-044",
+    "kind": "book",
+    "authors": "Rohrbach, Paul",
+    "title": "Aus Südwestafrikas schweren Tagen",
+    "year": "1909",
+    "notes": "Zeitgenössischer Bericht eines deutschen Kolonialbeamten zu den Ereignissen von 1904–1907. Wichtige Primärquelle, die die Logik des Vernichtungskrieges aus zeitgenössischer kolonialer Perspektive beleuchtet. Zu benutzen mit kritischer Distanz."
+  },
+  {
+    "id": "res-045",
+    "kind": "book",
+    "authors": "Schwabe, Kurd",
+    "title": "Mit Schwert und Pflug in Deutsch-Südwestafrika: Vier Kriegs- und Wanderjahre",
+    "year": "1904",
+    "notes": "Zeitgenössischer Erlebnisbericht eines deutschen Offiziers in DSWA. Wichtige Primärquelle für die Einstellungen der deutschen Kolonialtruppen. Zu benutzen mit kritischer Distanz gegenüber der kolonialen Perspektive."
+  },
+  {
+    "id": "res-046",
+    "kind": "other",
+    "authors": "Rheinische Missionsgesellschaft (RMG)",
+    "title": "Berichte der Rheinischen Missionsgesellschaft aus Deutsch-Südwestafrika (Jahrgänge 1900–1910)",
+    "notes": "Missionsberichte mit wichtigen Zeugenaussagen zu Übergriffen, Lagerbedingungen und dem Schicksal einheimischer Gemeinden. Teile digitalisiert. Archiv der Vereinten Evangelischen Mission, Wuppertal."
+  },
+  {
+    "id": "res-047",
+    "kind": "other",
+    "authors": "Deutsche Kolonialgesellschaft",
+    "title": "Deutsche Kolonialzeitung (Jahrgänge 1884–1914)",
+    "notes": "Wichtigstes koloniales Presseorgan Deutschlands. Enthält offizielle und halboffizielle Berichte zur Lage in DSWA, zur Aufstandsbekämpfung und zur Kolonialpolitik. Nationalbibliothek / Zeitungsdigitalisierung der Deutschen Nationalbibliothek."
+  },
+  {
+    "id": "res-048",
+    "kind": "book",
+    "authors": "Langbehn, Volker; Salama, Mohammad (Hrsg.)",
+    "title": "German Colonialism: Race, the Holocaust, and Postwar Germany",
+    "year": "2011",
+    "notes": "Sammelband mit mehreren Beiträgen zur Frage der Kontinuität zwischen deutschem Kolonialismus und NS. Columbia University Press, New York."
+  },
+  {
+    "id": "res-049",
+    "kind": "book",
+    "authors": "Poewe, Karla O.",
+    "title": "The Namibian Herero: A History of Their Psychosocial Disintegration and Survival",
+    "year": "1985",
+    "notes": "Anthropologische Studie mit historischen Elementen zu Trauma und gesellschaftlichem Wandel nach dem Genozid. Edwin Mellen Press."
+  },
+  {
+    "id": "res-050",
+    "kind": "book",
+    "authors": "Lau, Brigitte",
+    "title": "Uncertain Certainties: The Herero-German War of 1904",
+    "year": "1995",
+    "notes": "Polemische, revisionistisch ausgerichtete Schrift, die die Einordnung der Ereignisse als Völkermord in Frage stellt. Mibagus, Windhoek. Vielfach widerlegt (Dedering 1993, Gewald 1999); wichtig als Beispiel revisionistischer Tendenzen — nicht als Autorität zu zitieren."
+  },
+  {
+    "id": "res-051",
+    "kind": "article",
+    "authors": "Gewald, Jan-Bart",
+    "title": "The Herero Genocide: German Unity, Settlers, Soldiers, and Ideas",
+    "year": "2004",
+    "notes": "Erschienen in: Proceedings of a Symposium on German Colonial History (Lindenberger/Lüdtke, Hrsg.). Guter Überblicksartikel mit starkem Fokus auf die Diskussion um den Genozid-Begriff."
+  },
+  {
+    "id": "res-052",
+    "kind": "article",
+    "authors": "Nienaber, Sui",
+    "title": "The 1904–1908 Herero and Nama Genocide: Forgotten or Suppressed?",
+    "year": "2010",
+    "notes": "Erschienen in: African Identities, Bd. 8, Nr. 3. Überblicksartikel zu den Mechanismen des Vergessens und der Suppression in der deutschen und namibischen Geschichtsschreibung."
+  },
+  {
+    "id": "res-053",
+    "kind": "book",
+    "authors": "Zimmerer, Jürgen (Hrsg.)",
+    "title": "Kein Platz an der Sonne: Erinnerungsorte der deutschen Kolonialgeschichte",
+    "year": "2013",
+    "notes": "Sammelband zu Erinnerungsorten der deutschen Kolonialgeschichte, u. a. zu DSWA und Namibia. Campus Verlag, Frankfurt. Nützlich für das Gedenkkapitel."
+  },
+  {
+    "id": "res-054",
+    "kind": "website",
+    "authors": "Bundeszentrale für politische Bildung (bpb)",
+    "title": "Kolonialismus und Erinnerung: Dossier zur deutschen Kolonialgeschichte",
+    "url": "https://www.bpb.de/themen/kolonialismus",
+    "notes": "Gut aufbereitetes, kostenlos zugängliches Dossier der deutschen Bildungsbehörde. Enthält Artikel, Zeitleisten und Hinweise zu Herero/Nama-Genozid. Für den Schulkontext geeignet."
+  },
+  {
+    "id": "res-055",
+    "kind": "article",
+    "authors": "Krüger, Gesine",
+    "title": "Coming to Terms with the Past in Namibia and South Africa",
+    "year": "2003",
+    "notes": "Erschienen in: Stefanie Michels / Albert Wirz (Hrsg.), 'Geschichte in Afrika', Das Arabische Buch. Vergleichende Analyse der Aufarbeitungsprozesse in Namibia und Südafrika."
   }
 ]

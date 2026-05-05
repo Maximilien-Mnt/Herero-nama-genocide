@@ -5,10 +5,10 @@ import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayo
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)",
-  description: "Das koloniale Nachkriegsregime in DSWA, die Eingeborenenordnungen von 1907–1908, der Diamantenboom, Zwangsarbeit der Überlebenden und das Ende der deutschen Herrschaft 1915.",
+  title: "Das koloniale System: Verwaltung, Landenteignung und Ausbeutung (1894–1903)",
+  description: "Analyse der deutschen Kolonialverwaltung in DSWA, der systematischen Landenteignung, wirtschaftlichen Ausbeutung und der strukturellen Ursachen des Völkermords.",
   openGraph: {
-    title: "Nach dem Krieg (1908–1915) — Geschichte des Genozids an den Herero und Nama",
+    title: "Das koloniale System (1894–1903) — Geschichte des Genozids an den Herero und Nama",
   },
 };
 
@@ -19,12 +19,12 @@ export default function Page() {
         items={[
           { href: "/", label: "Startseite" },
           { href: "/histoire", label: "Geschichte" },
-          { label: "Nach dem Krieg (1908–1915)" },
+          { label: "Das koloniale System (1894–1903)" },
         ]}
       />
       <HistoireChapterLayout
-        slug="apres-1908"
-        title="Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)"
+        slug="koloniale-herrschaft"
+        title="Das koloniale System: Verwaltung, Landenteignung und wirtschaftliche Ausbeutung (1894–1903)"
       >
         <Chapter />
       </HistoireChapterLayout>

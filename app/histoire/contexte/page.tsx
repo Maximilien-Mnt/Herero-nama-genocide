@@ -1,4 +1,3 @@
-// 8 (app/histoire/contexte/page.tsx)
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageShell } from "@/components/PageShell";
@@ -6,10 +5,12 @@ import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayo
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Kolonialer Kontext",
-  description: "Deutsche Kolonisation, Herero- und Nama-Gesellschaften, Spannungen vor 1904.",
+  title: "Koloniales Erbe: Vorkoloniale Gesellschaften und die Anfänge der deutschen Herrschaft",
+  description: "Überblick über die vorkolonialen Gesellschaften der Herero und Nama sowie die Anfänge der deutschen Kolonialherrschaft in Deutsch-Südwestafrika (1884–1894).",
+  openGraph: {
+    title: "Koloniales Erbe — Geschichte des Genozids an den Herero und Nama",
+  },
 };
-
 export default function Page() {
   return (
     <PageShell>
@@ -17,12 +18,12 @@ export default function Page() {
         items={[
           { href: "/", label: "Startseite" },
           { href: "/histoire", label: "Geschichte" },
-          { label: "Kolonialer Kontext" },
+          { label: "Koloniales Erbe (1884–1894)" },
         ]}
       />
       <HistoireChapterLayout
         slug="contexte"
-        title="Kolonialer Kontext und Gesellschaften in Deutsch-Südwestafrika"
+        title="Koloniales Erbe: Vorkoloniale Gesellschaften und die Anfänge der deutschen Herrschaft (1884–1894)"
       >
         <Chapter />
       </HistoireChapterLayout>

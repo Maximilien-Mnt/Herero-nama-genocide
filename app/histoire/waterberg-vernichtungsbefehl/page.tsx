@@ -5,10 +5,10 @@ import { HistoireChapterLayout } from "@/components/histoire/HistoireChapterLayo
 import Chapter from "./chapter.mdx";
 
 export const metadata: Metadata = {
-  title: "Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)",
-  description: "Das koloniale Nachkriegsregime in DSWA, die Eingeborenenordnungen von 1907–1908, der Diamantenboom, Zwangsarbeit der Überlebenden und das Ende der deutschen Herrschaft 1915.",
+  title: "Die Wende: Die Schlacht am Waterberg und der Vernichtungsbefehl (August–Oktober 1904)",
+  description: "Die entscheidende Konfrontation am Waterberg-Plateau am 11.–12. August 1904 und der Vernichtungsbefehl von Trothas vom 2. Oktober 1904 — Analyse, Text und historiografische Debatte.",
   openGraph: {
-    title: "Nach dem Krieg (1908–1915) — Geschichte des Genozids an den Herero und Nama",
+    title: "Waterberg und Vernichtungsbefehl (1904) — Geschichte des Genozids an den Herero und Nama",
   },
 };
 
@@ -19,12 +19,12 @@ export default function Page() {
         items={[
           { href: "/", label: "Startseite" },
           { href: "/histoire", label: "Geschichte" },
-          { label: "Nach dem Krieg (1908–1915)" },
+          { label: "Waterberg und Vernichtungsbefehl (1904)" },
         ]}
       />
       <HistoireChapterLayout
-        slug="apres-1908"
-        title="Nach dem Krieg: Das koloniale Regime, Enteignung und gesellschaftliche Neuordnung (1908–1915)"
+        slug="waterberg-vernichtungsbefehl"
+        title="Die Wende: Die Schlacht am Waterberg und der Vernichtungsbefehl (August–Oktober 1904)"
       >
         <Chapter />
       </HistoireChapterLayout>

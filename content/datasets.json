@@ -1,69 +1,144 @@
 [
   {
-    "id": "ds-pop-proxy",
-    "title": "Bevölkerung: didaktische Illustration (Richtwerte)",
-    "unit": "Tausend (Schema)",
-    "sourceCitation": "Die Größenordnungen variieren je nach Schätzer; durch belegte Tabelle ersetzen (Ressourcen).",
-    "notes": "Demonstrationsdaten — durch validierte historiografische Reihe zu ersetzen.",
-    "chartType": "bar",
-    "relatedEventIds": ["evt-002"],
-    "points": [
-      { "label": "Vor 1904 (Schema)", "value": 85, "note": "Platzhalter" },
-      { "label": "Geschätzte Nach-Gewalt (Schema)", "value": 25, "note": "große Spannweite" }
-    ]
-  },
-  {
-    "id": "ds-mortality-proxy",
-    "title": "Sterblichkeitsindex (Schema — Lager / Vertreibung)",
-    "unit": "relativer Index 0–100",
-    "sourceCitation": "Visueller Platzhalter; nicht als exakte Zählung lesen.",
-    "notes": "Didaktische Visualisierung dokumentierter Intensitätsphasen.",
+    "id": "data-001",
+    "title": "Geschätzte Bevölkerungsentwicklung der Herero (1891–1911)",
+    "unit": "Personen (Schätzung)",
+    "sourceCitation": "Deutsche Kolonialvolkszählung 1911 (Bundesarchiv Berlin); Schätzungen für Vorkriegszeit bei Gewald (1999), Drechsler (1980), Zimmerer/Zeller (2003). Die Vorkriegszahlen sind Schätzungen und werden in der Forschung zwischen 60.000 und 100.000 diskutiert.",
+    "notes": "WICHTIG: Nur die Zahl von 1911 (15.130) ist eine direkt dokumentierte Volkszählung. Alle früheren Werte sind historiografische Schätzungen mit erheblichen Unsicherheitsspannen. Die Darstellung dient der Veranschaulichung des demografischen Einbruchs, nicht der pseudo-präzisen Quantifizierung.",
     "chartType": "area",
-    "relatedEventIds": ["evt-007", "evt-010", "evt-020"],
+    "relatedEventIds": ["evt-013", "evt-014", "evt-015", "evt-026", "evt-027"],
+    "relatedDocumentIds": ["doc-023", "doc-026", "doc-029"],
+    "relatedPlaceIds": ["place-002", "place-006", "place-003"],
+    "relatedHistorySlugs": ["waterberg-vernichtungsbefehl", "omaheke-vertreibung", "langzeitfolgen", "camps-extermination"],
     "points": [
-      { "label": "1904 Q3", "value": 30 },
-      { "label": "1904 Q4", "value": 70 },
-      { "label": "1905 Q1", "value": 85 },
-      { "label": "1905 Q3", "value": 60 },
-      { "label": "1906", "value": 40 }
+      { "label": "1891", "value": 80000, "note": "Schätzung (Bandbreite: 60.000–100.000)" },
+      { "label": "1904", "value": 80000, "note": "Vorkriegsschätzung" },
+      { "label": "1905", "value": 35000, "note": "Grobe Schätzung nach Waterberg und Omaheke-Flucht" },
+      { "label": "1906", "value": 22000, "note": "Schätzung, Rückgang durch Lager und Wüstentod" },
+      { "label": "1907", "value": 17000, "note": "Schätzung" },
+      { "label": "1911", "value": 15130, "note": "Offizielle Kolonialzählung — verlässlichste Angabe" }
     ]
   },
   {
-    "id": "ds-camp-proxy",
-    "title": "Gemeldete Gefangenenzahlen (Schema)",
-    "unit": "Personen (Schema)",
-    "sourceCitation": "Aus den unter Ressourcen aufgeführten Arbeiten zusammenstellen (große Abweichungen).",
-    "chartType": "line",
-    "relatedEventIds": ["evt-010"],
+    "id": "data-002",
+    "title": "Geschätzte Bevölkerungsentwicklung der Nama (1892–1911)",
+    "unit": "Personen (Schätzung)",
+    "sourceCitation": "Deutsche Kolonialvolkszählung 1911 (Bundesarchiv Berlin); Vorkriegsschätzungen bei Drechsler (1980), Hillebrecht in Zimmerer/Zeller (2003).",
+    "notes": "Auch hier ist der Wert von 1911 (ca. 9.781) die verlässlichste dokumentierte Zahl. Die Vorkriegszahlen sind Schätzungen. Der Rückgang um ca. 50% ist historisch gesichert; die genauen Zeitpunkte des Bevölkerungsrückgangs sind unsicher.",
+    "chartType": "area",
+    "relatedEventIds": ["evt-016", "evt-021", "evt-022", "evt-025", "evt-037"],
+    "relatedDocumentIds": ["doc-023"],
+    "relatedPlaceIds": ["place-011", "place-012", "place-008", "place-009"],
+    "relatedHistorySlugs": ["nama-widerstand", "langzeitfolgen", "camps-extermination"],
     "points": [
-      { "label": "Ende 1904", "value": 1200 },
-      { "label": "Mitte 1905", "value": 3500 },
-      { "label": "1906", "value": 2800 }
+      { "label": "1892", "value": 20000, "note": "Schätzung (Vorkolonialzeit)" },
+      { "label": "1904", "value": 20000, "note": "Vorkriegsschätzung" },
+      { "label": "1906", "value": 14000, "note": "Grobe Schätzung, Kriegszeit" },
+      { "label": "1908", "value": 11000, "note": "Schätzung nach Kriegsende" },
+      { "label": "1911", "value": 9781, "note": "Offizielle Kolonialzählung" }
     ]
   },
   {
-    "id": "ds-memory-polls",
-    "title": "Internationale Anerkennung (symbolische Meilensteine 0–100)",
-    "unit": "Illustrativer Score",
-    "sourceCitation": "Didaktische Konstruktion, keine echte Umfrage.",
+    "id": "data-003",
+    "title": "Geschätzte Spitzenbelegung der wichtigsten Konzentrationslager (1904–1907)",
+    "unit": "Insassen (Schätzung, Spitzenwert)",
+    "sourceCitation": "Erichsen, Casper W. (2005): 'The Angel of Death Has Descended Violently among Them', Basler Afrika Bibliographien. Ergänzend: Zimmerer/Zeller (2003). Genaue Zahlen für einzelne Lager sind in vielen Fällen unsicher oder undokumentiert.",
+    "notes": "Diese Zahlen repräsentieren geschätzte Spitzenbelegungen, nicht dokumentierte Gesamtzahlen. Die Sterblichkeit schwankte zwischen Lagern stark: Shark Island gilt als tödlichstes Lager (geschätzte Sterblichkeit über 50–75%). Die Zahlen dienen der relativen Veranschaulichung; einzelne Quellen weichen teils erheblich voneinander ab.",
     "chartType": "bar",
-    "relatedEventIds": ["evt-017", "evt-019"],
+    "relatedEventIds": ["evt-017", "evt-019", "evt-020", "evt-023"],
+    "relatedDocumentIds": ["doc-006", "doc-007", "doc-015", "doc-021"],
+    "relatedPlaceIds": ["place-003", "place-008", "place-010", "place-009"],
+    "relatedHistorySlugs": ["camps-extermination", "nama-widerstand"],
     "points": [
-      { "label": "2004 Gedenkfeiern", "value": 35 },
-      { "label": "2021 Bundestag", "value": 75 }
+      { "label": "Swakopmund", "value": 2500, "note": "Größtes Lager; überwiegend Herero (Schätzung)" },
+      { "label": "Shark Island", "value": 1700, "note": "Überwiegend Nama; höchste Sterblichkeitsrate (Schätzung)" },
+      { "label": "Aus", "value": 1000, "note": "Nama-Lager (Schätzung)" },
+      { "label": "Windhoek", "value": 800, "note": "Gemischtes Lager (Schätzung)" },
+      { "label": "Karibib", "value": 500, "note": "Herero; Eisenbahnarbeit (Schätzung)" }
     ]
   },
   {
-    "id": "ds-territory-loss",
-    "title": "Verlust territorialer Kontrolle der Herero (Schema)",
-    "unit": "% stilisiert",
-    "sourceCitation": "Kartografisches Begleitschema — keine metrische Bodenmessung.",
+    "id": "data-004",
+    "title": "Entwicklung der deutschen Truppenstärke in DSWA (1903–1908)",
+    "unit": "Soldaten (Schätzung)",
+    "sourceCitation": "Hull, Isabel V. (2005): 'Absolute Destruction', Cornell University Press; Bridgman (1981); Bundesarchiv-Militärarchiv Freiburg (Sekundärquellen). Genaue monatliche Stärken variieren je nach Quelle.",
+    "notes": "Die Zahlen zeigen den dramatischen Aufbau des deutschen Expeditionskorps zwischen 1904 und 1905. Der Höchststand von ca. 14.000–17.000 Soldaten in DSWA ist historisch gut belegt; die Monatswerte sind Schätzungen auf Basis verfügbarer Archivangaben.",
     "chartType": "line",
-    "relatedEventIds": ["evt-005", "evt-007"],
+    "relatedEventIds": ["evt-010", "evt-011", "evt-013", "evt-026"],
+    "relatedDocumentIds": ["doc-008"],
+    "relatedPlaceIds": ["place-001", "place-005"],
+    "relatedHistorySlugs": ["herero-aufstand-1904", "waterberg-vernichtungsbefehl", "nama-widerstand"],
     "points": [
-      { "label": "Jan 1904", "value": 70 },
-      { "label": "Juni 1904", "value": 35 },
-      { "label": "Okt 1904", "value": 10 }
+      { "label": "1903", "value": 766, "note": "Reguläre Schutztruppe vor dem Aufstand (dokumentiert)" },
+      { "label": "Frühjahr 1904", "value": 3000, "note": "Erste Verstärkungswellen" },
+      { "label": "Sommer 1904", "value": 9000, "note": "Vor der Schlacht am Waterberg" },
+      { "label": "Ende 1904", "value": 14000, "note": "Schätzung nach Hauptverstärkungen" },
+      { "label": "1905 (Höhepunkt)", "value": 17000, "note": "Geschätzter Höchststand" },
+      { "label": "1906", "value": 13000, "note": "Schätzung nach Abzügen" },
+      { "label": "1907", "value": 9000, "note": "Abzug von Truppen" },
+      { "label": "1908", "value": 4500, "note": "Reguläre Besatzung nach Kriegsende" }
+    ]
+  },
+  {
+    "id": "data-005",
+    "title": "Entwicklung der Landverteilung in DSWA — Einheimische vs. Siedlerland (ca. 1892–1913)",
+    "unit": "Tausend Hektar (grobe Schätzung)",
+    "sourceCitation": "Drechsler (1980); Bley (1968); Zimmerer/Zeller (2003). Genaue Landkataster-Daten sind für diesen Zeitraum nur fragmentarisch verfügbar; die Zahlen sind illustrative Schätzungen auf Basis bekannter Landenteignungsverordnungen.",
+    "notes": "DIDAKTISCHES DIAGRAMM: Diese Zahlen sind illustrativ und keine exakten Flächen-Messungen. Sie zeigen die Größenordnung der Landenteignung. Die tatsächlichen Verteilungen variierten stark nach Region. Das Diagramm dient dazu, die strukturelle Landenteignung als Prozess sichtbar zu machen.",
+    "chartType": "bar",
+    "relatedEventIds": ["evt-006", "evt-027", "evt-028"],
+    "relatedDocumentIds": ["doc-014", "doc-030"],
+    "relatedPlaceIds": ["place-001", "place-016"],
+    "relatedHistorySlugs": ["koloniale-herrschaft", "apres-1908", "langzeitfolgen"],
+    "points": [
+      { "label": "Einheim. Land 1892", "value": 26000, "note": "Grobe Schätzung traditioneller Weideflächen (in 10.000 ha)" },
+      { "label": "Siedler 1892", "value": 50, "note": "Sehr geringer früher Siedlerbesitz" },
+      { "label": "Einheim. Land 1904", "value": 22000, "note": "Bereits reduziert durch frühe Landnahmen" },
+      { "label": "Siedler 1904", "value": 800, "note": "Wachsender Siedlerbesitz" },
+      { "label": "Einheim. Land 1913", "value": 3500, "note": "Drastisch reduziert durch Reservatsystem" },
+      { "label": "Siedler 1913", "value": 3800, "note": "Massiver Anstieg nach dem Krieg" }
+    ]
+  },
+  {
+    "id": "data-006",
+    "title": "Historiografische Schätzungen zur Opferzahl des Herero-Genozids",
+    "unit": "Geschätzte Todesopfer der Herero",
+    "sourceCitation": "Drechsler (1980); Bridgman (1981); Pool (1991); Gewald (1999); Zimmerer/Zeller (2003); Bevölkerungsrückgang nach Kolonialzählung 1911.",
+    "notes": "Dieses Diagramm visualisiert die Bandbreite historiografischer Schätzungen. Der Unterschied zwischen den Angaben spiegelt nicht nur methodische Differenzen wider, sondern auch unterschiedliche Definitionen: Direkte Kriegstote, Lagertote und durch Vertreibung/Verdursten Gestorbene werden je nach Autor unterschiedlich gewichtet. Pools niedrigere Schätzung basiert auf einer engeren Berechnungsmethode. Die 'maximale Diskrepanz' ist die errechnete Differenz aus Vorkriegsschätzung (80.000) und Zählung 1911 (15.130), also ca. 64.870 'fehlende' Personen — nicht alle davon zwingend Todesopfer, aber der größte Teil.",
+    "chartType": "bar",
+    "relatedEventIds": ["evt-013", "evt-014", "evt-015", "evt-017"],
+    "relatedDocumentIds": ["doc-023"],
+    "relatedPlaceIds": ["place-006", "place-003", "place-008"],
+    "relatedHistorySlugs": ["langzeitfolgen", "waterberg-vernichtungsbefehl", "omaheke-vertreibung", "camps-extermination"],
+    "points": [
+      { "label": "Drechsler (1980)", "value": 65000, "note": "Gesamtschätzung Kriegs- und Lagertote" },
+      { "label": "Bridgman (1981)", "value": 60000, "note": "Militärhistorische Schätzung" },
+      { "label": "Pool (1991)", "value": 45000, "note": "Niedrigere Schätzung (engere Methode)" },
+      { "label": "Gewald (1999)", "value": 65000, "note": "Schätzung auf Basis umfassender Archivarbeit" },
+      { "label": "Zimmerer/Zeller (2003)", "value": 65000, "note": "Sammelband-Konsens (ca.)" },
+      { "label": "Populationsrückgang 1911", "value": 64870, "note": "Rechnerische Differenz: Vorkriegsschätzung (80.000) minus Zählung 1911 (15.130)" }
+    ]
+  },
+  {
+    "id": "data-007",
+    "title": "Geschätzte Gesamtzahl der Gefangenen in allen DSWA-Lagern (1904–1908)",
+    "unit": "Gefangene insgesamt (Schätzung)",
+    "sourceCitation": "Erichsen (2005); Zimmerer/Zeller (2003). Gesamtschätzungen für alle Lager kombiniert; erhebliche Unsicherheiten aufgrund lückenhafter Lagerregister.",
+    "notes": "Diese Schätzungen beruhen auf partiellen Lagerregistern, Missionsberichten und militärischen Akten. Die sinkenden Zahlen ab 1906/1907 spiegeln hauptsächlich die Sterblichkeit wider, nicht Entlassungen. Der Rückgang bis 1908 ist auf das Sterben der Insassen und die Schließung von Lagern zurückzuführen.",
+    "chartType": "area",
+    "relatedEventIds": ["evt-017", "evt-019", "evt-020", "evt-023", "evt-024"],
+    "relatedDocumentIds": ["doc-006", "doc-007", "doc-015"],
+    "relatedPlaceIds": ["place-003", "place-008", "place-009", "place-010"],
+    "relatedHistorySlugs": ["camps-extermination", "nama-widerstand"],
+    "points": [
+      { "label": "Ende 1904", "value": 2000, "note": "Erste Lager öffnen" },
+      { "label": "Mitte 1905", "value": 7000, "note": "Rasche Expansion des Lagersystems" },
+      { "label": "Ende 1905", "value": 12000, "note": "Schätzung (Herero und Nama)" },
+      { "label": "Mitte 1906", "value": 14500, "note": "Geschätzter Höhepunkt der Lagerbelegung" },
+      { "label": "Ende 1906", "value": 10000, "note": "Rückgang durch hohe Sterblichkeit" },
+      { "label": "Mitte 1907", "value": 6000, "note": "Weitere Abnahme" },
+      { "label": "Ende 1907", "value": 3000, "note": "Schließung von Shark Island" },
+      { "label": "1908", "value": 1000, "note": "Überlebende in verbleibenden Lagern oder als Zwangsarbeiter" }
     ]
   }
 ]

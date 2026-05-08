@@ -55,7 +55,6 @@ export interface Place {
   description: string;
   relatedEventIds: string[];
   eventType: EventType; // remplace "primaryCategory"
-  placeType: PlaceType;
 }
 
 export type DocumentType =

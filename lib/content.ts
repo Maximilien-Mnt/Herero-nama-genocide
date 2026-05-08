@@ -61,22 +61,50 @@ export function getResources(): Resource[] {
 export const historyChapters = [
   {
     slug: "contexte",
-    title: "Contexte colonial et sociétés du Sud-Ouest africain",
+    title: "Kolonialer Kontext (1884–1903)",
+  },
+  {
+    slug: "rassenideologie",
+    title: "Rassenideologie und koloniale Gewalt",
+  },
+  {
+    slug: "koloniale-herrschaft",
+    title: "Koloniale Herrschaft in Deutsch-Südwestafrika",
   },
   {
     slug: "prelude-revolte",
-    title: "Prélude : tensions et soulèvements de 1904",
+    title: "Vorgeschichte des Aufstands",
+  },
+  {
+    slug: "herero-aufstand-1904",
+    title: "Der Herero-Aufstand von 1904",
+  },
+  {
+    slug: "waterberg-vernichtungsbefehl",
+    title: "Waterberg und Vernichtungsbefehl",
+  },
+  {
+    slug: "omaheke-vertreibung",
+    title: "Vertreibung in die Omaheke",
   },
   {
     slug: "camps-extermination",
-    title: "Guerre, ordres de refoulement et camps",
+    title: "Das Lagersystem: Konzentrationslager, Zwangsarbeit und systematischer Tod",
+  },
+  {
+    slug: "nama-widerstand",
+    title: "Nama-Widerstand",
   },
   {
     slug: "apres-1908",
-    title: "Après 1908 : héritages de l’ordre colonial",
+    title: "Nach 1908: Verfolgung, Enteignung und Fortwirkung",
+  },
+  {
+    slug: "langzeitfolgen",
+    title: "Langzeitfolgen",
   },
   {
     slug: "memoire-reparation",
-    title: "Mémoire, reconnaissance et débats internationaux",
+    title: "Erinnerung, Anerkennung und Reparationen",
   },
 ] as const;

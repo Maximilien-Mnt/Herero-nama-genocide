@@ -1291,3 +1291,257 @@ main {
     max-width: 260px;
   }
 }
+/* =========================================================
+   HISTORY PAGE REDESIGN
+========================================================= */
+
+/* =========================================================
+   HISTORY SIDEBAR — simple, no internal scrollbar
+========================================================= */
+
+.history-page-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.history-sidebar {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+
+.history-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.history-panel {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.history-panel-header {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 0.95rem;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.history-panel-header:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.history-panel-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.history-panel-chevron {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.history-panel-chevron::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.history-panel-chevron.is-open {
+  transform: rotate(180deg);
+  color: var(--accent-warm);
+}
+
+.history-panel-body {
+  border-top: 1px solid var(--border-subtle);
+  padding: 0.85rem 0.95rem 0.95rem;
+}
+
+.history-link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.history-link-list li a {
+  display: block;
+  color: var(--text-body);
+  text-decoration: none;
+  line-height: 1.45;
+  font-size: 0.92rem;
+  transition: color 150ms ease;
+}
+
+.history-link-list li a:hover {
+  color: var(--accent-warm);
+}
+
+.history-link-list--toc .is-subitem {
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--border-subtle);
+}
+
+/* =========================================================
+   CROSSLINKS — restored original style
+========================================================= */
+
+.history-crosslinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.history-crosslinks .crosslink-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.1;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-body);
+  text-decoration: none;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.history-crosslinks .crosslink-tag:hover {
+  background: rgba(185, 147, 90, 0.12);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(185, 147, 90, 0.1);
+  transform: translateY(-1px);
+}
+
+.history-crosslinks .crosslink-tag svg,
+.history-crosslinks .crosslink-tag .crosslink-icon {
+  color: var(--accent-gold);
+  flex: 0 0 auto;
+}
+
+/* IMPORTANT :
+   empêche le style neutre des listes de gauche
+   d'écraser les crosslinks */
+.history-crosslinks a {
+  color: var(--text-body);
+}
+
+.history-crosslinks a:hover {
+  color: var(--text-body);
+}
+
+/* ========================================================= */
+
+.history-main {
+  min-width: 0;
+}
+
+.history-title {
+  font-family: var(--font-serif);
+  font-size: 2.75rem;
+  line-height: 1.1;
+  font-weight: 600;
+  margin: 0;
+}
+
+.history-article {
+  margin-top: 1.25rem;
+  max-width: none;
+}
+
+.history-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1000px) {
+  .history-page-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .history-sidebar {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+}
+/* ---- Dark‑theme table (matches Archive Nocturne) ---- */
+.mdx-table-container {
+  overflow-x: auto;
+  margin: 2rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+}
+
+.mdx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background-color: var(--bg-surface);
+  color: var(--text-body);
+}
+
+.mdx-th {
+  background-color: var(--bg-elevated);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border-strong);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+}
+
+.mdx-td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+}
+
+.mdx-tr:last-child .mdx-td {
+  border-bottom: none;
+}
+
+.mdx-tr:hover .mdx-td:hover {
+  background-color: rgba(185, 147, 90, 0.06);
+}
+
+/* Alternating rows slightly tinted */
+.mdx-tr:nth-child(even) .mdx-td {
+  background-color: rgba(255, 255, 255, 0.02);
+}

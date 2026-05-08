@@ -1,5 +1,4 @@
 // ./components/histoire/HistoireChapterLayout.tsx
-"use client";
 
 // Il gère la structure de chaque chapitre MDX, y compris la génération d'une table des matières (TOC) et l'affichage des liens croisés vers d'autres sections du site.
 // Génération de la TOC: Le useEffect scanne les titres h2 et h3 du contenu MDX (children) pour construire dynamiquement une table des matières. Il attribue des id aux titres s'ils n'en ont pas déjà, ce qui est une excellente pratique pour les ancres de navigation.
@@ -9,9 +8,12 @@
 
 // Chaque page de chapitre importe son contenu MDX (Chapter from './chapter.mdx') et l'enveloppe dans le composant HistoireChapterLayout.
 
+"use client";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
+
 import {
   getDatasetById,
   getDocumentById,
@@ -19,10 +21,15 @@ import {
   getPlaceById,
   historyChapters,
 } from "@/lib/content";
+
 import type { TimelineEvent } from "@/lib/types";
 import { CrossLinkTag } from "@/components/CrossLink";
 
-type TocItem = { id: string; label: string; level: 2 | 3 };
+type TocItem = {
+  id: string;
+  label: string;
+  level: 2 | 3;
+};
 
 function slugify(input: string) {
   return input
@@ -32,6 +39,37 @@ function slugify(input: string) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
+}
+
+function SidebarSection({
+  title,
+  children,
+  defaultOpen = true,
+}: {
+  title: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <section className="history-panel">
+      <button
+        type="button"
+        className="history-panel-header"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+      >
+        <span className="history-panel-title">{title}</span>
+        <span
+          className={`history-panel-chevron ${open ? "is-open" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {open ? <div className="history-panel-body">{children}</div> : null}
+    </section>
+  );
 }
 
 export function HistoireChapterLayout({
@@ -50,24 +88,33 @@ export function HistoireChapterLayout({
     const root = articleRef.current;
     if (!root) return;
 
-    const headings = Array.from(root.querySelectorAll("h2, h3")) as HTMLHeadingElement[];
+    const firstH1 = root.querySelector("h1");
+    if (firstH1) firstH1.remove();
+
+    const headings = Array.from(
+      root.querySelectorAll("h2, h3")
+    ) as HTMLHeadingElement[];
+
     const items: TocItem[] = [];
 
     headings.forEach((h) => {
-      const level: 2 | 3 = (h.tagName.toLowerCase() === "h2" ? 2 : 3) as 2 | 3;
+      const level: 2 | 3 = h.tagName.toLowerCase() === "h2" ? 2 : 3;
       const raw = h.textContent ?? "";
       const id = h.id || slugify(raw);
+
       if (!h.id) h.id = id;
       h.style.scrollMarginTop = "6.5rem";
+
       items.push({ id, label: raw.trim(), level });
     });
 
-    // Defer to avoid cascading renders when effects fire.
     queueMicrotask(() => setToc(items));
   }, []);
 
   const related = useMemo(() => {
-    const events = getEvents().filter((e) => e.relatedHistorySlugs.includes(slug));
+    const events = getEvents().filter((e) =>
+      e.relatedHistorySlugs.includes(slug)
+    );
     const placeIds = new Set<string>();
     const documentIds = new Set<string>();
     const datasetIds = new Set<string>();
@@ -83,158 +130,139 @@ export function HistoireChapterLayout({
 
   const prevNext = useMemo(() => {
     const idx = historyChapters.findIndex((c) => c.slug === slug);
-    const prev = idx > 0 ? historyChapters[idx - 1] : null;
-    const next = idx >= 0 && idx < historyChapters.length - 1 ? historyChapters[idx + 1] : null;
-    return { prev, next };
+    return {
+      prev: idx > 0 ? historyChapters[idx - 1] : null,
+      next:
+        idx >= 0 && idx < historyChapters.length - 1
+          ? historyChapters[idx + 1]
+          : null,
+    };
   }, [slug]);
 
   return (
-    <div
-      className="chapter-layout"
-      style={{
-        gap: "1.5rem",
-        alignItems: "start",
-      }}
-    >
-      <aside
-        className="chapter-sidebar"
-        style={{
-          alignSelf: "start",
-        }}
-      >
-        <div className="card" style={{ padding: "1rem", background: "rgba(255,255,255,0.02)" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)" }}>
-            Inhaltsverzeichnis
-          </div>
-          <ul style={{ listStyle: "none", padding: 0, margin: "0.75rem 0 0", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            {toc.slice(0, 12).map((item) => (
-              <li key={item.id} style={{ marginLeft: item.level === 3 ? "0.5rem" : 0 }}>
-                <a
-                  href={`#${item.id}`}
-                  style={{ color: "var(--text-body)", textDecoration: "none" }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }}
+    <div className="history-page-layout">
+      <aside className="history-sidebar" aria-label="Histoire Sidebar">
+        <div className="history-sidebar-inner">
+          <SidebarSection title="Kapitelübersicht" defaultOpen>
+            <ul className="history-link-list">
+              {historyChapters.map((c) => (
+                <li key={c.slug}>
+                  <Link href={`/histoire/${c.slug}`}>{c.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </SidebarSection>
+
+          <SidebarSection title="Inhaltsverzeichnis" defaultOpen>
+            <ul className="history-link-list history-link-list--toc">
+              {toc.map((item) => (
+                <li
+                  key={item.id}
+                  className={item.level === 3 ? "is-subitem" : ""}
                 >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById(item.id)?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </SidebarSection>
 
-          <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid var(--border-subtle)" }}>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)" }}>
-              Verknüpfte Links
-            </div>
-
-            <div className="crosslink-tags" style={{ marginTop: "0.75rem" }}>
-              {related.events.slice(0, 4).map((ev: TimelineEvent) => (
+          <SidebarSection title="Querverweise" defaultOpen={false}>
+            <div className="history-crosslinks">
+              {related.events.map((ev: TimelineEvent) => (
                 <CrossLinkTag
                   key={ev.id}
                   href={`/chronologie#${ev.id}`}
-                  icon="📅"
+                  icon="📅" // Icône pour la chronologie
                   label={ev.title}
                   sectionId={ev.id}
                 />
               ))}
-              {Array.from(related.documentIds).slice(0, 3).map((id) => {
+
+              {Array.from(related.documentIds).map((id) => {
                 const d = getDocumentById(id);
                 if (!d) return null;
                 return (
                   <CrossLinkTag
                     key={id}
                     href={`/documents#${d.id}`}
-                    icon="📖"
+                    icon="📄" // Icône pour les documents
                     label={d.title}
                     sectionId={d.id}
                   />
                 );
               })}
+
+              {Array.from(related.placeIds).map((id) => {
+                const p = getPlaceById(id);
+                if (!p) return null;
+                return (
+                  <CrossLinkTag
+                    key={id}
+                    href={`/carte?place=${p.id}`}
+                    icon="📍" // Icône pour les lieux
+                    label={p.name}
+                    sectionId={p.id}
+                  />
+                );
+              })}
+
+              {Array.from(related.datasetIds).map((id) => {
+                const ds = getDatasetById(id);
+                if (!ds) return null;
+                return (
+                  <CrossLinkTag
+                    key={id}
+                    href={`/statistiques#${ds.id}`}
+                    icon="📊" // Icône pour les statistiques
+                    label={ds.title}
+                    sectionId={ds.id}
+                  />
+                );
+              })}
             </div>
-          </div>
+          </SidebarSection>
         </div>
       </aside>
 
-      <section>
-        <div id={`histoire-${slug}`} style={{ scrollMarginTop: "6.5rem" }}>
-          <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.75rem", lineHeight: "44px", fontWeight: 600, margin: 0 }}>
-            {title}
-          </h1>
-        </div>
+      <main className="history-main">
+        <h1 className="history-title">{title}</h1>
 
-        <div ref={articleRef} className="prose" style={{ marginTop: "1rem", maxWidth: "none" }}>
+        <div ref={articleRef} className="prose history-article">
           {children}
         </div>
 
-        <div className="crosslink-tags" aria-label="Querverweise des Kapitels" style={{ marginTop: "1.25rem" }}>
-          {related.events.map((ev) => (
-            <CrossLinkTag
-              key={ev.id}
-              href={`/chronologie#${ev.id}`}
-              icon="📅"
-              label={ev.title}
-              sectionId={ev.id}
-            />
-          ))}
-
-          {Array.from(related.documentIds).map((id) => {
-            const d = getDocumentById(id);
-            if (!d) return null;
-            return (
-              <CrossLinkTag
-                key={id}
-                href={`/documents#${d.id}`}
-                icon="📖"
-                label={d.title}
-                sectionId={d.id}
-              />
-            );
-          })}
-
-          {Array.from(related.placeIds).map((id) => {
-            const p = getPlaceById(id);
-            if (!p) return null;
-            const sectionId = `place-${p.id}`;
-            return (
-              <CrossLinkTag
-                key={id}
-                href={`/carte?place=${p.id}#${sectionId}`}
-                icon="📍"
-                label={p.name}
-                sectionId={sectionId}
-              />
-            );
-          })}
-
-          {Array.from(related.datasetIds).map((id) => {
-            const ds = getDatasetById(id);
-            if (!ds) return null;
-            return (
-              <CrossLinkTag
-                key={id}
-                href={`/statistiques#${ds.id}`}
-                icon="📊"
-                label={ds.title}
-                sectionId={ds.id}
-              />
-            );
-          })}
-        </div>
-
-        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
+        <div className="history-nav">
           {prevNext.prev ? (
-            <Link href={`/histoire/${prevNext.prev.slug}`} className="button" style={{ textDecoration: "none" }}>
+            <Link
+              href={`/histoire/${prevNext.prev.slug}`}
+              className="button"
+              style={{ textDecoration: "none" }}
+            >
               ← {prevNext.prev.title}
             </Link>
           ) : null}
           {prevNext.next ? (
-            <Link href={`/histoire/${prevNext.next.slug}`} className="button" style={{ textDecoration: "none" }}>
+            <Link
+              href={`/histoire/${prevNext.next.slug}`}
+              className="button"
+              style={{ textDecoration: "none" }}
+            >
               {prevNext.next.title} →
             </Link>
           ) : null}
         </div>
-      </section>
+      </main>
     </div>
   );
 }

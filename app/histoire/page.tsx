@@ -1,4 +1,4 @@
-// 11 (app/histoire/page.tsx)
+// app/histoire/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -9,7 +9,7 @@ export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
   title: "Geschichte",
-  description: "Strukturierte Kapitel über Kontext, Verlauf und Erbe des Völkermords.",
+  description: "Völkermord an Herero und Nama: Kontext, Verlauf, Lager, Widerstand und Erinnerung (1884–2021).",
 };
 
 export default function HistoireIndexPage() {
@@ -20,15 +20,20 @@ export default function HistoireIndexPage() {
         Geschichte
       </h1>
       <p style={{ color: "var(--text-muted)", maxWidth: "44rem", marginTop: "0.75rem" }}>
-        Fünf Kapitel verknüpfen den kolonialen Kontext, die militärische Eskalation, Lager und erzwungenes Exil sowie Erinnerung und zeitgenössische Debatten. Jedes Kapitel kann unabhängig gelesen werden, verweist jedoch auf die Chronologie, die Karte und die Dokumente.
+        Zwölf Kapitel behandeln den kolonialen Kontext (1884–1903), den Aufstand und die Vernichtungspolitik (1904–1908), das Lagersystem, Langzeitfolgen und die Erinnerungspolitik bis heute. Jedes Kapitel kann unabhängig gelesen werden und ist mit der Chronologie, der Karte und den Dokumenten verknüpft.
       </p>
-      <ul style={{ maxWidth: "42rem" }}>
-        {historyChapters.map((c) => (
-          <li key={c.slug} style={{ marginBottom: "0.6rem" }}>
-            <Link href={`/histoire/${c.slug}`}>{c.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <div style={{ marginTop: "1.5rem" }}>
+        <strong style={{ display: "block", marginBottom: "0.75rem" }}>Alle Kapitel:</strong>
+        <ul style={{ maxWidth: "42rem", margin: 0, paddingLeft: "1.1rem" }}>
+          {historyChapters.map((c) => (
+            <li key={c.slug} style={{ marginBottom: "0.5rem" }}>
+              <Link href={`/histoire/${c.slug}`} style={{ textDecoration: "none" }}>
+                {c.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </PageShell>
   );
 }

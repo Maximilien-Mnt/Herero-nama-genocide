@@ -2,10 +2,12 @@
 // La configuration des images est assez permissive (dangerouslyAllowSVG: true) et inclut des politiques de sécurité de contenu.
 // Cela indique que le projet pourrait afficher des SVG ou des images provenant de sources variées.
 
-import createMDX from "@next/mdx";
-
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    mdxRs: true, // Compilateur MDX natif de Next.js (support GFM, tableaux)
+  },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
     dangerouslyAllowSVG: true,
@@ -14,6 +16,4 @@ const nextConfig = {
   },
 };
 
-const withMDX = createMDX({});
-
-export default withMDX(nextConfig);
+export default nextConfig;

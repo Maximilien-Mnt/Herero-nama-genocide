@@ -814,7 +814,6 @@ main {
   color: var(--text-body);
   line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1544,4 +1543,140 @@ main {
 /* Alternating rows slightly tinted */
 .mdx-tr:nth-child(even) .mdx-td {
   background-color: rgba(255, 255, 255, 0.02);
+}
+/* ============================================================
+   START PAGE – NEW BRANDING
+============================================================ */
+
+/* Full‑width image collage */
+.startpage-image-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 200px);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.startpage-image-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 2‑columns on mobile */
+@media (max-width: 768px) {
+  .startpage-image-strip {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 200px);
+  }
+}
+
+/* Warning box, now smaller and inline */
+.startpage-warning {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(155, 90, 60, 0.35);
+  background: rgba(155, 90, 60, 0.12);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.startpage-warning::before {
+  content: "⚠";
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Hero title */
+.startpage-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.startpage-title h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.1;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* Big, emotional quote */
+.startpage-quote {
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+  border-left: 4px solid var(--accent-gold);
+  background: rgba(185, 147, 90, 0.08);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  text-align: center;
+}
+
+.startpage-quote p {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--accent-warm);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Explanation paragraph */
+.startpage-explanation {
+  max-width: none;
+  margin: 0 auto 2.5rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-body);
+}
+/* ============================================================
+   START PAGE – IMAGE CELL & HOVER CAPTION
+============================================================ */
+
+.startpage-image-cell {
+  position: relative;
+  overflow: hidden;
+  margin: 0; /* reset figure default margin */
+}
+
+/* Overlay that appears on hover */
+.startpage-image-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 14, 12, 0.7);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.3;
+  text-align: center;
+  padding: 0.75rem;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none; /* allows click through to the image if needed */
+}
+
+/* Show the caption on hover of the figure */
+.startpage-image-cell:hover .startpage-image-caption {
+  opacity: 1;
+}
+
+/* Make sure the image itself fills the cell (already covered by .startpage-image-strip img) */
+.startpage-image-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { FilterPill } from "@/components/FilterPill";
 import { TimelineModal } from "./TimelineModal";
 import type { TimelineEvent, EventType } from "@/lib/types";
@@ -29,21 +29,23 @@ const eventTypeLabels: Record<EventType, string> = {
 
 interface TimelineProProps {
   events: TimelineEvent[];
+  highlightEventId?: string | null;
 }
 
-// Constantes de layout
-const YEAR_ROW_HEIGHT = 90;        // hauteur allouée par année (px)
-const CARD_WIDTH = 260;            // largeur des cartes
-const DOT_SIZE = 10;               // diamètre du point
-const MIN_CARD_GAP = 12;           // écart minimum entre deux cartes
+const YEAR_ROW_HEIGHT = 90;
+const CARD_WIDTH = 260;
+const DOT_SIZE = 10;
+const MIN_CARD_GAP = 12;
 
-export function TimelinePro({ events }: TimelineProProps) {
+export function TimelinePro({ events, highlightEventId }: TimelineProProps) {
   const [activeFilters, setActiveFilters] = useState<EventType[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  // Store refs for event cards so we can scroll to them
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // Observer la largeur du conteneur pour la position horizontale des cartes
+  // ResizeObserver
   useEffect(() => {
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
@@ -61,14 +63,11 @@ export function TimelinePro({ events }: TimelineProProps) {
     return events.filter((ev) => activeFilters.includes(ev.eventType));
   }, [events, activeFilters]);
 
-  // Tri chronologique
-  const sortedEvents = useMemo(() => {
-    return [...filteredEvents].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-  }, [filteredEvents]);
+  const sortedEvents = useMemo(
+    () => [...filteredEvents].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
+    [filteredEvents]
+  );
 
-  // Plage temporelle (min / max)
   const timeRange = useMemo(() => {
     if (sortedEvents.length === 0) return { min: 0, max: 0, span: 0 };
     const timestamps = sortedEvents.map((ev) => new Date(ev.date).getTime());
@@ -78,7 +77,6 @@ export function TimelinePro({ events }: TimelineProProps) {
       min -= 365 * 24 * 60 * 60 * 1000;
       max += 365 * 24 * 60 * 60 * 1000;
     }
-    // Ajouter une marge de 5% en haut et en bas
     const margin = (max - min) * 0.05;
     return {
       min: min - margin,
@@ -87,18 +85,17 @@ export function TimelinePro({ events }: TimelineProProps) {
     };
   }, [sortedEvents]);
 
-  // Calcul de la position Y pour un timestamp donné (en px depuis le haut du conteneur)
-  const getYPosition = (dateStr: string): number => {
-    const ts = new Date(dateStr).getTime();
-    const progress = (ts - timeRange.min) / timeRange.span;
-    // On multiplie par la hauteur totale = nombre d'années * YEAR_ROW_HEIGHT
-    // Pour plus de précision, on calcule le nombre total de pixels en fonction de la durée
-    const totalDays = timeRange.span / (1000 * 60 * 60 * 24);
-    const totalHeight = totalDays * (YEAR_ROW_HEIGHT / 365); // 365 jours par an ≈ YEAR_ROW_HEIGHT
-    return progress * totalHeight;
-  };
+  const getYPosition = useCallback(
+    (dateStr: string): number => {
+      const ts = new Date(dateStr).getTime();
+      const progress = (ts - timeRange.min) / timeRange.span;
+      const totalDays = timeRange.span / (1000 * 60 * 60 * 24);
+      const totalHeight = totalDays * (YEAR_ROW_HEIGHT / 365);
+      return progress * totalHeight;
+    },
+    [timeRange]
+  );
 
-  // Générer les années distinctes et leurs positions Y
   const yearMarkers = useMemo(() => {
     const years = new Set<number>();
     sortedEvents.forEach((ev) => {
@@ -111,53 +108,56 @@ export function TimelinePro({ events }: TimelineProProps) {
       const yPos = getYPosition(new Date(date).toISOString());
       return { year, yPos };
     });
-  }, [sortedEvents, timeRange]);
+  }, [sortedEvents, getYPosition]);
 
-  // Algorithme anti‑chevauchement : on répartit les cartes horizontalement
   const positionedEvents = useMemo(() => {
     if (sortedEvents.length === 0 || containerWidth === 0) return [];
-
-    // Première passe : calcul des Y bruts
     const raw = sortedEvents.map((ev) => ({
       ...ev,
       y: getYPosition(ev.date),
     }));
-
-    // On trie par Y croissant
     const sortedByY = [...raw].sort((a, b) => a.y - b.y);
-
-    // Deuxième passe : ajustement vertical pour éviter les chevauchements
     const adjusted: (TimelineEvent & { y: number; xOffset: number })[] = [];
     for (let i = 0; i < sortedByY.length; i++) {
       const current = sortedByY[i];
       let finalY = current.y;
       let xOffset = 0;
-
-      // Vérifier le chevauchement avec les événements déjà placés
       for (let j = 0; j < adjusted.length; j++) {
         const placed = adjusted[j];
         const verticalGap = Math.abs(finalY - placed.y);
         if (verticalGap < MIN_CARD_GAP + 20) {
-          // Chevauchement vertical : on décale horizontalement
           xOffset = Math.max(xOffset, placed.xOffset + 1);
         }
       }
-
-      // On ne décale pas trop (max 3 colonnes)
       xOffset = Math.min(xOffset, 3);
       adjusted.push({ ...current, y: finalY, xOffset });
     }
-
     return adjusted;
-  }, [sortedEvents, containerWidth, timeRange]);
+  }, [sortedEvents, containerWidth, getYPosition]);
 
-  // Calcul de la hauteur totale du conteneur
   const totalHeight = useMemo(() => {
     if (positionedEvents.length === 0) return 200;
     const maxY = Math.max(...positionedEvents.map((ev) => ev.y));
-    return maxY + 200; // marge en bas
+    return maxY + 200;
   }, [positionedEvents]);
 
+  // ---------- Highlight from URL hash ----------
+  useEffect(() => {
+    if (!highlightEventId) return;
+    const event = events.find((e) => e.id === highlightEventId);
+    if (event) {
+      setSelectedEvent(event);
+      // Wait for the card to be rendered, then scroll to it
+      setTimeout(() => {
+        const cardEl = cardRefs.current[event.id];
+        if (cardEl) {
+          cardEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 100);
+    }
+  }, [highlightEventId, events]);
+
+  // ---------- Filters ----------
   const toggleFilter = (type: EventType) => {
     setActiveFilters((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
@@ -174,7 +174,7 @@ export function TimelinePro({ events }: TimelineProProps) {
 
   return (
     <div className="timeline-pro-wrapper">
-      {/* Filtres */}
+      {/* Filters */}
       <div style={{ marginBottom: "2rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
         {(Object.entries(eventTypeLabels) as [EventType, string][]).map(([type, label]) => (
           <FilterPill
@@ -197,39 +197,26 @@ export function TimelinePro({ events }: TimelineProProps) {
         ))}
       </div>
 
-      {/* Layout principal */}
+      {/* Main layout */}
       <div className="timeline-pro-grid" ref={containerRef}>
-        {/* Colonne des années */}
+        {/* Year column */}
         <div className="timeline-pro-years" style={{ height: totalHeight }}>
           {yearMarkers.map(({ year, yPos }) => (
-            <div
-              key={year}
-              className="timeline-pro-year"
-              style={{ top: yPos }}
-            >
+            <div key={year} className="timeline-pro-year" style={{ top: yPos }}>
               <span className="timeline-pro-year-label">{year}</span>
             </div>
           ))}
         </div>
 
-        {/* Zone de la timeline */}
+        {/* Track */}
         <div className="timeline-pro-track" style={{ height: totalHeight }}>
-          {/* Ligne verticale principale */}
-          <div
-            className="timeline-pro-line"
-            style={{ height: totalHeight }}
-          />
+          <div className="timeline-pro-line" style={{ height: totalHeight }} />
 
-          {/* Lignes pointillées par année */}
           {yearMarkers.map(({ year, yPos }) => (
-            <div
-              key={`dash-${year}`}
-              className="timeline-pro-year-dash"
-              style={{ top: yPos }}
-            />
+            <div key={`dash-${year}`} className="timeline-pro-year-dash" style={{ top: yPos }} />
           ))}
 
-          {/* Points et connexions */}
+          {/* SVG connectors */}
           <svg
             className="timeline-pro-svg"
             style={{
@@ -242,15 +229,11 @@ export function TimelinePro({ events }: TimelineProProps) {
             }}
           >
             {positionedEvents.map((ev) => {
-              const dotX = 30; // position du point (px depuis la gauche du track)
+              const dotX = 30;
               const dotY = ev.y;
-              // Position horizontale de la carte : décalage en fonction du xOffset
               const cardX = dotX + 40 + ev.xOffset * 15;
-              const cardY = dotY - 12; // centrage vertical approximatif
-
-              // Chemin courbe reliant le point à la carte
+              const cardY = dotY - 12;
               const pathD = `M ${dotX} ${dotY} C ${dotX + 20} ${dotY}, ${cardX - 20} ${cardY + 15}, ${cardX} ${cardY + 15}`;
-
               return (
                 <path
                   key={`conn-${ev.id}`}
@@ -264,7 +247,7 @@ export function TimelinePro({ events }: TimelineProProps) {
             })}
           </svg>
 
-          {/* Points sur la ligne */}
+          {/* Dots */}
           {positionedEvents.map((ev) => (
             <div
               key={`dot-${ev.id}`}
@@ -277,25 +260,26 @@ export function TimelinePro({ events }: TimelineProProps) {
             />
           ))}
 
-          {/* Cartes événements */}
+          {/* Cards */}
           {positionedEvents.map((ev) => {
             const dotX = 30;
             const cardLeft = dotX + 40 + ev.xOffset * 15;
-            const year = new Date(ev.date).getFullYear();
-
             return (
               <div
                 key={ev.id}
+                ref={(el) => {
+                  cardRefs.current[ev.id] = el;
+                }}
                 className="timeline-pro-card"
                 style={{
-                  top: ev.y - 20, // ajustement pour centrer
+                  top: ev.y - 20,
                   left: cardLeft,
                   borderColor: eventTypeColors[ev.eventType],
                   width: CARD_WIDTH,
                 }}
                 onClick={() => setSelectedEvent(ev)}
               >
-                <div className="timeline-pro-card-year">{year}</div>
+                <div className="timeline-pro-card-year">{new Date(ev.date).getFullYear()}</div>
                 <div className="timeline-pro-card-title">{ev.title}</div>
                 <div className="timeline-pro-card-footer">
                   <span className="timeline-pro-card-date">
@@ -315,7 +299,6 @@ export function TimelinePro({ events }: TimelineProProps) {
         </div>
       </div>
 
-      {/* Modale */}
       <TimelineModal
         event={selectedEvent}
         onClose={() => setSelectedEvent(null)}

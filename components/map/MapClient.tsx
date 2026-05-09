@@ -6,7 +6,6 @@
 
 // components/map/MapClient.tsx
 // components/map/MapClient.tsx
-// components/map/MapClient.tsx
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -19,14 +18,13 @@ import { FilterPill } from "@/components/FilterPill";
 import { CrossLinkTag } from "@/components/CrossLink";
 import { getEventById } from "@/lib/content";
 
-// --- Event categories (unchanged) ---
+// --- Event categories (Zeugnis/Bericht entfernt) ---
 export const EVENT_CATEGORIES = [
   "battle",
   "massacre",
   "camp",
   "political",
   "resistance",
-  "testimony",
   "memorial",
   "other",
 ] as const;
@@ -44,12 +42,12 @@ const CATEGORY_LABELS: Record<EventType, string> = {
 
 const CATEGORY_COLORS: Record<EventType, string> = {
   battle: "#B85C5C",
-  massacre: "#C77D40",
+  massacre: "#B8935A",
   camp: "#6A4E9E",
-  political: "#B8935A",
+  political: "#4A7A9E",
   resistance: "#4D9E6A",
   testimony: "#4A7A9E",
-  memorial: "#9E6A9E",
+  memorial: "#c9abbc",
   other: "#7D6E5D",
 };
 

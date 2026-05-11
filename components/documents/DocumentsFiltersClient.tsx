@@ -40,8 +40,9 @@ export function DocumentsFiltersClient({ documents }: { documents: HistoricalDoc
   const sorted = useMemo(() => {
     if (sortOrder === "none") return filtered;
     return [...filtered].sort((a, b) => {
-      const ya = parseInt(a.year, 10);
-      const yb = parseInt(b.year, 10);
+      // Explicitly guard against year being undefined
+      const ya = parseInt(a.year ?? "", 10);
+      const yb = parseInt(b.year ?? "", 10);
       const aIsNaN = isNaN(ya);
       const bIsNaN = isNaN(yb);
       if (aIsNaN && bIsNaN) return 0;

@@ -1,6 +1,17 @@
 // components/documents/DocumentCard.tsx
 import type { HistoricalDocument, DocumentType } from "@/lib/types";
 
+/** Ensures a relative image path gets the correct /assets/documents-images/ prefix */
+function resolveImagePath(path: string): string {
+  if (!path) return path;
+  // Fix inadvertent "./public/" prefix
+  if (path.startsWith("./public/")) {
+    path = "/" + path.slice("./public/".length);
+  }
+  if (path.startsWith("/") || path.startsWith("http")) return path;
+  return `/assets/documents-images/${path}`;
+}
+
 function documentTypeLabel(t: DocumentType): string {
   switch (t) {
     case "photograph":
@@ -36,12 +47,11 @@ export function DocumentCard({
   const isGallery = viewMode === "gallery";
   const isGrid = viewMode === "grid";
 
-  // Thumbnail element
+  // Thumbnail element – no sensitive class
   const thumbnail = (
     <div
       className={[
         "document-thumb",
-        document.sensitive ? "document-thumb--sensitive" : "",
         isList ? "document-thumb--list" : "",
         isGallery ? "document-thumb--gallery" : "",
       ]
@@ -57,12 +67,8 @@ export function DocumentCard({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={document.thumbPath}
-        alt={
-          document.sensitive
-            ? "Sensibler Inhalt – zum Vergrößern klicken"
-            : document.title
-        }
+        src={resolveImagePath(document.thumbPath)}
+        alt={document.title}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
       <div className="document-thumb-overlay" aria-hidden>
@@ -93,18 +99,6 @@ export function DocumentCard({
         >
           {documentTypeLabel(document.type)}
         </span>
-        {document.sensitive ? (
-          <span
-            className="theme-tag"
-            style={{
-              borderColor: "var(--accent-rust)",
-              color: "var(--text-primary)",
-              background: "rgba(155, 90, 60, 0.15)",
-            }}
-          >
-            Sensibel
-          </span>
-        ) : null}
       </div>
 
       <h3

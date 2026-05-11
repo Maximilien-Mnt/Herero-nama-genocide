@@ -17,7 +17,6 @@ import {
   MIN_ZOOM,
   MAX_ZOOM,
   generateTicks,
-  detectLabelCollisions,
 } from "./TimelineUtils";
 
 // ---------- GERMAN DATE & HELPERS ----------
@@ -42,6 +41,14 @@ function formatDateRange(start: string, end?: string): string {
 function chapterTitle(slug: string) {
   const c = historyChapters.find((h) => h.slug === slug);
   return c?.title ?? slug;
+}
+
+function isMultiDayEvent(start: string, end?: string): boolean {
+  if (!end) return false;
+  const startTime = new Date(start).getTime();
+  const endTime = new Date(end).getTime();
+  const day = 24 * 60 * 60 * 1000;
+  return endTime - startTime > day;
 }
 
 // ---------- COLOR MAPPINGS ----------
@@ -71,8 +78,8 @@ function getEventColor(event: EventData): string {
   return CATEGORY_COLORS[event.eventType as EventType] || CATEGORY_COLORS.other;
 }
 
-// Multi‑line label helper
-function splitTitle(title: string, maxChars = 30): string[] {
+// Multi‑line helper
+function splitTitle(title: string, maxChars = 25): string[] {
   const words = title.split(" ");
   const lines: string[] = [];
   let cur = "";
@@ -107,7 +114,6 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     screenX: number;
   } | null>(null);
 
-  // Keep the latest events in a ref for the hash handler
   const eventsRef = useRef(events);
   eventsRef.current = events;
 
@@ -123,7 +129,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     return () => obs.disconnect();
   }, []);
 
-  // ----- initial viewport (once) -----
+  // ----- initial viewport -----
   const initViewport = useCallback(() => {
     if (!containerRef.current) return;
     const w = containerRef.current.clientWidth;
@@ -136,7 +142,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
 
   useEffect(() => { initViewport(); }, []); // eslint-disable-line
 
-  // ----- hash deep‑link listener (once) -----
+  // ----- hash deep‑link listener -----
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
@@ -156,9 +162,9 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     handleHashChange();
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []); // empty dependencies
+  }, []);
 
-  // ----- wheel listener (no page scroll while modal is open) -----
+  // ----- wheel listener -----
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -209,37 +215,117 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
 
   // ----- screen coordinates -----
   const axisY = containerHeight * 0.6;
-  const dotRadius = 8;
+  const dotRadius = 10;
+  const ribbonHeight = 22;
+  const laneSpacingRibbon = 30; // vertical gap between ribbon lanes
+  const labelLineHeight = 18; // for point label multi-line
 
   const toScreenX = useCallback(
     (worldX: number) => worldX * zoom + panX,
     [zoom, panX]
   );
 
-  const sortedEvents = useMemo(
-    () =>
-      events
-        .map((ev) => ({ ...ev, worldX: dateToX(ev.date) }))
-        .sort((a, b) => a.worldX - b.worldX),
-    [events]
-  );
+  const ribbonEvents = useMemo(() => events.filter(e => isMultiDayEvent(e.date, e.endDate)), [events]);
+  const pointEvents = useMemo(() => events.filter(e => !isMultiDayEvent(e.date, e.endDate)), [events]);
 
-  const eventScreenData = useMemo(
-    () => sortedEvents.map((ev) => ({ ...ev, screenX: toScreenX(ev.worldX) })),
-    [sortedEvents, toScreenX]
-  );
+  // ----- STABLE RIBBON LANES (world‑based) -----
+  const ribbonWorldData = useMemo(() => {
+    return ribbonEvents.map(ev => ({
+      ...ev,
+      worldStart: dateToX(ev.date),
+      worldEnd: dateToX(ev.endDate!),
+    }));
+  }, [ribbonEvents]);
 
+  const ribbonLanes = useMemo(() => {
+    const sorted = [...ribbonWorldData].sort((a, b) => a.worldStart - b.worldStart);
+    const lanes: number[] = [];
+    const assignment = new Map<string, number>();
+    const gap = 2; // world units
+    for (const ev of sorted) {
+      let lane = 0;
+      while (lanes[lane] !== undefined && lanes[lane] + gap > ev.worldStart) {
+        lane++;
+      }
+      lanes[lane] = Math.max(lanes[lane] || 0, ev.worldEnd);
+      assignment.set(ev.id, lane);
+    }
+    return assignment;
+  }, [ribbonWorldData]);
+
+  const ribbonRenderData = useMemo(() => {
+    return ribbonWorldData.map(ev => ({
+      ...ev,
+      screenStartX: toScreenX(ev.worldStart),
+      screenEndX: toScreenX(ev.worldEnd),
+      lane: ribbonLanes.get(ev.id) ?? 0,
+    }));
+  }, [ribbonWorldData, ribbonLanes, toScreenX]);
+
+  // ----- POINT LABEL LANES (progressive with zoom) -----
+  const pointScreenData = useMemo(() => {
+    return pointEvents
+      .map(ev => ({ ...ev, worldX: dateToX(ev.date) }))
+      .sort((a, b) => a.worldX - b.worldX);
+  }, [pointEvents]);
+
+  const pointScreenWithX = useMemo(() => {
+    return pointScreenData.map(ev => ({
+      ...ev,
+      screenX: toScreenX(ev.worldX),
+    }));
+  }, [pointScreenData, toScreenX]);
+
+  // Whether base label threshold is reached
   const labelVisible = zoom >= LABEL_VISIBLE_ZOOM_THRESHOLD;
 
-  const showLabelMap = useMemo(() => {
-    if (!labelVisible) return new Map<string, boolean>();
-    const data = eventScreenData.map((ev) => ({
-      id: ev.id,
-      screenX: ev.screenX,
-      estimatedWidthPx: ev.title.length * 10 + 20,
-    }));
-    return detectLabelCollisions(data);
-  }, [labelVisible, eventScreenData]);
+  // Progressive lanes: max lanes allowed = floor(zoom * 1.5)
+  const maxLabelLanes = useMemo(() => {
+    return Math.floor(zoom * 1.5);
+  }, [zoom]);
+
+  // Estimate label width for points (pixels)
+  const pointLabelWidth = useCallback((title: string) => title.length * 8 + 12, []);
+
+  // Place point labels into lanes (greedy algorithm)
+  const pointLabelLayout = useMemo(() => {
+    if (!labelVisible) return new Map<string, { lane: number; visible: boolean }>();
+
+    const gap = 10; // minimum horizontal gap between labels in pixels
+    const lanes: number[] = []; // right edge of each lane
+    const layout = new Map<string, { lane: number; visible: boolean }>();
+
+    for (const ev of pointScreenWithX) {
+      const w = pointLabelWidth(ev.title);
+      const xLeft = ev.screenX - w / 2;
+      let lane = 0;
+      while (lane < lanes.length && lanes[lane] + gap > xLeft) {
+        lane++;
+      }
+      // Record lane assignment
+      const visible = lane < maxLabelLanes;
+      layout.set(ev.id, { lane, visible });
+      // Update lane right edge
+      if (lane >= lanes.length) {
+        lanes.push(ev.screenX + w / 2);
+      } else {
+        lanes[lane] = Math.max(lanes[lane], ev.screenX + w / 2);
+      }
+    }
+    return layout;
+  }, [labelVisible, pointScreenWithX, maxLabelLanes, pointLabelWidth]);
+
+  // Determine vertical offset for a point label based on lane index
+  const pointLabelOffset = (lane: number, title: string) => {
+    const lines = splitTitle(title, 25).length;
+    const totalHeight = lines * labelLineHeight;
+    // Alternate above/below: even lanes above, odd below
+    const direction = lane % 2 === 0 ? -1 : 1;
+    // How many rows above/below? floor(lane/2) + 1
+    const row = Math.floor(lane / 2) + 1;
+    const baseOffset = 12 + dotRadius; // start just outside dot
+    return direction * (baseOffset + (row - 1) * (totalHeight + 6));
+  };
 
   const ticksWorld = useMemo(
     () => generateTicks(panX, zoom, containerWidth),
@@ -247,13 +333,11 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
   );
 
   const ticksScreen = useMemo(
-    () => ticksWorld.map((t) => ({ screenX: toScreenX(t.x), label: t.label })),
+    () => ticksWorld.map(t => ({ screenX: toScreenX(t.x), label: t.label })),
     [ticksWorld, toScreenX]
   );
 
-  const selectedEvent = selectedEventId
-    ? events.find((e) => e.id === selectedEventId)
-    : null;
+  const selectedEvent = selectedEventId ? events.find(e => e.id === selectedEventId) : null;
 
   return (
     <div
@@ -313,15 +397,69 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
           stroke="var(--border-default)"
           strokeWidth={1.5}
         />
-        {/* Event dots */}
-        {eventScreenData.map((ev, idx) => {
+
+        {/* ---- RIBBONS ---- */}
+        {ribbonRenderData.map(ev => {
+          const lane = ev.lane;
+          const offset = (lane % 2 === 0 ? 1 : -1) * (Math.floor(lane / 2) + 1) * laneSpacingRibbon;
+          const y = axisY + offset;
           const color = getEventColor(ev);
-          const showLabel = labelVisible && showLabelMap.get(ev.id);
-          const labelY = idx % 2 === 0 ? axisY - 38 : axisY + 38;
-          const lines = splitTitle(ev.title, 30);
+          const ribbonWidth = Math.max(ev.screenEndX - ev.screenStartX, 2);
+          const titleWidthEstimate = ev.title.length * 8 + 10;
+          const showInnerLabel = labelVisible && ribbonWidth > titleWidthEstimate;
+
           return (
             <g
-              key={ev.id}
+              key={`ribbon-${ev.id}`}
+              className="timeline-event ribbon"
+              onMouseEnter={() =>
+                setTooltipData({ id: ev.id, title: ev.title, screenX: (ev.screenStartX + ev.screenEndX) / 2 })
+              }
+              onMouseLeave={() => setTooltipData(null)}
+              onClick={() => handleEventClick(ev.id)}
+              style={{ cursor: "pointer" }}
+            >
+              <rect
+                x={ev.screenStartX}
+                y={y - ribbonHeight / 2}
+                width={ribbonWidth}
+                height={ribbonHeight}
+                rx={ribbonHeight / 2}
+                fill={color}
+                stroke="var(--bg-page)"
+                strokeWidth={2}
+              />
+              {showInnerLabel && (
+                <text
+                  x={ev.screenStartX + ribbonWidth / 2}
+                  y={y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize={11}
+                  fill="var(--text-primary)"
+                  fontFamily="var(--font-sans)"
+                  fontWeight={600}
+                  style={{ pointerEvents: "none" }}
+                >
+                  {ev.title}
+                </text>
+              )}
+            </g>
+          );
+        })}
+
+        {/* ---- POINTS ---- */}
+        {pointScreenWithX.map(ev => {
+          const color = getEventColor(ev);
+          const layout = pointLabelLayout.get(ev.id);
+          const showLabel = layout?.visible ?? false;
+          const lane = layout?.lane ?? 0;
+          const labelOffsetY = showLabel ? pointLabelOffset(lane, ev.title) : 0;
+          const lines = showLabel ? splitTitle(ev.title, 25) : [];
+
+          return (
+            <g
+              key={`point-${ev.id}`}
               className="timeline-event"
               onClick={() => handleEventClick(ev.id)}
               onMouseEnter={() =>
@@ -341,15 +479,15 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
               {showLabel && (
                 <text
                   x={ev.screenX}
-                  y={labelY - (lines.length - 1) * 9}
+                  y={axisY + labelOffsetY}
                   textAnchor="middle"
-                  fontSize={14}
+                  fontSize={13}
                   fill="var(--text-primary)"
                   fontFamily="var(--font-sans)"
                   fontWeight={500}
                 >
                   {lines.map((line, i) => (
-                    <tspan key={i} x={ev.screenX} dy={i === 0 ? 0 : 18}>
+                    <tspan key={i} x={ev.screenX} dy={i === 0 ? 0 : labelLineHeight}>
                       {line}
                     </tspan>
                   ))}
@@ -390,96 +528,64 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
         <div className="timeline-modal-overlay" onClick={closeModal}>
           <div
             className="timeline-modal-content"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
             style={{ borderTopColor: getEventColor(selectedEvent) }}
           >
-            <button
-              className="timeline-modal-close"
-              onClick={closeModal}
-              aria-label="Schließen"
-            >
+            <button className="timeline-modal-close" onClick={closeModal} aria-label="Schließen">
               ✕
             </button>
             <h2 className="timeline-modal-title">{selectedEvent.title}</h2>
-
-{/* Date + Category badge on the same line */}
-<div style={{
-  display: "flex",
-  alignItems: "center",
-  gap: "1rem",
-  marginBottom: "1.5rem",
-  borderBottom: "1px solid var(--border-subtle)",
-  paddingBottom: "0.75rem",
-}}>
-  <span className="timeline-modal-date" style={{ margin: 0, border: "none", padding: 0 }}>
-    {formatDateRange(selectedEvent.date, selectedEvent.endDate)}
-  </span>
-  <span
-    style={{
-      display: "inline-block",
-      padding: "0.25rem 0.7rem",
-      borderRadius: "var(--radius-md)",
-      backgroundColor: `${getEventColor(selectedEvent)}22`,
-      border: `1px solid ${getEventColor(selectedEvent)}`,
-      color: getEventColor(selectedEvent),
-      fontSize: "0.8rem",
-      fontWeight: 600,
-      textTransform: "uppercase",
-      letterSpacing: "0.03em",
-      lineHeight: 1.2,
-    }}
-  >
-    {CATEGORY_LABELS[selectedEvent.eventType as EventType]}
-  </span>
-</div>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              marginBottom: "1.5rem",
+              borderBottom: "1px solid var(--border-subtle)",
+              paddingBottom: "0.75rem",
+            }}>
+              <span style={{ margin: 0, border: "none", padding: 0, color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.9rem" }}>
+                {formatDateRange(selectedEvent.date, selectedEvent.endDate)}
+              </span>
+              <span style={{
+                display: "inline-block",
+                padding: "0.25rem 0.7rem",
+                borderRadius: "var(--radius-md)",
+                backgroundColor: `${getEventColor(selectedEvent)}22`,
+                border: `1px solid ${getEventColor(selectedEvent)}`,
+                color: getEventColor(selectedEvent),
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.03em",
+                lineHeight: 1.2,
+              }}>
+                {CATEGORY_LABELS[selectedEvent.eventType as EventType]}
+              </span>
+            </div>
             <div
               className="timeline-modal-description"
-              dangerouslySetInnerHTML={{
-                __html: selectedEvent.summary.replace(/\n/g, "<br/>"),
-              }}
+              dangerouslySetInnerHTML={{ __html: selectedEvent.summary.replace(/\n/g, "<br/>") }}
             />
-
-            {/* Standard CrossLinkTags */}
             <div className="crosslink-tags" style={{ marginTop: "1.5rem" }}>
-              {selectedEvent.relatedPlaceIds?.map((pid) => {
+              {selectedEvent.relatedPlaceIds?.map(pid => {
                 const place = getPlaceById(pid);
                 return place ? (
-                  <CrossLinkTag
-                    key={`place-${pid}`}
-                    href={`/carte?place=${pid}`}
-                    icon="📍"
-                    label={place.name}
-                  />
+                  <CrossLinkTag key={`place-${pid}`} href={`/carte?place=${pid}`} icon="📍" label={place.name} />
                 ) : null;
               })}
-              {selectedEvent.relatedDocumentIds?.map((did) => {
+              {selectedEvent.relatedDocumentIds?.map(did => {
                 const doc = getDocumentById(did);
                 return doc ? (
-                  <CrossLinkTag
-                    key={`doc-${did}`}
-                    href={`/documents#${did}`}
-                    icon="📄"
-                    label={doc.title}
-                  />
+                  <CrossLinkTag key={`doc-${did}`} href={`/documents#${did}`} icon="📄" label={doc.title} />
                 ) : null;
               })}
-              {selectedEvent.relatedHistorySlugs?.map((slug) => (
-                <CrossLinkTag
-                  key={`hist-${slug}`}
-                  href={`/histoire/${slug}`}
-                  icon="📖"
-                  label={chapterTitle(slug)}
-                />
+              {selectedEvent.relatedHistorySlugs?.map(slug => (
+                <CrossLinkTag key={`hist-${slug}`} href={`/histoire/${slug}`} icon="📖" label={chapterTitle(slug)} />
               ))}
-              {selectedEvent.relatedDatasetIds?.map((dsid) => {
+              {selectedEvent.relatedDatasetIds?.map(dsid => {
                 const ds = getDatasetById(dsid);
                 return ds ? (
-                  <CrossLinkTag
-                    key={`data-${dsid}`}
-                    href={`/statistiques#${dsid}`}
-                    icon="📊"
-                    label={ds.title}
-                  />
+                  <CrossLinkTag key={`data-${dsid}`} href={`/statistiques#${dsid}`} icon="📊" label={ds.title} />
                 ) : null;
               })}
             </div>
@@ -487,13 +593,22 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
         </div>
       )}
 
-      {/* ---- MODAL STYLES ---- */}
+      {/* ---- HOVER ANIMATIONS & MODAL STYLES ---- */}
       <style jsx>{`
         .timeline-event circle {
           transition: r 0.2s ease, fill 0.2s ease;
         }
         .timeline-event:hover circle {
-          r: 10;
+          r: 13;
+        }
+        .timeline-event.ribbon rect {
+          transition: transform 0.2s ease, filter 0.2s ease;
+          transform-box: fill-box;
+          transform-origin: center;
+        }
+        .timeline-event.ribbon:hover rect {
+          transform: scale(1, 1.7);
+          filter: brightness(1.2);
         }
         .timeline-modal-overlay {
           position: absolute;
@@ -546,14 +661,6 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
           margin: 0 0 0.5rem;
           color: var(--text-primary);
           padding-right: 2rem;
-        }
-        .timeline-modal-date {
-          font-family: var(--font-mono);
-          font-size: 0.9rem;
-          color: var(--text-muted);
-          margin-bottom: 1rem;
-          border-bottom: 1px solid var(--border-subtle);
-          padding-bottom: 0.75rem;
         }
         .timeline-modal-description {
           color: var(--text-body);

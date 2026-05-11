@@ -1,6 +1,6 @@
 // ./components/documents/DocumentsGallery.tsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
@@ -14,6 +14,17 @@ import {
   getPlaceById,
   historyChapters,
 } from "@/lib/content";
+
+/** Ensures a relative image path gets the correct /assets/documents-images/ prefix */
+function resolveImagePath(path: string): string {
+  if (!path) return path;
+  // Fix inadvertent "./public/" prefix
+  if (path.startsWith("./public/")) {
+    path = "/" + path.slice("./public/".length);
+  }
+  if (path.startsWith("/") || path.startsWith("http")) return path;
+  return `/assets/documents-images/${path}`;
+}
 
 type ViewMode = "grid" | "gallery" | "list";
 
@@ -105,19 +116,13 @@ function DocumentDetailModal({
               aria-label="Bild vergrößern"
             >
               <div
-                className={`document-thumb ${
-                  document.sensitive ? "document-thumb--sensitive" : ""
-                }`}
+                className={`document-thumb`}
                 style={{ width: "100%", height: "auto" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={document.thumbPath}
-                  alt={
-                    document.sensitive
-                      ? "Sensibler Inhalt – zum Vergrößern klicken"
-                      : document.title
-                  }
+                  src={resolveImagePath(document.thumbPath)}
+                  alt={document.title}
                 />
                 <div className="document-thumb-overlay" aria-hidden>
                   Vergrößern →
@@ -136,18 +141,6 @@ function DocumentDetailModal({
               }}
             >
               <span className="theme-tag">{document.type}</span>
-              {document.sensitive && (
-                <span
-                  className="theme-tag"
-                  style={{
-                    borderColor: "var(--accent-rust)",
-                    color: "var(--text-primary)",
-                    background: "rgba(155, 90, 60, 0.15)",
-                  }}
-                >
-                  Sensibel
-                </span>
-              )}
               {document.year && <span className="theme-tag">{document.year}</span>}
             </div>
 
@@ -239,13 +232,15 @@ export function DocumentsGallery({
   const [modalDoc, setModalDoc] = useState<HistoricalDocument | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number>(-1);
 
-  // Open a document from the full list by its ID
-  const openDocumentById = (id: string) => {
-    const doc = allDocuments.find((d) => d.id === id);
-    if (doc) {
-      setModalDoc(doc);
-    }
-  };
+  const openDocumentById = useCallback(
+    (id: string) => {
+      const doc = allDocuments.find((d) => d.id === id);
+      if (doc) {
+        setModalDoc(doc);
+      }
+    },
+    [allDocuments]
+  );
 
   // Listen for hash changes and open the corresponding document
   useEffect(() => {
@@ -261,16 +256,16 @@ export function DocumentsGallery({
 
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [allDocuments]);
+  }, [openDocumentById]);
 
   const openLightboxForDoc = (doc: HistoricalDocument) => {
     const idx = allDocuments.findIndex((d) => d.id === doc.id);
     if (idx !== -1) setLightboxIndex(idx);
   };
 
-  // Slides for the lightbox (from all documents)
+  // Slides for the lightbox (from all documents) – full path first, then thumbnail as fallback
   const slides = allDocuments.map((d) => ({
-    src: d.fullPath ?? d.thumbPath,
+    src: resolveImagePath(d.fullPath ?? d.thumbPath),
     title: d.title,
     description: `${d.credit} — ${d.licenseNote}`,
   }));
@@ -298,8 +293,6 @@ export function DocumentsGallery({
           isOpen={!!modalDoc}
           onClose={() => {
             setModalDoc(null);
-            // Optionally clear hash when closing
-            // window.location.hash = '';
           }}
           onImageClick={() => openLightboxForDoc(modalDoc)}
         />

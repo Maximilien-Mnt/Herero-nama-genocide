@@ -1,11 +1,10 @@
-// ./components/documents/DocumentsGallery.tsx
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/styles.css";
-import type { HistoricalDocument } from "@/lib/types";
+import type { HistoricalDocument, DocumentType } from "@/lib/types";
 import { DocumentCard } from "@/components/documents/DocumentCard";
 import { Reveal } from "@/components/Reveal";
 import { CrossLinkTag } from "@/components/CrossLink";
@@ -18,12 +17,22 @@ import {
 /** Ensures a relative image path gets the correct /assets/documents-images/ prefix */
 function resolveImagePath(path: string): string {
   if (!path) return path;
-  // Fix inadvertent "./public/" prefix
   if (path.startsWith("./public/")) {
     path = "/" + path.slice("./public/".length);
   }
   if (path.startsWith("/") || path.startsWith("http")) return path;
   return `/assets/documents-images/${path}`;
+}
+
+function documentTypeLabel(t: DocumentType): string {
+  switch (t) {
+    case "photograph": return "Foto";
+    case "map": return "Karte";
+    case "newspaper": return "Presse";
+    case "artifact": return "Artefakt";
+    case "text": return "Text";
+    case "other": return "Sonstiges";
+  }
 }
 
 type ViewMode = "grid" | "gallery" | "list";
@@ -49,16 +58,15 @@ function DocumentDetailModal({
   if (!isOpen) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    if (e.target === e.currentTarget) onClose();
+  };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") onClose();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  };
+  // Combined label: "Type • Year" or just "Type" if no year
+  const typeLabel = documentTypeLabel(document.type);
+  const combinedLabel = document.year ? `${typeLabel} • ${document.year}` : typeLabel;
 
   return (
     <div
@@ -70,56 +78,27 @@ function DocumentDetailModal({
       aria-labelledby="modal-title"
       tabIndex={-1}
     >
-      <div
-        className="modal-content card"
-        style={{
-          maxWidth: "700px",
-          margin: "2rem auto",
-          background: "var(--bg-elevated)",
-          border: "1px solid var(--border-strong)",
-          position: "relative",
-        }}
-      >
-        <button
-          className="modal-close"
-          onClick={onClose}
-          aria-label="Schließen"
-          style={{
-            position: "absolute",
-            top: "0.75rem",
-            right: "0.75rem",
-            background: "none",
-            border: "none",
-            fontSize: "1.5rem",
-            cursor: "pointer",
-            color: "var(--text-muted)",
-          }}
-        >
+      <div className="modal-content card">
+        <button className="modal-close" onClick={onClose} aria-label="Schließen">
           ×
         </button>
 
-        <h2 id="modal-title" style={{ marginTop: 0, marginBottom: "1rem" }}>
-          {document.title}
-        </h2>
+        <h2 id="modal-title" style={{ display: "none" }}>{document.title}</h2>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
-          <div style={{ flex: "0 0 200px" }}>
+        <div className="modal-grid">
+          {/* LEFT COLUMN */}
+          <div className="modal-left">
+            {/* Type + year in one centered box, full width */}
+            <div className="type-year-box">{combinedLabel}</div>
+
+            {/* Image */}
             <button
               type="button"
               onClick={onImageClick}
-              style={{
-                all: "unset",
-                cursor: "pointer",
-                display: "block",
-                width: "100%",
-              }}
+              className="modal-image-btn"
               aria-label="Bild vergrößern"
             >
-              <div
-                className={`document-thumb`}
-                style={{ width: "100%", height: "auto" }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+              <div className="document-thumb">
                 <img
                   src={resolveImagePath(document.thumbPath)}
                   alt={document.title}
@@ -129,69 +108,61 @@ function DocumentDetailModal({
                 </div>
               </div>
             </button>
+
+            {/* Credit + license below image */}
+            <div className="credit-license">
+              <div><span className="meta-label">Credit:</span> {document.credit}</div>
+              <div><span className="meta-label">Lizenz:</span> {document.licenseNote}</div>
+            </div>
           </div>
 
-          <div style={{ flex: 1 }}>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "0.5rem",
-                marginBottom: "1rem",
-              }}
-            >
-              <span className="theme-tag">{document.type}</span>
-              {document.year && <span className="theme-tag">{document.year}</span>}
-            </div>
-
-            <p style={{ margin: "0 0 1rem" }}>{document.blurb}</p>
-
-            <p style={{ margin: "0 0 0.5rem", fontSize: "0.9rem" }}>
-              <span style={{ color: "var(--text-muted)" }}>Credit:</span> {document.credit}
-              <br />
-              <span style={{ color: "var(--text-muted)" }}>Lizenz:</span> {document.licenseNote}
-            </p>
-
-            <div className="crosslink-tags" style={{ marginTop: "1rem" }}>
-              {document.relatedEventIds.map((id) => {
-                const ev = getEventById(id);
-                if (!ev) return null;
-                return (
-                  <CrossLinkTag
-                    key={id}
-                    href={`/chronologie#${id}`}
-                    icon="📅"
-                    label={ev.title}
-                    sectionId={id}
-                  />
-                );
-              })}
-              {document.relatedPlaceIds.map((id) => {
-                const p = getPlaceById(id);
-                if (!p) return null;
-                const sectionId = `place-${p.id}`;
-                return (
-                  <CrossLinkTag
-                    key={id}
-                    href={`/carte?place=${p.id}#${sectionId}`}
-                    icon="📍"
-                    label={p.name}
-                    sectionId={sectionId}
-                  />
-                );
-              })}
-              {document.relatedHistorySlugs.map((slug) => {
-                const sectionId = `histoire-${slug}`;
-                return (
-                  <CrossLinkTag
-                    key={slug}
-                    href={`/histoire/${slug}#${sectionId}`}
-                    icon="📚"
-                    label={chapterTitle(slug)}
-                    sectionId={sectionId}
-                  />
-                );
-              })}
+          {/* RIGHT COLUMN */}
+          <div className="modal-right">
+            <h3 className="modal-title">{document.title}</h3>
+            <p className="modal-blurb">{document.blurb}</p>
+            {/* Crosslinks – inside right column, responsive */}
+            <div className="crosslinks-container">
+              <div className="crosslink-tags">
+                {document.relatedEventIds.map((id) => {
+                  const ev = getEventById(id);
+                  if (!ev) return null;
+                  return (
+                    <CrossLinkTag
+                      key={id}
+                      href={`/chronologie#${id}`}
+                      icon="📅"
+                      label={ev.title}
+                      sectionId={id}
+                    />
+                  );
+                })}
+                {document.relatedPlaceIds.map((id) => {
+                  const p = getPlaceById(id);
+                  if (!p) return null;
+                  const sectionId = `place-${p.id}`;
+                  return (
+                    <CrossLinkTag
+                      key={id}
+                      href={`/carte?place=${p.id}#${sectionId}`}
+                      icon="📍"
+                      label={p.name}
+                      sectionId={sectionId}
+                    />
+                  );
+                })}
+                {document.relatedHistorySlugs.map((slug) => {
+                  const sectionId = `histoire-${slug}`;
+                  return (
+                    <CrossLinkTag
+                      key={slug}
+                      href={`/histoire/${slug}#${sectionId}`}
+                      icon="📚"
+                      label={chapterTitle(slug)}
+                      sectionId={sectionId}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -212,8 +183,159 @@ function DocumentDetailModal({
           padding: 1rem;
         }
         .modal-content {
+          max-width: 800px;
+          width: 100%;
+          background: var(--bg-elevated);
+          border: 1px solid var(--border-strong);
+          border-radius: 12px;
+          position: relative;
           max-height: 90vh;
           overflow-y: auto;
+          padding: 1.25rem;
+        }
+        .modal-close {
+          position: absolute;
+          top: 0.75rem;
+          right: 0.75rem;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: var(--text-muted);
+          z-index: 10;
+        }
+        /* Two‑column grid */
+        .modal-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+        }
+        .modal-left {
+          flex: 0 0 200px;
+        }
+        .modal-right {
+          flex: 1;
+          min-width: 200px;
+          display: flex;
+          flex-direction: column;
+        }
+        /* Single box for type + year */
+        .type-year-box {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid var(--border-strong);
+          border-radius: 8px;
+          padding: 0.5rem 0.75rem;
+          margin-bottom: 0.75rem;
+          text-align: center;
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--text-primary);
+          letter-spacing: 0.3px;
+        }
+        .modal-image-btn {
+          all: unset;
+          cursor: pointer;
+          display: block;
+          width: 100%;
+        }
+        .document-thumb {
+          position: relative;
+          width: 100%;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        .document-thumb img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+        .document-thumb-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0,0,0,0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          opacity: 0;
+          transition: opacity 0.2s;
+          pointer-events: none;
+        }
+        .document-thumb:hover .document-thumb-overlay {
+          opacity: 1;
+        }
+        .credit-license {
+          margin-top: 1rem;
+          font-size: 0.85rem;
+          color: var(--text-body);
+          border-top: 1px solid var(--border-weak);
+          padding-top: 0.75rem;
+        }
+        .credit-license div {
+          margin-bottom: 0.25rem;
+        }
+        .credit-license div:last-child {
+          margin-bottom: 0;
+        }
+        .meta-label {
+          color: var(--text-muted);
+        }
+        .modal-title {
+          margin: 0 0 0.75rem;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+        .modal-blurb {
+          margin: 0 0 1rem;
+          line-height: 1.5;
+        }
+        .crosslinks-container {
+          margin-top: 1rem;
+        }
+        .crosslink-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        /* Responsive: on small screens, left column becomes full width */
+        @media (max-width: 700px) {
+          .modal-grid {
+            flex-direction: column;
+          }
+          .modal-left {
+            flex: auto;
+            width: 100%;
+          }
+          .modal-right {
+            width: 100%;
+          }
+          .crosslinks-container {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-weak);
+          }
+          .modal-blurb {
+            margin-bottom: 0.75rem;
+          }
+        }
+
+        /* Even tighter spacing for very small screens */
+        @media (max-width: 480px) {
+          .modal-content {
+            padding: 1rem;
+          }
+          .type-year-box {
+            margin-bottom: 0.5rem;
+          }
+          .credit-license {
+            margin-top: 0.75rem;
+          }
+          .modal-title {
+            margin-top: 0.5rem;
+          }
         }
       `}</style>
     </div>
@@ -235,25 +357,17 @@ export function DocumentsGallery({
   const openDocumentById = useCallback(
     (id: string) => {
       const doc = allDocuments.find((d) => d.id === id);
-      if (doc) {
-        setModalDoc(doc);
-      }
+      if (doc) setModalDoc(doc);
     },
     [allDocuments]
   );
 
-  // Listen for hash changes and open the corresponding document
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
-      if (hash) {
-        openDocumentById(hash);
-      }
+      if (hash) openDocumentById(hash);
     };
-
-    // Check on mount
     handleHashChange();
-
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, [openDocumentById]);
@@ -263,7 +377,6 @@ export function DocumentsGallery({
     if (idx !== -1) setLightboxIndex(idx);
   };
 
-  // Slides for the lightbox (from all documents) – full path first, then thumbnail as fallback
   const slides = allDocuments.map((d) => ({
     src: resolveImagePath(d.fullPath ?? d.thumbPath),
     title: d.title,
@@ -291,9 +404,7 @@ export function DocumentsGallery({
         <DocumentDetailModal
           document={modalDoc}
           isOpen={!!modalDoc}
-          onClose={() => {
-            setModalDoc(null);
-          }}
+          onClose={() => setModalDoc(null)}
           onImageClick={() => openLightboxForDoc(modalDoc)}
         />
       )}

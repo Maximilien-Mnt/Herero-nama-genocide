@@ -15,7 +15,7 @@ const FILTERS: Array<{ value: DocumentType | "all"; label: string }> = [
   { value: "photograph", label: "Foto" },
   { value: "map", label: "Karte" },
   { value: "text", label: "Text" },
-  { value: "artifact", label: "Artefakt" },
+  { value: "other", label: "Sonstiges" }, // changed from "Artefakt" (artifact) to "Sonstiges" (other)
 ];
 
 export function DocumentsFiltersClient({ documents }: { documents: HistoricalDocument[] }) {

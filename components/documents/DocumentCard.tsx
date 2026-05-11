@@ -47,8 +47,36 @@ export function DocumentCard({
   const isGallery = viewMode === "gallery";
   const isGrid = viewMode === "grid";
 
-  // Thumbnail element – no sensitive class
-  const thumbnail = (
+  // Map image position string to CSS object-position value
+  const getObjectPosition = (pos?: string): string => {
+    switch (pos) {
+      case "top": return "top";
+      case "bottom": return "bottom";
+      case "left": return "left";
+      case "right": return "right";
+      case "center":
+      default: return "center";
+    }
+  };
+
+  const imagePosition = getObjectPosition(document.imagePosition);
+
+  // Shared thumbnail image with dynamic object-position
+  const thumbnailImage = (
+    <img
+      src={resolveImagePath(document.thumbPath)}
+      alt={document.title}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        objectPosition: imagePosition,
+      }}
+    />
+  );
+
+  // Thumbnail container with overlay (type+year at bottom-left)
+  const thumbnailWithOverlay = (
     <div
       className={[
         "document-thumb",
@@ -59,102 +87,44 @@ export function DocumentCard({
         .join(" ")}
       style={
         isList
-          ? { height: "100px", width: "100px", flexShrink: 0 }
+          ? { height: "100px", width: "100px", flexShrink: 0, position: "relative" }
           : isGallery
-          ? { aspectRatio: "16 / 9", width: "100%" }
-          : { aspectRatio: "4 / 3", width: "100%" }
+          ? { aspectRatio: "16 / 9", width: "100%", position: "relative" }
+          : { aspectRatio: "4 / 3", width: "100%", position: "relative" }
       }
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={resolveImagePath(document.thumbPath)}
-        alt={document.title}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      {thumbnailImage}
       <div className="document-thumb-overlay" aria-hidden>
         Ansehen →
+      </div>
+      {/* Type and year overlay at bottom-left */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "6px",
+          left: "6px",
+          display: "flex",
+          gap: "6px",
+          background: "rgba(0,0,0,0.7)",
+          padding: "2px 6px",
+          borderRadius: "4px",
+          fontSize: isList ? "0.65rem" : "0.75rem",
+          fontWeight: 500,
+          color: "white",
+          backdropFilter: "blur(2px)",
+          pointerEvents: "none",
+          zIndex: 2,
+        }}
+      >
+        <span>{documentTypeLabel(document.type)}</span>
+        {document.year && <span>{document.year}</span>}
       </div>
     </div>
   );
 
   const truncatedBlurb = truncateBlurb(document.blurb, 100);
 
-  const meta = (
-    <>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.5rem",
-          marginTop: isList ? 0 : "0.75rem",
-        }}
-      >
-        <span
-          className="theme-tag"
-          style={{
-            borderColor: "var(--border-strong)",
-            color: "var(--text-body)",
-            background: "rgba(255,255,255,0.02)",
-          }}
-        >
-          {documentTypeLabel(document.type)}
-        </span>
-      </div>
-
-      <h3
-        style={{
-          margin: isList ? "0 0 0.25rem" : "0.75rem 0 0.35rem",
-          fontFamily: "var(--font-sans)",
-          fontSize: isGallery ? "1.15rem" : "1rem",
-          fontWeight: 500,
-          lineHeight: "1.25",
-          color: "var(--text-primary)",
-        }}
-      >
-        {document.title}
-      </h3>
-
-      <p
-        style={{
-          margin: "0 0 0.5rem",
-          color: "var(--text-muted)",
-          fontSize: "0.95rem",
-          lineHeight: "1.4",
-          display: "-webkit-box",
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
-        }}
-      >
-        {document.year ? `${document.year} · ` : null}
-        {truncatedBlurb}
-      </p>
-
-      {/* Credit and Lizenz: each on a single line with ellipsis */}
-      <div style={{ margin: 0, fontSize: "0.85rem", color: "var(--text-body)" }}>
-        <div
-          style={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          <span style={{ color: "var(--text-muted)" }}>Credit:</span> {document.credit}
-        </div>
-        <div
-          style={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          <span style={{ color: "var(--text-muted)" }}>Lizenz:</span> {document.licenseNote}
-        </div>
-      </div>
-    </>
-  );
-
-  // List layout: horizontal with fixed thumbnail height
+  // List layout: horizontal with thumbnail on left
   if (isList) {
     return (
       <article
@@ -168,22 +138,51 @@ export function DocumentCard({
           style={{ all: "unset", cursor: "pointer", display: "block", width: "100%" }}
           aria-label={`Ansehen: ${document.title}`}
         >
-          <div
-            style={{
-              display: "flex",
-              gap: "1rem",
-              alignItems: "flex-start",
-            }}
-          >
-            {thumbnail}
-            <div style={{ flex: 1, minWidth: 0 }}>{meta}</div>
+          <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+            {thumbnailWithOverlay}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h3
+                style={{
+                  margin: "0 0 0.25rem",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "1rem",
+                  fontWeight: 500,
+                  lineHeight: "1.25",
+                  color: "var(--text-primary)",
+                }}
+              >
+                {document.title}
+              </h3>
+              <p
+                style={{
+                  margin: "0 0 0.5rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.95rem",
+                  lineHeight: "1.4",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {truncatedBlurb}
+              </p>
+              <div style={{ margin: 0, fontSize: "0.85rem", color: "var(--text-body)" }}>
+                <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <span style={{ color: "var(--text-muted)" }}>Credit:</span> {document.credit}
+                </div>
+                <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <span style={{ color: "var(--text-muted)" }}>Lizenz:</span> {document.licenseNote}
+                </div>
+              </div>
+            </div>
           </div>
         </button>
       </article>
     );
   }
 
-  // Grid or Gallery: vertical card with full height
+  // Grid or Gallery: vertical card
   return (
     <article
       className={`card document-card ${isGallery ? "document-card--gallery" : ""}`}
@@ -208,9 +207,42 @@ export function DocumentCard({
         }}
         aria-label={`Ansehen: ${document.title}`}
       >
-        {thumbnail}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          {meta}
+        {thumbnailWithOverlay}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", marginTop: "0.5rem" }}>
+          <h3
+            style={{
+              margin: "0 0 0.35rem",
+              fontFamily: "var(--font-sans)",
+              fontSize: isGallery ? "1.15rem" : "1rem",
+              fontWeight: 500,
+              lineHeight: "1.25",
+              color: "var(--text-primary)",
+            }}
+          >
+            {document.title}
+          </h3>
+          <p
+            style={{
+              margin: "0 0 0.5rem",
+              color: "var(--text-muted)",
+              fontSize: "0.95rem",
+              lineHeight: "1.4",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {truncatedBlurb}
+          </p>
+          <div style={{ margin: 0, fontSize: "0.85rem", color: "var(--text-body)" }}>
+            <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <span style={{ color: "var(--text-muted)" }}>Credit:</span> {document.credit}
+            </div>
+            <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <span style={{ color: "var(--text-muted)" }}>Lizenz:</span> {document.licenseNote}
+            </div>
+          </div>
         </div>
       </button>
     </article>

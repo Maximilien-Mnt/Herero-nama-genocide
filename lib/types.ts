@@ -80,6 +80,7 @@ export interface HistoricalDocument {
   relatedPlaceIds: string[];
   relatedHistorySlugs: string[];
   sensitive?: boolean;
+  imagePosition?: "center" | "top" | "bottom" | "left" | "right";
 }
 
 export type ChartKind = "line" | "bar" | "area";

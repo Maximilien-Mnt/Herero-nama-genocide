@@ -27,7 +27,7 @@ export default function RessourcesPage() {
       <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Ressourcen" }]} />
       <h1 style={{ fontFamily: "var(--font-serif)" }}>Ressourcen und Bibliografie</h1>
       <p style={{ color: "var(--muted)" }}>
-        Ausgangsliste, vom pädagogischen Team validiert: Ergänzen Sie institutionelle URLs, präzisieren Sie Ausgaben und vermerken Sie verfügbare Übersetzungen. Zur Zitierweise siehe{" "}
+      Nicht alle hier aufgeführten Ressourcen wurden unbedingt für das Projekt verwendet; sie enthalten auch zusätzliche Inhalte und Optionen zur weiteren Erkundung des Themas. Zur Zitierweise siehe{" "}
         <Link href="/citer">Wie zitiere ich dieses Projekt?</Link>.
       </p>
       <ol style={{ paddingLeft: "1.2rem" }}>

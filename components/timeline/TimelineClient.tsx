@@ -1,4 +1,3 @@
-// components/timeline/TimelineClient.tsx
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -78,7 +77,6 @@ function getEventColor(event: EventData): string {
   return CATEGORY_COLORS[event.eventType as EventType] || CATEGORY_COLORS.other;
 }
 
-// Multi‑line helper
 function splitTitle(title: string, maxChars = 25): string[] {
   const words = title.split(" ");
   const lines: string[] = [];
@@ -107,6 +105,13 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
   const [dragStartPanX, setDragStartPanX] = useState(0);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [animated, setAnimated] = useState(false);
+
+  // Touch gestures state
+  const [touchStartDistance, setTouchStartDistance] = useState<number | null>(null);
+  const [touchStartZoom, setTouchStartZoom] = useState<number>(1);
+  const [touchStartPanX, setTouchStartPanX] = useState<number>(0);
+  const [touchStartClientX, setTouchStartClientX] = useState<number>(0);
+  const [isTouchPanning, setIsTouchPanning] = useState(false);
 
   const [tooltipData, setTooltipData] = useState<{
     id: string;
@@ -164,7 +169,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // ----- wheel listener -----
+  // ----- wheel listener (desktop zoom) -----
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -184,7 +189,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     return () => el.removeEventListener("wheel", handleWheel);
   }, [zoom, panX, selectedEventId]);
 
-  // ----- panning (drag) -----
+  // ----- panning (mouse drag) -----
   const onMouseDown = useCallback(
     (e: React.MouseEvent) => {
       if ((e.target as HTMLElement).closest(".timeline-event")) return;
@@ -209,6 +214,83 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     };
   }, [dragging, dragStartMouseX, dragStartPanX]);
 
+  // ----- TOUCH GESTURES (pinch zoom + pan) -----
+  
+
+  // Remove the getDistance function entirely (lines ~210-215)
+
+// Replace onTouchStart, onTouchMove, onTouchEnd with:
+
+const onTouchStart = (e: React.TouchEvent) => {
+  if ((e.target as HTMLElement).closest(".timeline-event")) return;
+  e.preventDefault();
+  const touches = e.touches;
+  if (touches.length === 2) {
+    // Pinch start
+    const touch1 = touches.item(0);
+    const touch2 = touches.item(1);
+    if (touch1 && touch2) {
+      const dx = touch1.clientX - touch2.clientX;
+      const dy = touch1.clientY - touch2.clientY;
+      const distance = Math.hypot(dx, dy);
+      setTouchStartDistance(distance);
+      setTouchStartZoom(zoom);
+      setTouchStartPanX(panX);
+      setIsTouchPanning(false);
+    }
+  } else if (touches.length === 1) {
+    // One-finger pan start
+    const touch = touches.item(0);
+    if (touch) {
+      setTouchStartClientX(touch.clientX);
+      setTouchStartPanX(panX);
+      setIsTouchPanning(true);
+    }
+  }
+};
+
+const onTouchMove = (e: React.TouchEvent) => {
+  if ((e.target as HTMLElement).closest(".timeline-event")) return;
+  e.preventDefault();
+  const touches = e.touches;
+  if (touches.length === 2 && touchStartDistance !== null) {
+    // Pinch zoom
+    const touch1 = touches.item(0);
+    const touch2 = touches.item(1);
+    if (touch1 && touch2) {
+      const dx = touch1.clientX - touch2.clientX;
+      const dy = touch1.clientY - touch2.clientY;
+      const newDistance = Math.hypot(dx, dy);
+      const delta = newDistance / touchStartDistance;
+      let newZoom = touchStartZoom * delta;
+      newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, newZoom));
+
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (rect) {
+        const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+        const worldX = (centerX - touchStartPanX) / touchStartZoom;
+        setZoom(newZoom);
+        setPanX(centerX - worldX * newZoom);
+      } else {
+        setZoom(newZoom);
+      }
+    }
+  } else if (touches.length === 1 && isTouchPanning) {
+    // One-finger pan
+    const touch = touches.item(0);
+    if (touch) {
+      const deltaX = touch.clientX - touchStartClientX;
+      setPanX(touchStartPanX + deltaX);
+    }
+  }
+};
+
+const onTouchEnd = (e: React.TouchEvent) => {
+  e.preventDefault();
+  setTouchStartDistance(null);
+  setIsTouchPanning(false);
+};
+
   // ----- event handlers -----
   const handleEventClick = (id: string) => setSelectedEventId(id);
   const closeModal = () => setSelectedEventId(null);
@@ -217,8 +299,8 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
   const axisY = containerHeight * 0.6;
   const dotRadius = 10;
   const ribbonHeight = 22;
-  const laneSpacingRibbon = 30; // vertical gap between ribbon lanes
-  const labelLineHeight = 18; // for point label multi-line
+  const laneSpacingRibbon = 30;
+  const labelLineHeight = 18;
 
   const toScreenX = useCallback(
     (worldX: number) => worldX * zoom + panX,
@@ -228,7 +310,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
   const ribbonEvents = useMemo(() => events.filter(e => isMultiDayEvent(e.date, e.endDate)), [events]);
   const pointEvents = useMemo(() => events.filter(e => !isMultiDayEvent(e.date, e.endDate)), [events]);
 
-  // ----- STABLE RIBBON LANES (world‑based) -----
+  // RIBBON LANES
   const ribbonWorldData = useMemo(() => {
     return ribbonEvents.map(ev => ({
       ...ev,
@@ -241,7 +323,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     const sorted = [...ribbonWorldData].sort((a, b) => a.worldStart - b.worldStart);
     const lanes: number[] = [];
     const assignment = new Map<string, number>();
-    const gap = 2; // world units
+    const gap = 2;
     for (const ev of sorted) {
       let lane = 0;
       while (lanes[lane] !== undefined && lanes[lane] + gap > ev.worldStart) {
@@ -262,7 +344,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     }));
   }, [ribbonWorldData, ribbonLanes, toScreenX]);
 
-  // ----- POINT LABEL LANES (progressive with zoom) -----
+  // POINT LABELS
   const pointScreenData = useMemo(() => {
     return pointEvents
       .map(ev => ({ ...ev, worldX: dateToX(ev.date) }))
@@ -276,25 +358,15 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     }));
   }, [pointScreenData, toScreenX]);
 
-  // Whether base label threshold is reached
   const labelVisible = zoom >= LABEL_VISIBLE_ZOOM_THRESHOLD;
-
-  // Progressive lanes: max lanes allowed = floor(zoom * 1.5)
-  const maxLabelLanes = useMemo(() => {
-    return Math.floor(zoom * 1.5);
-  }, [zoom]);
-
-  // Estimate label width for points (pixels)
+  const maxLabelLanes = useMemo(() => Math.floor(zoom * 1.5), [zoom]);
   const pointLabelWidth = useCallback((title: string) => title.length * 8 + 12, []);
 
-  // Place point labels into lanes (greedy algorithm)
   const pointLabelLayout = useMemo(() => {
     if (!labelVisible) return new Map<string, { lane: number; visible: boolean }>();
-
-    const gap = 10; // minimum horizontal gap between labels in pixels
-    const lanes: number[] = []; // right edge of each lane
+    const gap = 10;
+    const lanes: number[] = [];
     const layout = new Map<string, { lane: number; visible: boolean }>();
-
     for (const ev of pointScreenWithX) {
       const w = pointLabelWidth(ev.title);
       const xLeft = ev.screenX - w / 2;
@@ -302,10 +374,8 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
       while (lane < lanes.length && lanes[lane] + gap > xLeft) {
         lane++;
       }
-      // Record lane assignment
       const visible = lane < maxLabelLanes;
       layout.set(ev.id, { lane, visible });
-      // Update lane right edge
       if (lane >= lanes.length) {
         lanes.push(ev.screenX + w / 2);
       } else {
@@ -315,15 +385,12 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     return layout;
   }, [labelVisible, pointScreenWithX, maxLabelLanes, pointLabelWidth]);
 
-  // Determine vertical offset for a point label based on lane index
   const pointLabelOffset = (lane: number, title: string) => {
     const lines = splitTitle(title, 25).length;
     const totalHeight = lines * labelLineHeight;
-    // Alternate above/below: even lanes above, odd below
     const direction = lane % 2 === 0 ? -1 : 1;
-    // How many rows above/below? floor(lane/2) + 1
     const row = Math.floor(lane / 2) + 1;
-    const baseOffset = 12 + dotRadius; // start just outside dot
+    const baseOffset = 12 + dotRadius;
     return direction * (baseOffset + (row - 1) * (totalHeight + 6));
   };
 
@@ -331,7 +398,6 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
     () => generateTicks(panX, zoom, containerWidth),
     [panX, zoom, containerWidth]
   );
-
   const ticksScreen = useMemo(
     () => ticksWorld.map(t => ({ screenX: toScreenX(t.x), label: t.label })),
     [ticksWorld, toScreenX]
@@ -351,8 +417,12 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
         background: "var(--bg-page)",
         border: "1px solid var(--border-default)",
         borderRadius: "var(--radius-md)",
+        touchAction: "none",  // Prevent browser scroll/zoom while interacting
       }}
       onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       <svg
         width="100%"
@@ -398,7 +468,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
           strokeWidth={1.5}
         />
 
-        {/* ---- RIBBONS ---- */}
+        {/* RIBBONS */}
         {ribbonRenderData.map(ev => {
           const lane = ev.lane;
           const offset = (lane % 2 === 0 ? 1 : -1) * (Math.floor(lane / 2) + 1) * laneSpacingRibbon;
@@ -448,7 +518,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
           );
         })}
 
-        {/* ---- POINTS ---- */}
+        {/* POINTS */}
         {pointScreenWithX.map(ev => {
           const color = getEventColor(ev);
           const layout = pointLabelLayout.get(ev.id);
@@ -523,7 +593,7 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
         </div>
       )}
 
-      {/* ----- DETAIL MODAL ----- */}
+      {/* DETAIL MODAL */}
       {selectedEvent && (
         <div className="timeline-modal-overlay" onClick={closeModal}>
           <div
@@ -593,7 +663,6 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
         </div>
       )}
 
-      {/* ---- HOVER ANIMATIONS & MODAL STYLES ---- */}
       <style jsx>{`
         .timeline-event circle {
           transition: r 0.2s ease, fill 0.2s ease;

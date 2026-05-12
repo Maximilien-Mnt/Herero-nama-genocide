@@ -222,7 +222,11 @@ export default function TimelineClient({ events }: { events: EventData[] }) {
 // Replace onTouchStart, onTouchMove, onTouchEnd with:
 
 const onTouchStart = (e: React.TouchEvent) => {
-  if ((e.target as HTMLElement).closest(".timeline-event")) return;
+  // If touching on an event element, do nothing (allow click)
+  if ((e.target as HTMLElement).closest(".timeline-event")) {
+    return;
+  }
+  // Only prevent default and handle gestures for background touches
   e.preventDefault();
   const touches = e.touches;
   if (touches.length === 2) {
@@ -250,11 +254,10 @@ const onTouchStart = (e: React.TouchEvent) => {
 };
 
 const onTouchMove = (e: React.TouchEvent) => {
-  if ((e.target as HTMLElement).closest(".timeline-event")) return;
-  e.preventDefault();
   const touches = e.touches;
+  // Only prevent default if we are actually panning or pinching
   if (touches.length === 2 && touchStartDistance !== null) {
-    // Pinch zoom
+    e.preventDefault(); // prevent page scroll while pinching
     const touch1 = touches.item(0);
     const touch2 = touches.item(1);
     if (touch1 && touch2) {
@@ -264,7 +267,6 @@ const onTouchMove = (e: React.TouchEvent) => {
       const delta = newDistance / touchStartDistance;
       let newZoom = touchStartZoom * delta;
       newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, newZoom));
-
       const rect = containerRef.current?.getBoundingClientRect();
       if (rect) {
         const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
@@ -276,7 +278,7 @@ const onTouchMove = (e: React.TouchEvent) => {
       }
     }
   } else if (touches.length === 1 && isTouchPanning) {
-    // One-finger pan
+    e.preventDefault(); // prevent page scroll while panning
     const touch = touches.item(0);
     if (touch) {
       const deltaX = touch.clientX - touchStartClientX;
@@ -286,9 +288,9 @@ const onTouchMove = (e: React.TouchEvent) => {
 };
 
 const onTouchEnd = (e: React.TouchEvent) => {
-  e.preventDefault();
   setTouchStartDistance(null);
   setIsTouchPanning(false);
+  // No preventDefault here – allows click events to fire
 };
 
   // ----- event handlers -----
@@ -417,7 +419,6 @@ const onTouchEnd = (e: React.TouchEvent) => {
         background: "var(--bg-page)",
         border: "1px solid var(--border-default)",
         borderRadius: "var(--radius-md)",
-        touchAction: "none",  // Prevent browser scroll/zoom while interacting
       }}
       onMouseDown={onMouseDown}
       onTouchStart={onTouchStart}

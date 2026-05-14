@@ -78,104 +78,100 @@ export default function MethodologiePage() {
     <PageShell>
       <Breadcrumb items={[{ href: "/", label: "Startseite" }, { label: "Methodik" }]} />
       <article className="prose" style={{ maxWidth: "none" }}>
-        <SectionTitle title="Arbeitsablauf" owners={["Daniel", "Maximilien"]} />
+        <p>Es sei darauf hingewiesen, dass der Großteil dieser Seite sowie viele andere Seiten der Website aus dem Französischen ins Deutsche übersetzt wurden.</p>
+        <SectionTitle title="Projektablauf" owners={["Daniel", "Maximilien"]} />
         <p>
-          Zunächst recherchierten wir das Projekt und sammelten allgemeine Informationen zum
-          Völkermord, um uns einen Überblick zu verschaffen. Wir teilten die Arbeit optimal auf,
-          basierend auf den Stärken, Schwächen und der Verfügbarkeit jedes Einzelnen. Die
-          Grundlagen unserer Arbeitsprozesse waren gelegt, und wir begannen, Kollaborationstools
-          einzusetzen.
+          Zu Beginn recherchierten wir das Thema und sammelten allgemeine Informationen zum
+          Völkermord, um uns einen ersten Überblick zu verschaffen. Danach teilten wir die Arbeit
+          entsprechend unserer Stärken, unserer Verfügbarkeit und unserer jeweiligen Aufgaben auf.
+          So legten wir die Grundlage für unsere Zusammenarbeit und begannen, gemeinsame
+          Kollaborationstools zu nutzen.
         </p>
         <p>
-          Wir legten beide los: Einer von uns erstellte die grundlegende Website-Architektur, die
-          Dateistruktur, Version 1 und die Einrichtung, die Bereitstellung auf Vercel und die
-          Implementierung auf GitHub, während der andere erste Recherchen durchführte, Quellen
-          auswählte, Bilder suchte und sein Verständnis des Völkermords vertiefte.
+          Einer von uns erstellte die grundlegende Website-Architektur, die Dateistruktur, die
+          erste Version, die Einrichtung sowie die Bereitstellung auf Vercel und GitHub. Der andere
+          konzentrierte sich zunächst auf die Recherche, die Auswahl von Quellen, die Suche nach
+          Bildern und das vertiefte Verständnis des historischen Themas.
         </p>
         <p>
-          Im Laufe des Projekts finalisierten wir Design, Einrichtung, Struktur und Code-Logik,
-          beispielsweise die Farbwahl Schwarz/Braun/Gold und MDX für die Geschichtsseiten. Die
-          Zusammenarbeit verlief gut, mit ein wenig Arbeit täglich und insgesamt mindestens mehreren
-          Stunden pro Woche. Die Website näherte sich ihrer endgültigen Form, als wir die Quellen
-          erneut überprüften, die Relevanz der Informationen sicherstellten und Korrektur lasen.
+          Im Verlauf des Projekts arbeiteten wir an Design, Struktur und Code-Logik. Dazu gehörten
+          unter anderem die Gestaltung des visuellen Stils sowie die Verwendung von MDX für die
+          Geschichtsseiten. Die Zusammenarbeit verlief regelmäßig über mehrere Wochen hinweg, und
+          wir überprüften die Quellen erneut, passten Inhalte an und lasen die Texte mehrfach
+          Korrektur.
         </p>
         <p>
-          Schließlich erreichten wir die finale Entwicklungsphase. Die letzten Fehler und Probleme
-          wurden behoben, einige Seiten wie die Startseite optimiert und ein weiteres Korrekturlesen
-          durchgeführt, insbesondere für die Zeitleiste und die Karten-Registerkarte. Statistiken
-          wurden recherchiert und implementiert, wobei Qualität Vorrang vor Quantität hatte.
-          Abschließend wurden letzte Prüfungen durchgeführt, eine Domain für unsere Website erworben
-          und der Gesamtumfang an Text und Informationen für eine bessere Zugänglichkeit reduziert.
-          Schließlich wurde die Lizenz ausgewählt, die Projektinformationen zusammengestellt und
-          diese Methodikseite verfasst.
+          In der letzten Phase behoben wir die verbleibenden Fehler, optimierten einzelne Seiten wie
+          die Startseite und überprüften besonders die Zeitleiste und den Kartenbereich noch
+          einmal. Außerdem recherchierten und integrierten wir Statistiken, reduzierten den Umfang
+          einzelner Texte für mehr Übersichtlichkeit, wählten die Lizenz aus, fassten die
+          Projektinformationen zusammen und erstellten diese Methodikseite.
         </p>
 
-        <SectionTitle title="Zusammenarbeit" owners={["Daniel"]} />
+        <SectionTitle title="Zusammenarbeit" owners={["Daniel", "Maximilien"]} />
         <p>
-          In unserem Projekt haben wir die Arbeit gut aufgeteilt, damit jeder klare Aufgaben hatte.
-          Am Anfang haben wir gemeinsam entschieden, wer welchen Teil übernimmt. So konnte jeder an
-          seinem Bereich arbeiten und wir waren schneller fertig.
+          In unserem Projekt haben wir die Aufgaben klar aufgeteilt, damit jeder einen
+          überschaubaren Arbeitsbereich hatte. Zu Beginn entschieden wir gemeinsam, wer welchen
+          Teil übernimmt. So konnte jeder in seinem Bereich arbeiten, und wir kamen effizienter
+          voran.
         </p>
         <p>
-          Ich (Daniel) war vor allem für das Überprüfen der Inhalte und die Korrekturen zuständig,
-          während mein Klassenkamerad eher den technischen Teil und den Aufbau der Website gemacht
-          hat. Trotzdem haben wir viele Entscheidungen zusammen getroffen, damit alles zusammenpasst.
+          Ich (Daniel) war vor allem für die inhaltliche Kontrolle und die Korrekturen zuständig,
+          während Maximilien sich stärker um den technischen Teil und den Aufbau der Website
+          kümmerte. Trotzdem trafen wir wichtige Entscheidungen gemeinsam, damit Inhalt und
+          Umsetzung zusammenpassten.
         </p>
         <p>
-          Für den Austausch unserer Inhalte haben wir regelmäßig miteinander gesprochen und unsere
-          Texte geteilt. Wir haben die Texte zuerst in Notion geschrieben und organisiert. Danach
-          haben wir sie je nach Bedarf in JSON/MDX umgewandelt und dann in den Code eingefügt.
+          Für den Austausch unserer Inhalte sprachen wir regelmäßig miteinander und teilten unsere
+          Texte. Zuerst schrieben und organisierten wir sie in Notion. Danach überführten wir sie je
+          nach Bedarf in JSON, MDX oder direkt in den Code.
         </p>
         <p>
-          Unser Ablauf war meistens so: Text in Notion schreiben → Inhalte überprüfen → in JSON/MDX
-          oder Code übertragen → Website aktualisieren → gemeinsam testen und noch einmal
-          durchlesen. Als Tool haben wir vor allem Notion benutzt, aber auch Nachrichten, um schnell
-          Fragen zu klären.
+          Unser Ablauf war meist folgender: Text in Notion schreiben, Inhalte prüfen, in JSON, MDX
+          oder Code übertragen, die Website aktualisieren und anschließend gemeinsam testen.
+          Neben Notion nutzten wir auch Nachrichten, um Fragen schnell zu klären.
         </p>
         <p>
-          Am Ende haben wir die Website noch einmal gemeinsam überprüft und kleine Änderungen
-          gemacht, damit alles gut aussieht und richtig funktioniert.
+          Am Ende überprüften wir die Website noch einmal gemeinsam und nahmen kleinere Anpassungen
+          vor, damit alles korrekt dargestellt wurde und zuverlässig funktionierte.
         </p>
 
-        <SectionTitle title="Entwicklung/Programmierung" owners={["Maximilien"]} />
+        <SectionTitle title="Entwicklung und Programmierung" owners={["Maximilien"]} />
         <p>
-          Die Website-Entwicklungsphase setzte stärker auf KI als der akademische/Forschungsteil.
-          Zunächst wurde eine einfache erste Version erstellt. Informationen zum Tech-Stack, den
-          Paketen, der Laufzeitumgebung, den Frameworks und Bibliotheken wurden hauptsächlich
-          mithilfe von KI zusammengefasst und abgerufen, die mich (Maximilien) in den frühen
-          Entwicklungsphasen unterstützte.
+          Die Entwicklungsphase der Website stützte sich stärker auf KI als der
+          historische und inhaltliche Teil. Zunächst entstand eine einfache erste Version. Angaben
+          zum Tech-Stack, zu Paketen, Laufzeitumgebung, Frameworks und Bibliotheken wurden in der
+          Anfangsphase teilweise mithilfe von KI zusammengefasst und abgerufen.
         </p>
         <p>
-          Im weiteren Projektverlauf gewannen die Anpassung an die Bedürfnisse unserer Website
-          zunehmend an Bedeutung, und meine Abhängigkeit von KI nahm deutlich ab. Ich verwaltete den
-          Großteil der Dateistruktur, der Code-Logik und der Funktionen und pflegte komplexe
-          Features wie das Querverlinkungssystem.
+          Im weiteren Verlauf passten wir die Website immer stärker an unsere konkreten Bedürfnisse
+          an, und mein Bedarf an KI-Unterstützung nahm deutlich ab. Ich verwaltete den Großteil der
+          Dateistruktur, der Code-Logik und der Funktionen und pflegte komplexe Elemente wie das
+          Querverlinkungssystem.
         </p>
         <p>
-          Für die interaktiven Bereiche der Website wählten wir das JSON-Format, da es flexibel,
-          hochgradig kompatibel mit unserem Querverlinkungssystem, leicht modifizierbar und auch für
-          Anfänger verständlich ist. Zudem waren Wartung und Fehlerbehebung sehr einfach, und die
-          Implementierung im Code war unkompliziert. Für die Verlaufsseiten wählten wir aus
-          praktischen Gründen das MDX-Format: In Notion werden Inhalte mit Markdown (.md) verwaltet.
-          Daher konnten wir die gesamten Verlaufsseiten problemlos in Notion erstellen und
-          anschließend ohne große Anpassungen, wie beispielsweise die Verwendung von HTML für
-          Tabellen, in das Projekt einfügen.
+          Für die interaktiven Bereiche der Website wählten wir JSON, weil das Format flexibel,
+          leicht anpassbar und mit unserem Querverlinkungssystem gut kompatibel ist. Außerdem ließ
+          es sich einfach warten und im Code umsetzen. Für die Geschichtsseiten nutzten wir MDX aus
+          praktischen Gründen: Die Inhalte wurden in Notion bereits in Markdown verwaltet und
+          konnten daher mit wenigen Anpassungen in das Projekt übernommen werden, auch wenn an
+          einzelnen Stellen zusätzliche Formatierung nötig war.
         </p>
         <p>
-          Letztendlich habe ich persönlich das Hinzufügen von Fotos, die Pflege, Organisation und
-          Implementierung der Inhalte im JSON/MDX-Format, das CSS-Design, die Anpassung der
-          Website, die Optimierung der Benutzeroberfläche, die Definition der Projektstruktur, die
-          UI/UX-Entscheidungen, die Implementierung von Filter- und Sortiersystemen sowie die
-          Entwicklung von Kernfunktionen wie Karte, Suchstatistiken und wiederverwendbaren React-
-          Komponenten übernommen.
+          Ich war außerdem für das Hinzufügen von Bildern, die Pflege und Organisation der Inhalte
+          in JSON und MDX, das CSS-Design, die Anpassung der Website, die Verbesserung der
+          Benutzeroberfläche, die Definition der Projektstruktur, die UI- und UX-Entscheidungen,
+          die Filter- und Sortiersysteme sowie zentrale Funktionen wie Karte, Suchstatistiken und
+          wiederverwendbare React-Komponenten verantwortlich.
         </p>
 
         <SectionTitle title="Design" owners={["Maximilien"]} />
         <p>
           Das visuelle Design unserer Website orientiert sich an einer dunklen, ruhigen und
           seriösen Darstellung. Wir haben bewusst ein Farbsystem aus Schwarz-, Braun- und Goldtönen
-          gewählt, um eine historische, archivartige Atmosphäre zu schaffen. Diese Farben passen zum
-          Thema des Projekts und geben der Seite gleichzeitig einen klaren, wiedererkennbaren Stil.
+          gewählt, um eine historische, archivartige Atmosphäre zu schaffen. Diese Farben passen
+          zum Thema des Projekts und geben der Seite gleichzeitig einen klaren, wiedererkennbaren
+          Stil.
         </p>
         <p>
           Bei der Typografie haben wir zwei Schriftarten kombiniert: eine Serifenschrift für
@@ -186,22 +182,22 @@ export default function MethodologiePage() {
         </p>
         <p>
           Ein weiterer wichtiger Punkt war die Übersichtlichkeit auf allen Geräten. Die Website
-          wurde so aufgebaut, dass sie auch auf kleineren Bildschirmen gut funktioniert. Besonders
-          bei Karten, Zeitleiste, Dokumenten und den historischen Kapiteln war uns wichtig, dass
-          das Design nicht nur schön aussieht, sondern auch praktisch, stabil und leicht verständlich
-          bleibt.
+          wurde so aufgebaut, dass sie auch auf kleineren Bildschirmen gut funktioniert.
+          Besonders bei Karten, der Zeitleiste, den Dokumenten und den historischen Kapiteln war
+          uns wichtig, dass das Design nicht nur schön aussieht, sondern auch praktisch, stabil und
+          leicht verständlich bleibt.
         </p>
 
-        <SectionTitle title="KI Nutzung" owners={["Maximilien"]} />
+        <SectionTitle title="Nutzung von KI" owners={["Maximilien"]} />
         <p>
           Im Rahmen unserer Arbeit nutzten wir KI zur Korrektur, Verifizierung, Wiederholung
-          einfacher Prozesse und zur Unterstützung beim Codieren und Programmieren. Wir verwendeten
-          hauptsächlich die folgenden KIs in unseren verschiedenen Forschungsprojekten:
+          einfacher Prozesse und zur Unterstützung beim Codieren und Programmieren. Wir
+          verwendeten hauptsächlich die folgenden KIs in unseren verschiedenen Forschungsprojekten:
         </p>
         <ul>
           <li>Claude von Anthropic</li>
           <li>ChatGPT von OpenAI</li>
-          <li>Manus von Meta</li>
+          <li>Manus</li>
           <li>DeepSeek R1</li>
         </ul>
         <p>
@@ -211,9 +207,9 @@ export default function MethodologiePage() {
 
         <h3>Claude</h3>
         <p>
-          Claude von Anthropic wurde hauptsächlich eingesetzt, um die von uns erstellten großen JSON-
-          oder MDX-Dateien fehlerfrei zu bearbeiten. Musste beispielsweise jedes JSON-Objekt in
-          einer JSON-Datei wiederholt geändert werden, war es praktischer, die KI zu nutzen, um
+          Claude von Anthropic wurde hauptsächlich eingesetzt, um die von uns erstellten großen
+          JSON- oder MDX-Dateien fehlerfrei zu bearbeiten. Musste beispielsweise jedes JSON-Objekt
+          in einer JSON-Datei wiederholt geändert werden, war es praktischer, die KI zu nutzen, um
           dieselbe Aktion dutzende Male auszuführen, ohne den Rest der Datei zu beeinträchtigen.
           Dadurch konnten wir erheblich Zeit sparen, ohne die Qualität und Relevanz der Inhalte zu
           beeinträchtigen.
@@ -230,9 +226,9 @@ export default function MethodologiePage() {
 
         <h3>Manus</h3>
         <p>
-          Manus wurde nur wenig genutzt, hauptsächlich zum Parsen von Informationen aus die
-          verschiedenen files und zum Verständnis der Datei/Filestruktur und der Codelogik durch
-          eine Verbindung zum GitHub-Repository.
+          Manus wurde nur wenig genutzt, hauptsächlich zum Parsen von Informationen aus den
+          verschiedenen Dateien und zum Verständnis der Datei- und Ordnerstruktur sowie der
+          Codelogik durch eine Verbindung zum GitHub-Repository.
         </p>
 
         <h3>DeepSeek</h3>
@@ -244,53 +240,69 @@ export default function MethodologiePage() {
           app/carte/page.tsx.
         </p>
 
-        <SectionTitle title="Korrekturlesen/Überprüfung" owners={["Daniel"]} />
+        <SectionTitle title="Korrektur und Überprüfung" owners={["Daniel"]} />
         <p>
           In der letzten Phase unseres Projekts habe ich (Daniel) die gesamte Website noch einmal
           durchgelesen und überprüft. Dabei habe ich vor allem auf die Inhalte, die Verständlichkeit
           der Texte und die richtige Darstellung der Informationen geachtet. Wenn ich etwas gefunden
-          habe, das nicht gut war oder verbessert werden konnte, habe ich es meinem Klassenkameraden
-          gesagt, damit wir es ändern konnten.
+          habe, das nicht gut war oder verbessert werden konnte, habe ich es Maximilien mitgeteilt,
+          damit wir es anpassen konnten.
         </p>
         <p>
-          Danach hat mir mein Klassenkamerad den Code der Website geschickt, damit ich die Fehler
-          direkt im Skript korrigieren konnte. Ich habe die notwendigen Änderungen vorgenommen und
-          den Code verbessert. Anschließend hat mein Klassenkamerad den korrigierten Code wieder in
-          die Website eingefügt. So konnten wir gut zusammenarbeiten und ein besseres Ergebnis
-          erreichen.
+          Danach hat mir Maximilien den Code der Website geschickt, damit ich die Fehler direkt im
+          Skript korrigieren konnte. Ich habe die notwendigen Änderungen vorgenommen und den Code
+          verbessert. Anschließend hat Maximilien den korrigierten Code wieder in die Website
+          eingefügt. So konnten wir gut zusammenarbeiten und ein besseres Ergebnis erreichen.
+        </p>
+
+        <SectionTitle title="Quellenwahl und Verifikation" owners={["Daniel"]} />
+        <p>
+          Für dieses Projekt wählten wir unsere Quellen nach ihrer fachlichen Zuverlässigkeit und
+          ihrem institutionellen Hintergrund aus. Vorrang hatten Veröffentlichungen von Archiven,
+          Museen, Universitäten, Gedenkstätten und anderen wissenschaftlichen oder kulturellen
+          Einrichtungen. Diese Quellen boten meist gut belegte Informationen und waren für ein
+          historisches Thema besonders geeignet.
+        </p>
+        <p>
+          Die Auswahl erfolgte in mehreren Schritten. Zuerst suchten wir nach allgemein
+          vertrauenswürdigen Materialien, dann verglichen wir verschiedene Quellen miteinander und
+          überprüften, ob die Angaben übereinstimmten. Wenn mehrere unabhängige und seriöse Quellen
+          denselben Sachverhalt bestätigten, stieg unser Vertrauen in die Information. Bei
+          widersprüchlichen Angaben bevorzugten wir in der Regel institutionelle oder fachliche
+          Quellen.
+        </p>
+        <p>
+          Die Seite <a href="/ressources">Ressourcen</a> enthält sowohl Quellen, die wir tatsächlich
+          im Projekt verwendet haben, als auch zusätzliche Empfehlungen für Leserinnen und Leser, die
+          das Thema weiter vertiefen möchten. Sie dient damit nicht nur als Bibliografie, sondern
+          auch als Ausgangspunkt für weitere Recherche.
         </p>
 
         <SectionTitle title="Forschung" owners={["Daniel"]} />
         <p>
           Für die Erstellung unserer Internetseite über den Völkermord an den Herero und Nama habe
-          ich (Daniel) zuerst ausführliche Recherchen im Internet gemacht. Am Anfang habe ich
+          ich (Daniel) zuerst ausführliche Recherchen im Internet durchgeführt. Zu Beginn nutzte ich
           verschiedene Suchbegriffe wie „Herero und Nama Genozid“, „deutsche Kolonialzeit in
-          Namibia“ oder „Geschichte der Herero und Nama“ benutzt, um möglichst viele Informationen
-          zu finden. Alle Webseiten und Quellen, die mir interessant oder vertrauenswürdig
-          erschienen, habe ich anschließend in Notion gespeichert und geordnet. Dadurch konnte ich
-          meine Recherche besser organisieren und später schneller auf die verschiedenen
-          Informationen zugreifen. Außerdem habe ich wichtige Notizen gemacht und interessante
-          Fakten direkt aufgeschrieben.
+          Namibia“ oder „Geschichte der Herero und Nama“, um möglichst viele Informationen zu
+          finden. Alle Webseiten und Quellen, die mir relevant oder vertrauenswürdig erschienen,
+          speicherte ich anschließend in Notion und ordnete sie dort. Dadurch konnte ich meine
+          Recherche besser strukturieren und später schneller auf die Informationen zugreifen.
+          Außerdem machte ich wichtige Notizen und schrieb interessante Fakten direkt auf.
         </p>
         <p>
-          Danach habe ich alle gesammelten Quellen genau gelesen und analysiert. Dabei war es mir
-          wichtig, nur seriöse und zuverlässige Informationen zu benutzen. Deshalb habe ich vor
+          Danach las ich alle gesammelten Quellen genau und analysierte sie. Dabei war es mir
+          wichtig, nur seriöse und zuverlässige Informationen zu verwenden. Deshalb nutzte ich vor
           allem Webseiten von Universitäten, Museen, historischen Archiven und bekannten
-          Nachrichtenseiten verwendet. Ich habe außerdem verschiedene Quellen miteinander
-          verglichen, um sicherzugehen, dass die Informationen korrekt sind. Wenn mehrere Webseiten
-          dieselben Fakten bestätigt haben, konnte ich davon ausgehen, dass die Informationen
-          stimmen. Auf diese Weise konnte ich falsche oder ungenaue Informationen vermeiden und nur
-          gute Quellen für das Projekt benutzen.
+          Nachrichtenseiten. Ich verglich außerdem verschiedene Quellen miteinander, um sicherzugehen,
+          dass die Informationen korrekt waren. Wenn mehrere Webseiten dieselben Fakten bestätigten,
+          konnte ich davon ausgehen, dass die Angaben verlässlich waren. Auf diese Weise konnten wir
+          falsche oder ungenaue Informationen vermeiden.
         </p>
         <p>
-          Nachdem ich genug Informationen gesammelt und analysiert hatte, habe ich in Notion eigene
-          Texte geschrieben und die wichtigsten Ergebnisse zusammengefasst. Danach habe ich
-          zusammen mit meinem Kameraden Texte auf Französisch geschrieben und anschließend die
-          deutsche Übersetzung kopiert und angepasst. So konnten wir die Inhalte einfacher
-          vorbereiten und gleichzeitig darauf achten, dass die Informationen verständlich bleiben.
-          Anschließend hat mein Kamerad die fertigen Texte übernommen und sie in Code für die
-          Internetseite eingefügt. Durch diese Arbeitsmethode konnten wir unsere Webseite Schritt
-          für Schritt gut organisieren und gestalten.
+          Nachdem ich genügend Informationen gesammelt und ausgewertet hatte, schrieb ich in Notion
+          eigene Texte und fasste die wichtigsten Ergebnisse zusammen. Danach arbeiteten wir die
+          Inhalte gemeinsam weiter aus und übertrugen sie in die Website. So konnten wir die Inhalte
+          Schritt für Schritt gut organisieren und verständlich darstellen.
         </p>
       </article>
     </PageShell>

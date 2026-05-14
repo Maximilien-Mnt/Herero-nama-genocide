@@ -1,6 +1,7 @@
 // 15 (app/page.tsx) – Startseite
 // app/page.tsx — Neu gestaltete Startseite
 // app/page.tsx — Neu gestaltete Startseite
+
 import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 
@@ -56,7 +57,7 @@ const startpageImages = [
   {
     src: "/assets/startpage-images/simg13.jpg",
     pos: "bottom",
-    caption: "Lothar von Trotha (1848‑1920), deutscher General",
+    caption: "Lothar von Trotha (1848–1920), deutscher General",
   },
   {
     src: "/assets/startpage-images/simg12.webp",
@@ -66,22 +67,22 @@ const startpageImages = [
   {
     src: "/assets/startpage-images/simg2.jpg",
     pos: "top",
-    caption: "Samuel Maharero (1856–1923), Anführer des Herero‑Aufstands",
+    caption: "Samuel Maharero (1856–1923), Anführer des Herero-Aufstands",
   },
   {
     src: "/assets/startpage-images/simg4.jpg",
     pos: "100% 0%",
-    caption: "Herero‑Gefangene, die 1907 die Flucht in die Omaheke‑Wüste überlebten",
+    caption: "Herero-Gefangene, die 1907 die Flucht in die Omaheke-Wüste überlebten",
   },
   {
     src: "/assets/startpage-images/simg17.jpg",
     pos: "center top",
-    caption: "Swakopmund‑Denkmal",
+    caption: "Swakopmund-Denkmal",
   },
   {
     src: "/assets/startpage-images/simg8.webp",
     pos: "center bottom",
-    caption: "Gedenk‑Basrelief in Windhoek",
+    caption: "Gedenk-Basrelief in Windhoek",
   },
   {
     src: "/assets/startpage-images/simg16.jpg",
@@ -103,14 +104,12 @@ const startpageImages = [
 export default function HomePage() {
   return (
     <>
-      {/* Main title */}
       <header className="startpage-title" style={{ marginTop: "15px" }}>
         <h1>
           Völkermord an den <br /> Herero und Nama
         </h1>
       </header>
 
-      {/* Full‑width historical image strip */}
       <div className="startpage-image-strip" aria-label="Historische Bildcollage">
         {startpageImages.map((img, i) => (
           <figure key={i} className="startpage-image-cell">
@@ -129,29 +128,25 @@ export default function HomePage() {
       </div>
 
       <PageShell>
-        {/* Large citation */}
         <blockquote className="startpage-quote">
           <p>„Their blood waters our freedom.“</p>
         </blockquote>
 
-        {/* Engaging, academic explanation */}
         <section className="startpage-explanation">
           <p>
-            Zwischen 1904 und 1908 verübten deutsche Kolonialtruppen in Deutsch‑Südwestafrika
-            (dem heutigen Namibia) den ersten Völkermord des 20. Jahrhunderts. Die Aufstände
-            der Herero und später der Nama – geboren aus systematischer Enteignung und rassistischer
-            Unterdrückung – beantwortete das Kaiserreich mit einer beispiellosen Vernichtungspolitik.
-            General Lothar von Trotha erließ den „Vernichtungsbefehl“, der Jagd auf Zivilisten machte;
-            Tausende wurden in die Omaheke‑Wüste getrieben oder in Konzentrationslager verschleppt.
-            Bis zu 80 % der Herero und rund 50 % der Nama verloren ihr Leben. Die Spuren dieses
-            Genozids wirken bis heute fort – in Namibia, in Deutschland und in der komplexen Frage
-            nach Erinnerung, historischer Gerechtigkeit und Reparation. Diese Website zeigt auf einfache Weise
-            die historischen Zusammenhänge, die beteiligten Akteure, die Schauplätze und die
-            Nachwirkungen, um von diese Ereignisse zu bezeugen.
+            Zwischen 1904 und 1908 verübten deutsche Kolonialtruppen in Deutsch-Südwestafrika,
+            dem heutigen Namibia, den ersten Völkermord des 20. Jahrhunderts. Die Herero und
+            später die Nama reagierten auf systematische Enteignung und rassistische Unterdrückung
+            mit Widerstand. Das Deutsche Reich antwortete mit einer Vernichtungspolitik; General
+            Lothar von Trotha erließ den sogenannten Vernichtungsbefehl. Tausende Menschen wurden
+            in die Omaheke-Wüste getrieben oder in Konzentrationslager verschleppt. Bis zu 80 %
+            der Herero und rund 50 % der Nama verloren ihr Leben. Die Folgen dieses Genozids
+            wirken bis heute fort, in Namibia, in Deutschland und in den Debatten über Erinnerung,
+            historische Gerechtigkeit und Reparationen. Diese Website stellt die historischen
+            Zusammenhänge, die beteiligten Akteure, die Schauplätze und die Nachwirkungen übersichtlich dar.
           </p>
         </section>
 
-        {/* Section navigation */}
         <div className="home-nav-grid" aria-label="Hauptnavigation">
           {sections.map((s) => (
             <Link

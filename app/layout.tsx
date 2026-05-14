@@ -4,8 +4,6 @@
 // Composants globaux: SiteHeader, SiteFooter, PageTransition (pour les animations de page), et les outils d'analyse de Vercel (Analytics, SpeedInsights) sont inclus ici, garantissant leur présence sur toutes les pages.
 // Accessibilité: Un lien "skip-link" est présent pour l'accessibilité, permettant de sauter directement au contenu principal.
 
-
-
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -27,15 +25,16 @@ export const metadata: Metadata = {
     default: siteTitle,
     template: `%s — ${siteTitle}`,
   },
-  icons: {
-    icon: '/assets/favicon_black.png', // Path to your icon file
-  },
   description,
+  icons: {
+    icon: "/assets/favicon_black.png",
+  },
   openGraph: {
     title: siteTitle,
     description,
     type: "website",
     locale: "de_DE",
+    siteName: siteTitle,
   },
   robots: { index: true, follow: true },
 };
@@ -44,11 +43,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de">
       <body>
-        <a className="skip-link" href="#contenu-principal">
-          Zur Hauptnavigation springen
+        <a className="skip-link" href="#main-content">
+          Zum Hauptinhalt springen
         </a>
         <SiteHeader />
-        <main id="contenu-principal">
+        <main id="main-content">
           <PageTransition>{children}</PageTransition>
         </main>
         <SiteFooter />
@@ -56,6 +55,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SpeedInsights />
       </body>
     </html>
-
   );
 }

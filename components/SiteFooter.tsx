@@ -20,17 +20,23 @@ export function SiteFooter() {
           margin: "0 auto",
           display: "flex",
           flexWrap: "wrap",
-          gap: "1rem",
+          gap: "0px",
           justifyContent: "space-between",
         }}
       >
-        <p style={{ margin: 0 }}>
-          Quellen &amp; Zitate: <Link href="/citer">Zitierweise</Link>.
-        </p>
-        <p style={{ margin: 0 }}>
-          Zu Bildungszwecken. Siehe <Link href="/a-propos">Rechtshinweise</Link> und Informationen
-          zu externen Inhalten.
-        </p>
+        <p>
+  Diese Website dient ausschließlich Bildungszwecken.
+  <br />
+  Hinweise zur Zitierung finden Sie unter{" "}
+  <Link href="/citer">Zitierweise</Link>.
+  <br />
+  Informationen zur Lizenz und zu rechtlichen Fragen finden Sie unter{" "}
+  <Link href="/rechtliches">Rechtliche Hinweise</Link>.
+  <br />
+  Weitere Informationen zum Projekt finden Sie unter{" "}
+  <Link href="/a-propos">Über das Projekt</Link>.
+</p>
+<p>© 2026 Maximilien Montant & Daniel Liberge</p>
       </div>
     </footer>
   );

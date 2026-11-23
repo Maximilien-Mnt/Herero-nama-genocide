@@ -36,7 +36,7 @@ This project is an interactive educational website about the **Herero and Nama g
 - **Methodology** — Research and citation notes  
 
 ### Tech Stack/Tools
-- Vercel (recommended hosting)
+- Vercel (hosting)
 - Next.js (App Router) + MDX (`@next/mdx`, `@mdx-js/*`)
 - React + TypeScript
 - Recharts (statistics)
